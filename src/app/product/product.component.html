@@ -1,1 +1,18 @@
-<p>product works!</p>
+<p-table [value]="products" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Image</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.title }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td><img src="{{ product.image }}" height="30px" /></td>
+      </tr>
+    </ng-template>
+  </p-table>
