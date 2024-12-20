@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-add-edit-product',
   templateUrl: './add-edit-product.component.html',
-  styleUrls: ['./add-edit-product.component.sass']
+  styleUrls: ['./add-edit-product.component.css']
 })
 export class AddEditProductComponent implements OnInit{
 
@@ -19,7 +20,7 @@ export class AddEditProductComponent implements OnInit{
     image: ["", Validators.required]
   })
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private productService: ProductService){
 
   }
 
@@ -30,8 +31,13 @@ export class AddEditProductComponent implements OnInit{
     this.clickClose.emit(true);
   } 
 
-  addProduct(){
-
+  addProduct() {
+    this.productService.saveProduct(this.productForm.value).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
+    this.closeModal();
   }
 
 }

@@ -4,6 +4,9 @@ import { AddEditProductComponent } from './add-edit-product.component';
 import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     DialogModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputTextModule,
+    InputNumberModule,
+    InputTextareaModule
   ],
   exports: [
     AddEditProductComponent
