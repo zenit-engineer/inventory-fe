@@ -19,7 +19,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
-    InputTextareaModule
+    InputTextareaModule,
   ],
   exports: [
     AddEditProductComponent

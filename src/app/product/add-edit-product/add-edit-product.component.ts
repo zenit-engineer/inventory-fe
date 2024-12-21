@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -21,7 +22,11 @@ export class AddEditProductComponent implements OnInit{
     image: ["", Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private productService: ProductService){
+  constructor(
+    private fb: FormBuilder, 
+    private productService: ProductService,
+    private messageService: MessageService
+  ){
 
   }
 
@@ -37,8 +42,12 @@ export class AddEditProductComponent implements OnInit{
     this.productService.saveProduct(this.productForm.value).subscribe(
       response => {
         this.clickAdd.emit(response);
-        this.productForm.reset();
         this.closeModal();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product added' });
+      },
+      error => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+        console.log('Errror occured');
       }
     )
   }

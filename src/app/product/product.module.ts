@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddEditProductModule } from './add-edit-product/add-edit-product.module';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -19,10 +21,14 @@ import { AddEditProductModule } from './add-edit-product/add-edit-product.module
     ButtonModule,
     DialogModule,
     BrowserAnimationsModule,
-    AddEditProductModule
+    AddEditProductModule,
+    ToastModule
   ],
   exports: [
     ProductComponent
+  ],
+  providers:[
+    MessageService
   ]
 })
 export class ProductModule { }
