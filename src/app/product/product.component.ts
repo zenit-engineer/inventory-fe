@@ -34,4 +34,9 @@ export class ProductComponent implements OnInit{
     this.displayAddModal = !isClosed;
   }
 
+  saveProductToList(newData: any){
+    this.products.unshift(newData);
+    //this.getProductList(); if i had been using real db not fake API
+  }
+
 }

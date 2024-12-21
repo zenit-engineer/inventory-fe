@@ -11,6 +11,7 @@ export class AddEditProductComponent implements OnInit{
 
   @Input() displayAddModal: boolean = true;
   @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() clickAdd: EventEmitter<any> = new EventEmitter<any>();
 
   productForm = this.fb.group({
     title: ["", Validators.required],
@@ -29,15 +30,17 @@ export class AddEditProductComponent implements OnInit{
 
   closeModal(){
     this.clickClose.emit(true);
+    this.productForm.reset();
   } 
 
   addProduct() {
     this.productService.saveProduct(this.productForm.value).subscribe(
       response => {
-        console.log(response);
+        this.clickAdd.emit(response);
+        this.productForm.reset();
+        this.closeModal();
       }
     )
-    this.closeModal();
   }
 
 }
