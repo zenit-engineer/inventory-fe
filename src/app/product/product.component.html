@@ -10,6 +10,7 @@
       <th>Category</th>
       <th>Image</th>
       <th></th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
@@ -26,6 +27,14 @@
           (click)="showEditModal(product)"
         ></button>
       </td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger mr-2"
+          (click)="deleteProduct(product)"
+        ></button>
+      </td>
     </tr>
   </ng-template>
 </p-table>
@@ -37,4 +46,7 @@
   [selectedProduct]="selectedProduct"
   ></app-add-edit-product>
 
+<p-confirmDialog 
+  header="Delete"
+></p-confirmDialog>
 <p-toast position="bottom-left"/>
