@@ -37,9 +37,16 @@ export class ProductComponent implements OnInit{
     this.displayAddEditModal = !isClosed;
   }
 
-  saveProductToList(newData: any){
-    this.products.unshift(newData);
-    //this.getProductList(); if i had been using real db not fake API
+  saveEditProductToList(newData: any){
+    if(newData.id === this.selectedProduct.id){
+      const productIndex = this.products.findIndex(data => data.id === newData.id);
+      this.products[productIndex] = newData;
+    }else{
+      this.products.unshift(newData);
+    }
+
+    //this.getProductList(); if i had been using real db not fake API (usage only this line)
+
   }
   
   showEditModal(product: Product){

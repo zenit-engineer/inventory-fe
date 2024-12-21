@@ -11,9 +11,10 @@ import { MessageService } from 'primeng/api';
 export class AddEditProductComponent implements OnInit,OnChanges{
 
   @Input() displayAddEditModal: boolean = true;
-  @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() clickAdd: EventEmitter<any> = new EventEmitter<any>();
   @Input() selectedProduct: any = null;
+  @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() clickAddEdit: EventEmitter<any> = new EventEmitter<any>();
+  modalType = "Add";
 
   productForm = this.fb.group({
     title: ["", Validators.required],
@@ -37,8 +38,10 @@ export class AddEditProductComponent implements OnInit,OnChanges{
   ngOnChanges(): void {
     if(this.selectedProduct){
       this.productForm.patchValue(this.selectedProduct); 
+      this.modalType = 'Edit';
     } else {
       this.productForm.reset();
+      this.modalType = 'Add';
     }
   }
 
@@ -47,12 +50,13 @@ export class AddEditProductComponent implements OnInit,OnChanges{
     this.productForm.reset();
   } 
 
-  addProduct() {
-    this.productService.saveProduct(this.productForm.value).subscribe(
+  addEditProduct() {
+    this.productService.addEditProduct(this.productForm.value, this.selectedProduct).subscribe(
       response => {
-        this.clickAdd.emit(response);
+        this.clickAddEdit.emit(response);
         this.closeModal();
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product added' });
+        const msg = this.modalType === 'Add' ? 'Product addedd' : 'Product Updated';
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
       },
       error => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
