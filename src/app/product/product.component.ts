@@ -25,8 +25,8 @@ export class ProductComponent implements OnInit, OnDestroy{
     this.getProductList();
   }
 
-  getProductList(){
-    this.productSubscribtion = this.productService.getProducts().subscribe(
+  getProductList(category?: string){
+    this.productSubscribtion = this.productService.getProducts(category || "").subscribe(
       response => {
         this.products = response;
         console.log(this.products);
@@ -78,6 +78,10 @@ export class ProductComponent implements OnInit, OnDestroy{
         this.subscriptions.push(this.productSubscribtion);
       }
     })
+  }
+
+  getProductsByCategory(category: string){
+    this.getProductList(category);
   }
 
   ngOnDestroy(): void {

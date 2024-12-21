@@ -3,6 +3,12 @@
   <p-button label="Add Product" (onClick)="showAddModal()" />
 </div>
 <p-table [value]="products" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="caption">
+    <app-filter-project
+      (selectCategory)="getProductsByCategory($event)">
+
+    </app-filter-project>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th>Title</th>

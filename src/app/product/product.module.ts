@@ -11,10 +11,14 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { FilterProjectComponent } from './filter-project/filter-project.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    FilterProjectComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,9 @@ import { ConfirmationService } from 'primeng/api';
     BrowserAnimationsModule,
     AddEditProductModule,
     ToastModule,
-    ConfirmDialogModule  
+    ConfirmDialogModule,
+    DropdownModule,
+    FormsModule  
   ],
   exports: [
     ProductComponent
