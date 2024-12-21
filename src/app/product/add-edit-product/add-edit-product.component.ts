@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 import { MessageService } from 'primeng/api';
@@ -8,11 +8,12 @@ import { MessageService } from 'primeng/api';
   templateUrl: './add-edit-product.component.html',
   styleUrls: ['./add-edit-product.component.css']
 })
-export class AddEditProductComponent implements OnInit{
+export class AddEditProductComponent implements OnInit,OnChanges{
 
-  @Input() displayAddModal: boolean = true;
+  @Input() displayAddEditModal: boolean = true;
   @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() clickAdd: EventEmitter<any> = new EventEmitter<any>();
+  @Input() selectedProduct: any = null;
 
   productForm = this.fb.group({
     title: ["", Validators.required],
@@ -31,6 +32,14 @@ export class AddEditProductComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(): void {
+    if(this.selectedProduct){
+      this.productForm.patchValue(this.selectedProduct); 
+    } else {
+      this.productForm.reset();
+    }
   }
 
   closeModal(){

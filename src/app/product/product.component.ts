@@ -10,7 +10,9 @@ import { Product } from './product';
 export class ProductComponent implements OnInit{
   
   products: Product[] = [];
-  displayAddModal = false;
+  displayAddEditModal = false;
+  selectedProduct: any = null;
+
   constructor(private productService: ProductService){}
   
   ngOnInit(): void {
@@ -27,16 +29,22 @@ export class ProductComponent implements OnInit{
   }
 
   showAddModal(){
-    this.displayAddModal = true;
+    this.displayAddEditModal = true;
+    this.selectedProduct = null;
   }
 
   hideAddModal(isClosed: boolean){
-    this.displayAddModal = !isClosed;
+    this.displayAddEditModal = !isClosed;
   }
 
   saveProductToList(newData: any){
     this.products.unshift(newData);
     //this.getProductList(); if i had been using real db not fake API
+  }
+  
+  showEditModal(product: Product){
+    this.displayAddEditModal = true;
+    this.selectedProduct = product;
   }
 
 }
