@@ -1,33 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from './product';
+import { getAllProductsApiResponse } from '../interfaces/get-all-products-api-response';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) {
+  configUrl: string = environment.backend_url;
 
-  }//test
+  constructor(private http: HttpClient) {}
 
-  getProducts(category: string): Observable<Product[]>{
-    const categoryUrl = category ? `category/${category}` : '';
-    return this.http.get<Product[]>(`https://fakestoreapi.com/products/${categoryUrl}/?sort=desc`);
+  getAllProducts(): Observable<getAllProductsApiResponse>{
+    return this.http.get<getAllProductsApiResponse>(`${this.configUrl}/api/v1/product/all`);
+  }
+
+  deleteProduct(productId: number): Observable<any>{
+    return this.http.delete<Observable<any>>(`${this.configUrl}/api/v1/product/${productId}`);
   }
 
   addEditProduct(postData: any, selectedProduct: any) {
     if(!selectedProduct){
-      return this.http.post('https://fakestoreapi.com/products', postData);
+      return this.http.post('http://localhost:8080/api/v1/product', postData);
     } else {
-      return this.http.put(`https://fakestoreapi.com/products/${selectedProduct.id}`, postData);
+      return this.http.put(`http://localhost:8080/api/v1/product/${selectedProduct.id}`, postData);
     }
     
-  }
-
-  deleteProduct(productId: number){
-    return this.http.delete(`https://fakestoreapi.com/products/${productId}`);
   }
 
   getCategories(): Observable<string[]>{

@@ -3,6 +3,8 @@ import { ProductService } from './product.service';
 import { Product } from './product';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';  // Correctly importing catchError and map
+
 
 @Component({
   selector: 'app-product',
@@ -12,27 +14,19 @@ import { Subscription } from 'rxjs';
 export class ProductComponent implements OnInit, OnDestroy{
   
   products: Product[] = [];
-  displayAddEditModal = false;
   selectedProduct: any = null;
+  displayAddEditModal = false;
   subscriptions: Subscription[] = [];
-  productSubscribtion: Subscription = new Subscription();
+  productSubscription: Subscription = new Subscription();
 
-  constructor(private productService: ProductService, private messageService: MessageService,
+  constructor(
+    private productService: ProductService, 
+    private messageService: MessageService,
     private confirmationService: ConfirmationService
   ){}
   
   ngOnInit(): void {
-    this.getProductList();
-  }
-
-  getProductList(category?: string){
-    this.productSubscribtion = this.productService.getProducts(category || "").subscribe(
-      response => {
-        this.products = response;
-        console.log(this.products);
-      }
-    )
-    this.subscriptions.push(this.productSubscribtion)
+    this.getAllProducts();
   }
 
   showAddModal(){
@@ -40,8 +34,64 @@ export class ProductComponent implements OnInit, OnDestroy{
     this.selectedProduct = null;
   }
 
+  showEditModal(product: Product){
+    this.displayAddEditModal = true;
+    this.selectedProduct = product;
+  }
+
   hideAddModal(isClosed: boolean){
     this.displayAddEditModal = !isClosed;
+  }
+
+  getAllProducts(): void {
+    this.productSubscription = this.productService.getAllProducts().pipe(
+      map(response => response.data),  
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        return [];  
+      })
+    ).subscribe(
+      products => {
+        this.products = products;}
+    );
+    this.subscriptions.push(this.productSubscription)
+  }
+
+  deleteProduct(productId: number) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      accept: () => {  
+        this.productSubscription = this.productService.deleteProduct(productId).subscribe(
+          response => {
+            if (response.status === 'OK') {
+
+              this.getAllProducts(); 
+  
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: response.message || 'Deleted Successfully'
+              });
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: response.message || 'Something went wrong!'
+              });
+            }
+          },
+          error => {
+            console.error('Error deleting product:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: error.message || 'There was an error deleting the product.'
+            });
+          }
+        );
+        this.subscriptions.push(this.productSubscription);
+      }
+    });
   }
 
   saveEditProductToList(newData: any){
@@ -52,36 +102,15 @@ export class ProductComponent implements OnInit, OnDestroy{
       this.products.unshift(newData);
     }
 
-    //this.getProductList(); if i had been using real db not fake API (usage only this line)
+    this.getAllProducts();// while I'm using real database
 
-  }
-  
-  showEditModal(product: Product){
-    this.displayAddEditModal = true;
-    this.selectedProduct = product;
-  }
-
-  deleteProduct(product: Product){
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      accept: () => {  
-        this.productSubscribtion = this.productService.deleteProduct(product.id).subscribe(
-          response => {
-            //this.getProductList() if we used real database 
-            this.products = this.products.filter(data => data.id !== product.id);
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted Successfully' });
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'Success', detail: error });
-          }
-        );
-        this.subscriptions.push(this.productSubscribtion);
-      }
-    })
   }
 
   getProductsByCategory(category: string){
-    this.getProductList(category);
+    this.getProductListByCategory(category);
+  }
+  getProductListByCategory(category: string) {
+    throw new Error('Method not implemented.');
   }
 
   ngOnDestroy(): void {

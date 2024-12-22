@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-filter-project',
   templateUrl: './filter-project.component.html',
-  styleUrls: ['./filter-project.component.sass']
+  styleUrls: ['./filter-project.component.css']
 })
 export class FilterProjectComponent implements OnInit, OnDestroy{
 

@@ -1,7 +1,17 @@
-<p-dropdown
-  [options]="categories"
-  [(ngModel)]="selectedCategory"
-  placeholder="Select Category"
-  [showClear]="true"
-  (onChange)="onChangeCategory($event)"
-></p-dropdown>
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <p-dropdown
+    [options]="categories"
+    [(ngModel)]="selectedCategory"
+    placeholder="Select Price"
+    [showClear]="true"
+    (onChange)="onChangeCategory($event)"
+  ></p-dropdown>
+
+  <p-dropdown
+    [options]="categories"
+    [(ngModel)]="selectedCategory"
+    placeholder="Select Category"
+    [showClear]="true"
+    (onChange)="onChangeCategory($event)"
+  ></p-dropdown>
+</div>
