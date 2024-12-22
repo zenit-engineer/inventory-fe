@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { getAllProductsApiResponse } from '../interfaces/get-all-products-api-response';
+import { ApiResponse } from '../interfaces/api-response';
 import { environment } from 'src/environments/environment';
+import { Product } from './product';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,20 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getAllProducts(): Observable<getAllProductsApiResponse>{
-    return this.http.get<getAllProductsApiResponse>(`${this.configUrl}/api/v1/product/all`);
+  getAllProducts(): Observable<ApiResponse>{
+    return this.http.get<ApiResponse>(`${this.configUrl}/api/v1/product/all`);
   }
 
-  deleteProduct(productId: number): Observable<any>{
-    return this.http.delete<Observable<any>>(`${this.configUrl}/api/v1/product/${productId}`);
+  deleteProduct(productId: number): Observable<ApiResponse>{
+    return this.http.delete<ApiResponse>(`${this.configUrl}/api/v1/product/${productId}`);
+  }
+
+  updateProduct(product: Product): Observable<ApiResponse>{
+    return this.http.put<ApiResponse>(`${this.configUrl}/api/v1/product/${product.id}`, product);
+  }
+
+  addProduct(product: Product): Observable<ApiResponse>{
+    return this.http.post<ApiResponse>(`${this.configUrl}/api/v1/product`, product);
   }
 
   addEditProduct(postData: any, selectedProduct: any) {

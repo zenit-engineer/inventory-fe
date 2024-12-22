@@ -1,6 +1,6 @@
 import { Product } from "../product/product";
 
-export interface getAllProductsApiResponse {
+export interface ApiResponse {
     status: string;
     message: string;
     data: Product[];

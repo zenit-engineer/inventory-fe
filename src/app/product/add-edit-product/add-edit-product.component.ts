@@ -1,20 +1,30 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 import { MessageService } from 'primeng/api';
+import { Product } from '../product';
+import { catchError, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-product',
   templateUrl: './add-edit-product.component.html',
   styleUrls: ['./add-edit-product.component.css']
 })
-export class AddEditProductComponent implements OnInit,OnChanges{
+export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
 
   @Input() displayAddEditModal: boolean = true;
   @Input() selectedProduct: any = null;
   @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() clickAddEdit: EventEmitter<any> = new EventEmitter<any>();
   modalType = "Add";
+
+  subscriptions: Subscription[] = [];
+  productSubscription: Subscription = new Subscription();
+
+  //for the dropdown
+  selectedCategory: string = '';
+  categories:string[] = [];
+  @Output() selectCategory: EventEmitter<string> = new EventEmitter<string>();
 
   productForm = this.fb.group({
     title: ["", Validators.required],
@@ -33,6 +43,7 @@ export class AddEditProductComponent implements OnInit,OnChanges{
   }
 
   ngOnInit(): void {
+    this.getCategories();
   }
 
   ngOnChanges(): void {
@@ -51,18 +62,129 @@ export class AddEditProductComponent implements OnInit,OnChanges{
   } 
 
   addEditProduct() {
-    this.productService.addEditProduct(this.productForm.value, this.selectedProduct).subscribe(
-      response => {
+    const productData: Product = {
+      id: this.selectedProduct?.id || null,
+      title: this.productForm.value.title ?? '',  // Fallback to an empty string if null or undefined
+      price: parseFloat(this.productForm.value.price ?? "0") || 0,
+      description: this.productForm.value.description ?? '',  // Fallback to an empty string if null or undefined
+      category: this.productForm.value.category ?? '',  // Fallback to an empty string if null or undefined
+      image: this.productForm.value.image ?? '',  // Fallback to an empty string if null or undefined
+      rating: this.selectedProduct?.rating ?? 0 // Fallback to 0 if rating is undefined
+    };
+  
+    // Check if it's an update or add operation
+    if (productData.id) {
+      this.updateProduct(productData);
+    } else {
+      this.addProduct(productData);
+    }
+  }  
+  
+  updateProduct(productData: Product): void {
+    this.productSubscription = this.productService.updateProduct(productData).pipe(
+      catchError(error => {
+        console.error('Error updating product:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error updating the product.'
+        });
+        return [];  // Prevent breaking the flow by returning an empty observable
+      })
+    ).subscribe({
+      next: (response) => {
         this.clickAddEdit.emit(response);
         this.closeModal();
-        const msg = this.modalType === 'Add' ? 'Product addedd' : 'Product Updated';
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: response.message || 'Product updated successfully!'
+        });
       },
-      error => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
-        console.log('Errror occured');
+      error: (error) => {
+        console.error('Error occurred while updating product:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error updating the product.'
+        });
       }
-    )
+    });
+  
+    this.subscriptions.push(this.productSubscription);
+  }
+  
+  
+  addProduct(productData: Product): void {
+    this.productSubscription = this.productService.addProduct(productData).pipe(
+      catchError(error => {
+        console.error('Error adding product:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error adding the product.'
+        });
+        return [];  // Prevent breaking the flow by returning an empty observable
+      })
+    ).subscribe({
+      next: (response) => {
+        this.clickAddEdit.emit(response);
+        this.closeModal();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: response.message || 'Product added successfully!'
+        });
+      },
+      error: (error) => {
+        console.error('Error occurred while adding product:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error adding the product.'
+        });
+      }
+    });
+  
+    this.subscriptions.push(this.productSubscription);
+  }
+  
+  
+  getCategories(): void {
+    this.productSubscription = this.productService.getCategories().pipe(
+      catchError(error => {
+        console.error('Error fetching categories:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error fetching the categories.'
+        });
+        return []; // Return an empty array to keep the observable chain intact
+      })
+    ).subscribe({
+      next: (response) => {
+        this.categories = response;
+      },
+      error: (error) => {
+        console.error('Error occurred while fetching categories:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'There was an error fetching the categories.'
+        });
+      }
+    });
+  
+    this.subscriptions.push(this.productSubscription);
+  }
+  
+
+  onChangeCategory($event: any){
+    this.selectCategory.emit($event.value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }
