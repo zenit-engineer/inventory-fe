@@ -4,6 +4,12 @@ import { ProductService } from '../product.service';
 import { MessageService } from 'primeng/api';
 import { Product } from '../product';
 import { catchError, Subscription } from 'rxjs';
+import { FileUploadEvent } from 'primeng/fileupload';
+
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
 
 @Component({
   selector: 'app-add-edit-product',
@@ -30,7 +36,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     title: ["", Validators.required],
     price: ["", Validators.required],
     description: [""],
-    category: ["", Validators.required],
+    category: [""],
     image: ["", Validators.required]
   })
 
@@ -71,7 +77,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
       image: this.productForm.value.image ?? '',  // Fallback to an empty string if null or undefined
       rating: this.selectedProduct?.rating ?? 0 // Fallback to 0 if rating is undefined
     };
-  
+    
     // Check if it's an update or add operation
     if (productData.id) {
       this.updateProduct(productData);
@@ -176,6 +182,22 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     });
   
     this.subscriptions.push(this.productSubscription);
+  }
+  
+  onImageUpload(event: any) {
+    const file = event.files[0]; // Retrieve the uploaded file
+    const reader = new FileReader();
+  
+    reader.onload = () => {
+      const base64Image = (reader.result as string).split(',')[1]; // Remove the prefix
+      this.productForm.patchValue({
+        image: base64Image, // Store only the base64 string
+      });
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file); // Read the file as a Data URL
+    }
   }
   
 

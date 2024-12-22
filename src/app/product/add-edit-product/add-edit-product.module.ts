@@ -9,6 +9,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';  // Import DropdownModule
 import { FormsModule } from '@angular/forms';  // For ngModel binding
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { FormsModule } from '@angular/forms';  // For ngModel binding
     InputNumberModule,
     InputTextareaModule,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    FileUploadModule,
+    ToastModule
   ],
   exports: [
     AddEditProductComponent

@@ -38,40 +38,41 @@
     >
   </div>
   <div class="field">
+    <label class="block" for="category">Category</label>
+    <p-dropdown
+    [options]="categories"
+    [(ngModel)]="selectedCategory"
+    placeholder="Select Price"
+    [showClear]="true"
+    (onChange)="onChangeCategory($event)"
+    ></p-dropdown>
+  </div>
+  <div class="field">
     <label class="block">Description</label>
     <textarea pInputTextarea formControlName="description"></textarea>
   </div>
   <div class="field">
     <label class="block" for="image">Image</label>
-    <input type="text" pInputText id="image" formControlName="image" />
-    <small
-      class="p-error block"
-      *ngIf="
-        productForm.controls['image'].invalid &&
-        productForm.controls['image'].dirty
-      "
-      >Field is required</small
-    >
+    <div class="card flex justify-content-center">
+      <p-toast />
+      <p-fileUpload
+        mode="basic"
+        name="file"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        (onSelect)="onImageUpload($event)"
+        chooseLabel="Upload Image"
+      ></p-fileUpload>
+
   </div>
-  <div class="field">
-    <label class="block" for="category">Category</label>
-    <input type="text" pInputText id="category" formControlName="category" />
-    <small
-      class="p-error block"
-      *ngIf="
-        productForm.controls['category'].invalid &&
-        productForm.controls['category'].dirty
-      "
-      >Field is required</small
-    >
   </div>
+  
 </form>
 
   <ng-template pTemplate="footer">
     <p-button
       (click)="addEditProduct()"
       label="{{modalType}}"
-      [disabled]="productForm.invalid"
     ></p-button>
     <p-button (click)="closeModal()" label="Close" styleClass="p-button-text">
     </p-button>

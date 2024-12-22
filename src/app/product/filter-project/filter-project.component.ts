@@ -11,6 +11,8 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
 
   selectedCategory: string = '';
   categories:string[] = [];
+  selectedPrice: string = '';
+  price: string[] = ['<100', '<500', '<1000'];
   @Output() selectCategory: EventEmitter<string> = new EventEmitter<string>();
   subscriptions: Subscription[] = [];
   productSubscribtion: Subscription = new Subscription();
