@@ -130,15 +130,32 @@ export class ProductComponent implements OnInit, OnDestroy {
   }  
   
   
-  getProductsByCategory(category: string) {
-    this.getProductListByCategory(category);
+  getProductsByCategory(category: string | null){
+    this.productSubscription = this.productService.getProductsByCategory(category).pipe(
+      map(response => response.data),
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load products.'
+        });
+        return []; // Return an empty array in case of error to prevent breaking the flow
+      })
+    ).subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (error) => {
+        console.error('Error during product fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while fetching products.'
+        });
+      }
+    });
   }
-
-  getProductListByCategory(category: string) {
-    // Implement this method if required
-    console.log('Fetching products by category:', category);
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

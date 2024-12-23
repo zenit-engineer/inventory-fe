@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response';
@@ -30,17 +30,18 @@ export class ProductService {
     return this.http.post<ApiResponse>(`${this.configUrl}/api/v1/product`, product);
   }
 
-  addEditProduct(postData: any, selectedProduct: any) {
-    if(!selectedProduct){
-      return this.http.post('http://localhost:8080/api/v1/product', postData);
-    } else {
-      return this.http.put(`http://localhost:8080/api/v1/product/${selectedProduct.id}`, postData);
-    }
-    
+  searchProduct(category: string): Observable<ApiResponse>{
+    return this.http.get<ApiResponse>(`${this.configUrl}/api/v1/product/category/${category}`);
   }
 
   getCategories(): Observable<string[]>{
     return this.http.get<string[]>(`https://fakestoreapi.com/products/categories`);
   }
+
+  getProductsByCategory(category: string | null): Observable<ApiResponse> {
+    const params = new HttpParams().set('category', category || '');
+    return this.http.get<ApiResponse>(`${this.configUrl}/api/v1/product/by-category`, { params });
+  }
+  
 
 }

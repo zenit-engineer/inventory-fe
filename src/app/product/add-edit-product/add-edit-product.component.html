@@ -44,7 +44,7 @@
     [(ngModel)]="selectedCategory"
     placeholder="Select Price"
     [showClear]="true"
-    (onChange)="onChangeCategory($event)"
+    (ngModelChange)="onDropdownChange($event)">
     ></p-dropdown>
   </div>
   <div class="field">

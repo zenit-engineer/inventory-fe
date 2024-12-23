@@ -27,10 +27,9 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   subscriptions: Subscription[] = [];
   productSubscription: Subscription = new Subscription();
 
-  //for the dropdown
-  selectedCategory: string = '';
-  categories:string[] = [];
-  @Output() selectCategory: EventEmitter<string> = new EventEmitter<string>();
+  selectedCategory: string | null = null;
+  categories:string[] = ['sport','electronics','cosmetics'];
+  @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
 
   productForm = this.fb.group({
     title: ["", Validators.required],
@@ -157,31 +156,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   
   
   getCategories(): void {
-    this.productSubscription = this.productService.getCategories().pipe(
-      catchError(error => {
-        console.error('Error fetching categories:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.message || 'There was an error fetching the categories.'
-        });
-        return []; // Return an empty array to keep the observable chain intact
-      })
-    ).subscribe({
-      next: (response) => {
-        this.categories = response;
-      },
-      error: (error) => {
-        console.error('Error occurred while fetching categories:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.message || 'There was an error fetching the categories.'
-        });
-      }
-    });
-  
-    this.subscriptions.push(this.productSubscription);
+    this.categories;
   }
   
   onImageUpload(event: any) {
@@ -204,6 +179,11 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   onChangeCategory($event: any){
     this.selectCategory.emit($event.value);
   }
+
+  onDropdownChange(value: string | null): void {
+    this.selectedCategory = value;
+    this.selectCategory.emit(value); // Emit null when the dropdown is cleared
+  } 
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
