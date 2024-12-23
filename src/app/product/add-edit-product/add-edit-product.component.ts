@@ -34,8 +34,8 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   productForm = this.fb.group({
     title: ["", Validators.required],
     price: ["", Validators.required],
-    description: [""],
-    category: [""],
+    description: ["", Validators.required],
+    category: ["", Validators.required],
     image: ["", Validators.required]
   })
 

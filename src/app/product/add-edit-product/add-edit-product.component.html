@@ -41,11 +41,18 @@
     <label class="block" for="category">Category</label>
     <p-dropdown
     [options]="categories"
-    [(ngModel)]="selectedCategory"
-    placeholder="Select Price"
+    formControlName="category"
+    placeholder="Select Category"
     [showClear]="true"
-    (ngModelChange)="onDropdownChange($event)">
-    ></p-dropdown>
+  ></p-dropdown>
+  <small
+    class="p-error block"
+    *ngIf="
+      productForm.controls['category'].invalid &&
+      productForm.controls['category'].dirty
+    "
+    >Field is required</small
+  >
   </div>
   <div class="field">
     <label class="block">Description</label>
@@ -70,6 +77,7 @@
     <p-button
       (click)="addEditProduct()"
       label="{{modalType}}"
+      [disabled]="productForm.invalid"
     ></p-button>
     <p-button (click)="closeModal()" label="Close" styleClass="p-button-text">
     </p-button>
