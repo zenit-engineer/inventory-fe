@@ -28,7 +28,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   productSubscription: Subscription = new Subscription();
 
   selectedCategory: string | null = null;
-  categories:string[] = ['sport','electronics','cosmetics'];
+  categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
 
   productForm = this.fb.group({

@@ -13,9 +13,13 @@ import { Product } from '../product';
 export class FilterProjectComponent implements OnInit, OnDestroy{
 
   products: Product[] = [];
+  request = {
+    first: 1,
+    rows: 10
+  }
 
   selectedCategory: string | null = null;
-  categories:string[] = ['sports','electronics','clothin','cosmetics'];
+  categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
   
   subscriptions: Subscription[] = [];
@@ -40,73 +44,73 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     console.log('test');
   }
 
-  clearSearch() {
-    if (this.searchInput) {
-      this.searchInput.nativeElement.value = '';
-    }
-    if (this.dt1) {
-      this.dt1.filterGlobal('', 'contains');
-    }
-    this.getAllProducts();
-  }
+  // clearSearch() {
+  //   if (this.searchInput) {
+  //     this.searchInput.nativeElement.value = '';
+  //   }
+  //   if (this.dt1) {
+  //     this.dt1.filterGlobal('', 'contains');
+  //   }
+  //   this.getAllProducts();
+  // }
 
-   getAllProducts() {
-      this.productSubscription = this.productService.getAllProducts().pipe(
-        map(response => response.data),
-        catchError(error => {
-          console.error('Error fetching products:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load products.'
-          });
-          return []; // Return an empty array in case of error to prevent breaking the flow
-        })
-      ).subscribe({
-        next: (products) => {
-          this.products = products;
-        },
-        error: (error) => {
-          console.error('Error during product fetch:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.message || 'Error occurred while fetching products.'
-          });
-        }
-      });
+  //  getAllProducts() {
+  //     this.productSubscription = this.productService.getAllProducts(this.request).pipe(
+  //       map(response => response.data),
+  //       catchError(error => {
+  //         console.error('Error fetching products:', error);
+  //         this.messageService.add({
+  //           severity: 'error',
+  //           summary: 'Error',
+  //           detail: 'Failed to load products.'
+  //         });
+  //         return []; // Return an empty array in case of error to prevent breaking the flow
+  //       })
+  //     ).subscribe({
+  //       next: (products) => {
+  //         this.products = products;
+  //       },
+  //       error: (error) => {
+  //         console.error('Error during product fetch:', error);
+  //         this.messageService.add({
+  //           severity: 'error',
+  //           summary: 'Error',
+  //           detail: error.message || 'Error occurred while fetching products.'
+  //         });
+  //       }
+  //     });
     
-      this.subscriptions.push(this.productSubscription);
-    }
+  //     this.subscriptions.push(this.productSubscription);
+  //   }
 
-    searchPatient(category: string) {
-      this.productSubscription = this.productService.searchProduct(category).pipe(
-        map(response => response.data),
-        catchError(error => {
-          console.error('Error fetching products:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load products.'
-          });
-          return []; // Return an empty array in case of error to prevent breaking the flow
-        })
-      ).subscribe({
-        next: (products) => {
-          this.products = products;
-        },
-        error: (error) => {
-          console.error('Error during product fetch:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.message || 'Error occurred while fetching products.'
-          });
-        }
-      });
+    // searchPatient(category: string) {
+    //   this.productSubscription = this.productService.searchProduct(category).pipe(
+    //     map(response => response.data),
+    //     catchError(error => {
+    //       console.error('Error fetching products:', error);
+    //       this.messageService.add({
+    //         severity: 'error',
+    //         summary: 'Error',
+    //         detail: 'Failed to load products.'
+    //       });
+    //       return []; // Return an empty array in case of error to prevent breaking the flow
+    //     })
+    //   ).subscribe({
+    //     next: (products) => {
+    //       this.products = products;
+    //     },
+    //     error: (error) => {
+    //       console.error('Error during product fetch:', error);
+    //       this.messageService.add({
+    //         severity: 'error',
+    //         summary: 'Error',
+    //         detail: error.message || 'Error occurred while fetching products.'
+    //       });
+    //     }
+    //   });
     
-      this.subscriptions.push(this.productSubscription); // Ensure to add subscription to the array for unsubscription
-    }    
+    //   this.subscriptions.push(this.productSubscription); // Ensure to add subscription to the array for unsubscription
+    // }    
     
 
     onDropdownChange(value: string | null): void {
