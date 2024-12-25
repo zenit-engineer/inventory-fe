@@ -75,7 +75,6 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
 
   onDropdownChange($event: any) {
     // this.table.clear();
-    this.selectedCategory = $event.value;
     this.selectCategory.emit($event.value); // Emit null when the dropdown is cleared
   }
   
