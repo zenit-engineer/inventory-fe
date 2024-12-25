@@ -36,7 +36,10 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     price: ["", Validators.required],
     description: ["", Validators.required],
     category: ["", Validators.required],
-    image: ["", Validators.required]
+    image: ["", Validators.required],
+    manufacturer: ["", Validators.required],
+    supplier: ["", Validators.required],
+    weight: ["", Validators.required]
   })
 
   constructor(
@@ -74,7 +77,10 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
       description: this.productForm.value.description ?? '',  // Fallback to an empty string if null or undefined
       category: this.productForm.value.category ?? '',  // Fallback to an empty string if null or undefined
       image: this.productForm.value.image ?? '',  // Fallback to an empty string if null or undefined
-      rating: this.selectedProduct?.rating ?? 0 // Fallback to 0 if rating is undefined
+      rating: this.selectedProduct?.rating ?? 0, // Fallback to 0 if rating is undefined
+      manufacturer: this.productForm.value.manufacturer ?? '',  // Fallback to an empty string if null or undefined
+      supplier: this.productForm.value.supplier ?? '',  // Fallback to an empty string if null or undefined
+      weight: this.productForm.value.weight ?? ''
     };
     
     // Check if it's an update or add operation

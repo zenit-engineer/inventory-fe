@@ -59,6 +59,42 @@
     <textarea pInputTextarea formControlName="description"></textarea>
   </div>
   <div class="field">
+    <label class="block" for="manufacturer">Manufacturer</label>
+    <input type="text" pInputText id="manufacturer" formControlName="manufacturer" />
+    <small
+      class="p-error block"
+      *ngIf="
+        productForm.controls['manufacturer'].invalid &&
+        productForm.controls['manufacturer'].dirty
+      "
+      >Field is required</small
+    >
+  </div>
+  <div class="field">
+    <label class="block" for="supplier">Supplier</label>
+    <input type="text" pInputText id="supplier" formControlName="supplier" />
+    <small
+      class="p-error block"
+      *ngIf="
+        productForm.controls['supplier'].invalid &&
+        productForm.controls['supplier'].dirty
+      "
+      >Field is required</small
+    >
+  </div>
+  <div class="field">
+    <label class="block" for="weight">Weight</label>
+    <input type="text" pInputText id="weight" formControlName="weight" />
+    <small
+      class="p-error block"
+      *ngIf="
+        productForm.controls['weight'].invalid &&
+        productForm.controls['weight'].dirty
+      "
+      >Field is required</small
+    >
+  </div>
+  <div class="field">
     <label class="block" for="image">Image</label>
       <p-toast />
       <p-fileUpload

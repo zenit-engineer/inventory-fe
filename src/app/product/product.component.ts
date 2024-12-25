@@ -111,7 +111,7 @@ export class ProductComponent implements OnDestroy {
   getProductsByCategory(category: string | null){
     if(category === null || category === undefined){
       this.productTable.clear();
-    }else{
+    } else{
       this.productSubscription = this.productService.getProductsByCategory(category).pipe(
         map(response => response.data),
         catchError(error => {

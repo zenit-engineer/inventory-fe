@@ -1,9 +1,31 @@
 /* Selects and styles all even-numbered table rows */
 .parent-row:nth-child(even) {
-    background-color:white; /* Light grey */
+    background-color: white;
+    /* Light grey */
 }
 
 /* Selects and styles all odd-numbered table rows */
 .parent-row:nth-child(odd) {
-    background-color:rgb(221, 226, 231); /* White */
+    background-color: rgb(221, 226, 231);
+    /* White */
 }
+
+/* Ensure cells are of equal size */
+p-table th,
+p-table td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Header row styling */
+p-table th {
+    background-color: #f7f7f7;
+    border-bottom: 2px solid #ccc;
+    font-weight: bold;
+}
+
+/* Optional: Add hover effects */
+//   .parent-row:hover {
+//     background-color: #9b6d6d;
+//   }

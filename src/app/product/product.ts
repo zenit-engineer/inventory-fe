@@ -6,6 +6,9 @@ export interface Product {
     category: string;
     image: string;
     rating: RatingProps;
+    manufacturer: string;
+    supplier: string;
+    weight: string;
 }
 
 interface RatingProps{
