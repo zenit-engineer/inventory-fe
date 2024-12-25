@@ -74,16 +74,10 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     
 
   onDropdownChange($event: any) {
-    // this.table.clear();
     this.selectCategory.emit($event.value); // Emit null when the dropdown is cleared
   }
   
   searchProducts(searchedText: string) {
-    // this.table.clear(); // Clears filters on the p-table
-    this.request = {
-      ...this.request,
-      first: 0,
-    }
     this.searchChanged.emit(searchedText);
   }
   
