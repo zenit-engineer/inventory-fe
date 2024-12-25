@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from './product.service';
 import { Product } from './product';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
+import { ProductRequest } from '../interfaces/product-request';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.sass']
+  styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnDestroy {
 
@@ -20,9 +21,14 @@ export class ProductComponent implements OnDestroy {
   productSubscription: Subscription = new Subscription();
   totalProducts: number = 0;
 
-  request = {
+  isSortingApplied: boolean = false; // Initial state
+  @ViewChild('productTable') productTable!: Table; // Reference to the p-table
+
+  request: ProductRequest = {
     first: 0,
-    rows: 10
+    rows: 10,
+    sortField: '',
+    sortOrder: 1
   }
 
   constructor(
@@ -103,6 +109,7 @@ export class ProductComponent implements OnDestroy {
   }  
   
   getProductsByCategory(category: string | null){
+    console.log(category);
     this.productSubscription = this.productService.getProductsByCategory(category).pipe(
       map(response => response.data),
       catchError(error => {
@@ -158,16 +165,65 @@ export class ProductComponent implements OnDestroy {
   }
   
   loadProducts($event: TableLazyLoadEvent) {
-    // Log the event to check the pagination details
-    console.log($event);
     
     // Dynamically set the `first` and `rows` properties from the lazy load event
+    this.request.sortField = $event.sortField || '';
+    this.request.sortOrder = $event.sortOrder || 1;
     this.request.first = $event.first || 0; // The starting index for the page
     this.request.rows = $event.rows || 10;  // Number of rows per page
   
+    // Check if sorting is applied
+    this.isSortingApplied = !!$event.sortField;
+
     // Fetch products based on the updated pagination request
     this.getAllProducts();
   }
+
+  resetSorting() {
+    this.request.sortField = ''; // Clear the sort field
+    this.request.sortOrder = 1; // Reset to ascending or default
+    this.request.first = 0; // Reset pagination to the first page
+  
+    this.isSortingApplied = false; // Indicate no sorting is applied
+    
+    if (this.productTable) {
+      this.productTable.clear();
+    }
+
+    this.getAllProducts();
+  }  
+
+  searchProduct(searchText: string | null) {
+    if(searchText == null){
+      console.log(searchText);
+    }
+    this.productSubscription = this.productService.searchProduct(searchText).pipe(
+      map(response => response.data),
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load products.'
+        });
+        return []; // Return an empty array in case of error to prevent breaking the flow
+      })
+    ).subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (error) => {
+        console.error('Error during product fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while fetching products.'
+        });
+      }
+    });
+  
+    this.subscriptions.push(this.productSubscription); // Ensure to add subscription to the array for unsubscription
+  }    
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

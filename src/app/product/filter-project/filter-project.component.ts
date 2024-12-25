@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ProductService } from '../product.service';
 import { catchError, map, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { Product } from '../product';
+import { ProductRequest } from 'src/app/interfaces/product-request';
 
 @Component({
   selector: 'app-filter-project',
@@ -13,11 +14,14 @@ import { Product } from '../product';
 export class FilterProjectComponent implements OnInit, OnDestroy{
 
   products: Product[] = [];
-  request = {
-    first: 1,
-    rows: 10
+  
+  globalFilter = '';
+  request: ProductRequest = {
+    first: 0,
+    rows: 10,
+    sortField: '',
+    sortOrder: 1
   }
-
   selectedCategory: string | null = null;
   categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
@@ -25,8 +29,8 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   subscriptions: Subscription[] = [];
   productSubscription: Subscription = new Subscription();
  
-  @ViewChild('search') searchInput!: ElementRef;
-  @ViewChild(Table) dt1!: Table;
+  @Input() table!: Table;
+  @Output() searchChanged: EventEmitter<string| null> = new EventEmitter<string | null>();;
 
   constructor(private productService: ProductService,
     private messageService: MessageService
@@ -40,84 +44,50 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     return this.categories;
   }
 
-  searchProduct(){
-    console.log('test');
+  getAllProducts() {
+    this.productSubscription = this.productService.getAllProducts(this.request).pipe(
+      map(response => response.data.products),  // Extract the products array from the response
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load products.'
+        });
+        return []; // Return an empty array in case of error to prevent breaking the flow
+      })
+    ).subscribe({
+      next: (products) => {
+        this.products = products;  // Assign the products array to the component's products property
+      },
+      error: (error) => {
+        console.error('Error during product fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while fetching products.'
+        });
+      }
+    });
+    this.subscriptions.push(this.productSubscription);
+  }  
+    
+
+  onDropdownChange($event: any) {
+    // this.table.clear();
+    this.selectedCategory = $event.value;
+    this.selectCategory.emit($event.value); // Emit null when the dropdown is cleared
   }
-
-  // clearSearch() {
-  //   if (this.searchInput) {
-  //     this.searchInput.nativeElement.value = '';
-  //   }
-  //   if (this.dt1) {
-  //     this.dt1.filterGlobal('', 'contains');
-  //   }
-  //   this.getAllProducts();
-  // }
-
-  //  getAllProducts() {
-  //     this.productSubscription = this.productService.getAllProducts(this.request).pipe(
-  //       map(response => response.data),
-  //       catchError(error => {
-  //         console.error('Error fetching products:', error);
-  //         this.messageService.add({
-  //           severity: 'error',
-  //           summary: 'Error',
-  //           detail: 'Failed to load products.'
-  //         });
-  //         return []; // Return an empty array in case of error to prevent breaking the flow
-  //       })
-  //     ).subscribe({
-  //       next: (products) => {
-  //         this.products = products;
-  //       },
-  //       error: (error) => {
-  //         console.error('Error during product fetch:', error);
-  //         this.messageService.add({
-  //           severity: 'error',
-  //           summary: 'Error',
-  //           detail: error.message || 'Error occurred while fetching products.'
-  //         });
-  //       }
-  //     });
-    
-  //     this.subscriptions.push(this.productSubscription);
-  //   }
-
-    // searchPatient(category: string) {
-    //   this.productSubscription = this.productService.searchProduct(category).pipe(
-    //     map(response => response.data),
-    //     catchError(error => {
-    //       console.error('Error fetching products:', error);
-    //       this.messageService.add({
-    //         severity: 'error',
-    //         summary: 'Error',
-    //         detail: 'Failed to load products.'
-    //       });
-    //       return []; // Return an empty array in case of error to prevent breaking the flow
-    //     })
-    //   ).subscribe({
-    //     next: (products) => {
-    //       this.products = products;
-    //     },
-    //     error: (error) => {
-    //       console.error('Error during product fetch:', error);
-    //       this.messageService.add({
-    //         severity: 'error',
-    //         summary: 'Error',
-    //         detail: error.message || 'Error occurred while fetching products.'
-    //       });
-    //     }
-    //   });
-    
-    //   this.subscriptions.push(this.productSubscription); // Ensure to add subscription to the array for unsubscription
-    // }    
-    
-
-    onDropdownChange(value: string | null): void {
-      this.selectedCategory = value;
-      this.selectCategory.emit(value); // Emit null when the dropdown is cleared
-    }    
-
+  
+  searchProducts(searchedText: string) {
+    // this.table.clear(); // Clears filters on the p-table
+    this.request = {
+      ...this.request,
+      first: 0,
+    }
+    this.searchChanged.emit(searchedText);
+  }
+  
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

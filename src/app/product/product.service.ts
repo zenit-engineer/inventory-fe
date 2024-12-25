@@ -18,13 +18,17 @@ export class ProductService {
 
   getAllProducts(request: ProductRequest): Observable<PaginationApiResponse>{
 
-    const { first, rows} = request;
+    const { first, rows, sortField, sortOrder} = request;
 
     const page = (first / rows) + 1;
 
-    const pageDetails = `page=${page}&limit=${rows}`
+    let params = `page=${page}&limit=${rows}`
 
-    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all?${pageDetails}`);
+    if(sortField){
+      params += `&sort=${sortField}&order=${sortOrder ===1 ? 'asc' : 'desc'}`;
+    }
+
+    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all?${params}`);
   }
 
   deleteProduct(productId: number): Observable<ApiResponse>{
@@ -39,8 +43,9 @@ export class ProductService {
     return this.http.post<ApiResponse>(`${this.baseUrl}/api/v1/product`, product);
   }
 
-  searchProduct(category: string): Observable<ApiResponse>{
-    return this.http.get<ApiResponse>(`${this.baseUrl}/api/v1/product/category/${category}`);
+  searchProduct(searchText: string | null): Observable<ApiResponse>{
+    const params = new HttpParams().set('searchText', searchText || '');
+    return this.http.get<ApiResponse>(`${this.baseUrl}/api/v1/product/search`, {params});
   }
 
   getCategories(): Observable<string[]>{

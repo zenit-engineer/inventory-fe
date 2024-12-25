@@ -1,19 +1,18 @@
-<div style="display: flex; flex-direction: row; gap: 10px;">
-
+<div class="flex align-items-center justify-content-between">
   <p-dropdown
     [options]="categories"
     [(ngModel)]="selectedCategory"
     placeholder="Select Category"
     [showClear]="true"
-    (ngModelChange)="onDropdownChange($event)">
+    (onChange)="onDropdownChange($event)">
   ></p-dropdown>
+  <div class="flex flex-column gap-2">
+    <input 
+        pInputText
+        type="text" 
+        (ngModelChange)="searchProducts($event)" 
+        placeholder="Search Product"
+        [(ngModel)]="globalFilter" />
+  </div>
 </div>
-<!-- <div class="flex"> -->
-  <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-    (click)="clearSearch()"></button> -->
-    <!-- <span class="p-input-icon-left ml-auto">
-      <i class="pi pi-search"></i>
-      <input #search pInputText type="text"
-              (input)="searchPatient(search.value)" placeholder="Search keyword" style="margin-right: 30px"/>
-    </span> -->
-<!-- </div> -->
+  

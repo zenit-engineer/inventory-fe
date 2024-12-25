@@ -3,6 +3,7 @@
   <p-button label="Add Product" (onClick)="showAddModal()" />
 </div>
 <p-table 
+#productTable 
 [value]="products" 
 [scrollable]="true" 
 scrollHeight="70vh" 
@@ -12,27 +13,32 @@ scrollHeight="70vh"
 [lazy]="true"
 (onLazyLoad)="loadProducts($event)"
 [totalRecords]="totalProducts"
+(sortFunction)="loadProducts($event)"
 >
   <ng-template pTemplate="caption">
     <app-filter-project
-      (selectCategory)="getProductsByCategory($event)">
+      (selectCategory)="getProductsByCategory($event)"
+      (searchChanged)="searchProduct($event)"
+      [table]="productTable">
     </app-filter-project>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th>Title</th>
+      <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
       <th>Price</th>
       <th>Category</th>
       <th>Image</th>
       <th>Rating</th>
-      <th></th>
+      <th>
+        <p-button label="Reset Sorting" (onClick)="resetSorting()" class="p-button-secondary" [disabled]="!isSortingApplied"></p-button>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
-    <tr>
+    <tr class="parent-row">
       <td>{{ product.title }}</td>
-      <td>{{ product.price }} €</td>
+      <td>{{ product.price }}</td>
       <td>{{ product.category }}</td>
       <td>
         <img [src]="'data:image/jpeg;base64,' + product.image" height="30px" />

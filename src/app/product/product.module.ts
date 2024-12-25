@@ -11,14 +11,13 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { FilterProjectComponent } from './filter-project/filter-project.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { FilterProjectModule } from './filter-project/filter-project.module';
 
 @NgModule({
   declarations: [
-    ProductComponent,
-    FilterProjectComponent
+    ProductComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     ToastModule,
     ConfirmDialogModule,
     DropdownModule,
-    FormsModule  
+    FormsModule,
+    FilterProjectModule  
   ],
   exports: [
     ProductComponent
