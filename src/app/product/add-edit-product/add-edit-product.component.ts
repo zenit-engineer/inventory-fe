@@ -174,7 +174,6 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
       reader.readAsDataURL(file); // Read the file as a Data URL
     }
   }
-  
 
   onChangeCategory($event: any){
     this.selectCategory.emit($event.value);
@@ -187,6 +186,10 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  onImageRemove(){
+    this.productForm.patchValue({ image: null }); // Reset the image form control to null
   }
 
 }

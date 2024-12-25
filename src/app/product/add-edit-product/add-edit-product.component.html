@@ -67,6 +67,7 @@
         accept="image/*"
         [maxFileSize]="1000000"
         (onSelect)="onImageUpload($event)"
+        (onRemove)="onImageRemove()"
         chooseLabel="Upload Image"
       ></p-fileUpload>
   </div>
