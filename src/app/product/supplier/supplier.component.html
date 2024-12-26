@@ -1,0 +1,18 @@
+<div class="suppliers">
+  <p-button class="add-supplier" label="Add Supplier" />
+    <p-table [value]="suppliers" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="supplier">
+            Supplier <p-sortIcon field="supplier"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-supplier>
+        <tr>
+          <td>{{ supplier }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

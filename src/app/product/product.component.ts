@@ -148,8 +148,15 @@ export class ProductComponent implements OnDestroy {
     // Update the corresponding request field based on filter type
     if (filterType === 'category') {
       this.request.category = value; // Update category filter
-    } else if (filterType === 'search') {
+    } 
+    if (filterType === 'search') {
       this.request.searchText = value; // Update search text
+    }
+    if (filterType === 'manufacturer') {
+      this.request.manufacturer = value; // Update search text
+    } 
+    if (filterType === 'supplier') {
+      this.request.supplier = value; // Update search text
     }  
   
     // Reset pagination to the first page when a filter changes

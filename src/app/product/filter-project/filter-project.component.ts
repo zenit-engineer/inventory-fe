@@ -27,8 +27,15 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     searchText: ''
   }
   selectedCategory: string | null = null;
+  selectedSupplier: string | null = null;
+  selectedManufacturer: string | null = null;
   categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
+  suppliers:string[] = ['Apple','Ali Baba','Amazon','Ali Express','Microsoft'];
+  manufacturers:string[] = ['Adidas', 'Puma', 'Nike', 'La Coste'];
+
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
+  @Output() selectSupplier: EventEmitter<string | null> = new EventEmitter<string | null>();
+  @Output() selectManufacturer: EventEmitter<string | null> = new EventEmitter<string | null>();
   
   subscriptions: Subscription[] = [];
   productSubscription: Subscription = new Subscription();
@@ -77,10 +84,20 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   }  
     
 
-  onDropdownChange($event: any) {
+  onCategoryChange($event: any) {
     this.selectCategory.emit($event.value || null); // Emit null when the dropdown is cleared
   }
+
+  onManufacturerChange($event: any) {
+    this.selectManufacturer.emit($event.value || null); // Emit null when the dropdown is cleared
+  }
+
+  onSupplierChange($event: any) {
+    this.selectSupplier.emit($event.value || null); // Emit null when the dropdown is cleared
+  }
+
   
+
   searchProducts(searchedText: string) {
     this.searchChanged.emit(searchedText.trim());
   }

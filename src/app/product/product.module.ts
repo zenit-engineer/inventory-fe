@@ -14,10 +14,14 @@ import { ConfirmationService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { FilterProjectModule } from './filter-project/filter-project.module';
+import { ManufacturerComponent } from './manufacturer/manufacturer.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    ManufacturerComponent,
+    SupplierComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +35,7 @@ import { FilterProjectModule } from './filter-project/filter-project.module';
     ConfirmDialogModule,
     DropdownModule,
     FormsModule,
-    FilterProjectModule  
+    FilterProjectModule,
   ],
   exports: [
     ProductComponent

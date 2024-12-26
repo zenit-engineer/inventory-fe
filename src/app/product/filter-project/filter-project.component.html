@@ -1,12 +1,29 @@
-<div class="flex align-items-center justify-content-between">
+<div class="flex align-items-center gap-3">
   <p-dropdown
     [options]="categories"
     [(ngModel)]="selectedCategory"
     placeholder="Select Category"
     [showClear]="true"
-    (onChange)="onDropdownChange($event)">
-  ></p-dropdown>
-  <div class="flex flex-column gap-2">
+    (onChange)="onCategoryChange($event)">
+  </p-dropdown>
+
+  <p-dropdown
+    [options]="manufacturers"
+    [(ngModel)]="selectedManufacturer"
+    placeholder="Select Manufacturer"
+    [showClear]="true"
+    (onChange)="onManufacturerChange($event)">
+  </p-dropdown>
+
+  <p-dropdown
+    [options]="suppliers"
+    [(ngModel)]="selectedSupplier"
+    placeholder="Select Supplier"
+    [showClear]="true"
+    (onChange)="onSupplierChange($event)">
+  </p-dropdown>
+
+  <div class="ml-auto">
     <input 
         pInputText
         type="text" 
@@ -15,4 +32,3 @@
         [(ngModel)]="globalFilter" />
   </div>
 </div>
-  

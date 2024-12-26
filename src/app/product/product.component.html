@@ -18,6 +18,8 @@ scrollHeight="70vh"
   <ng-template pTemplate="caption">
     <app-filter-project
       (selectCategory)="onFilterChange('category', $event)"
+      (selectSupplier)="onFilterChange('supplier', $event)"
+      (selectManufacturer)="onFilterChange('manufacturer', $event)"
       (searchChanged)="onFilterChange('search', $event)"
       [table]="productTable">
     </app-filter-project>
@@ -84,3 +86,8 @@ scrollHeight="70vh"
   header="Delete"
 ></p-confirmDialog>
 <p-toast position="bottom-left"/>
+
+<div class="table-container">
+  <app-manufacturer></app-manufacturer>
+  <app-supplier></app-supplier>
+</div>

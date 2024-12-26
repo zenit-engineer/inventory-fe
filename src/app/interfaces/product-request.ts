@@ -4,7 +4,7 @@ export interface ProductRequest {
     sortField: string | string[],
     sortOrder: number,
     category: string | null, 
-    supplier: string, 
-    manufacturer: string, 
+    supplier: string | null, 
+    manufacturer: string | null, 
     searchText: string | null
 }
