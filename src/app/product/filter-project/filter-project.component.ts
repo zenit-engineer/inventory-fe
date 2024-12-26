@@ -20,7 +20,11 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     first: 0,
     rows: 10,
     sortField: '',
-    sortOrder: 1
+    sortOrder: 1,
+    category: '', 
+    supplier: '', 
+    manufacturer: '', 
+    searchText: ''
   }
   selectedCategory: string | null = null;
   categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
@@ -74,11 +78,11 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     
 
   onDropdownChange($event: any) {
-    this.selectCategory.emit($event.value); // Emit null when the dropdown is cleared
+    this.selectCategory.emit($event.value || null); // Emit null when the dropdown is cleared
   }
   
   searchProducts(searchedText: string) {
-    this.searchChanged.emit(searchedText);
+    this.searchChanged.emit(searchedText.trim());
   }
   
   ngOnDestroy(): void {

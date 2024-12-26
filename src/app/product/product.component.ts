@@ -28,7 +28,11 @@ export class ProductComponent implements OnDestroy {
     first: 0,
     rows: 10,
     sortField: '',
-    sortOrder: 1
+    sortOrder: 1,
+    category: '' , 
+    supplier: '', 
+    manufacturer: '', 
+    searchText: '' 
   }
 
   constructor(
@@ -139,8 +143,24 @@ export class ProductComponent implements OnDestroy {
       this.subscriptions.push(this.productSubscription);
     }    
   }
+
+  onFilterChange(filterType: string, value: string | null) {
+    // Update the corresponding request field based on filter type
+    if (filterType === 'category') {
+      this.request.category = value; // Update category filter
+    } else if (filterType === 'search') {
+      this.request.searchText = value; // Update search text
+    }  
+  
+    // Reset pagination to the first page when a filter changes
+    this.request.first = 0;
+  
+    // Fetch products with the updated filters
+    this.getAllProducts();
+  }
   
   getAllProducts() {
+
     this.productSubscription = this.productService.getAllProducts(this.request).pipe(
       map(response => {
         const responseData = response.data;

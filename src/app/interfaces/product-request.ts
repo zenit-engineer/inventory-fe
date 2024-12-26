@@ -3,4 +3,8 @@ export interface ProductRequest {
     rows: number,
     sortField: string | string[],
     sortOrder: number,
+    category: string | null, 
+    supplier: string, 
+    manufacturer: string, 
+    searchText: string | null
 }

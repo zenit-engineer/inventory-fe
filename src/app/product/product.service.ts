@@ -18,7 +18,7 @@ export class ProductService {
 
   getAllProducts(request: ProductRequest): Observable<PaginationApiResponse>{
 
-    const { first, rows, sortField, sortOrder} = request;
+    const { first, rows, sortField, sortOrder, category, supplier, manufacturer, searchText} = request;
 
     const page = (first / rows) + 1;
 
@@ -28,7 +28,23 @@ export class ProductService {
       params += `&sort=${sortField}&order=${sortOrder ===1 ? 'asc' : 'desc'}`;
     }
 
-    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all?${params}`);
+    if(category){
+      params += `&category=${category}`;
+    }
+
+    if(supplier){
+      params += `&supplier=${supplier}`;
+    }
+
+    if(manufacturer){
+      params += `&manufacturer=${manufacturer}`;
+    }
+
+    if(searchText){
+      params += `&searchText=${searchText}`;
+    }
+
+    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all-test?${params}`);
   }
 
   deleteProduct(productId: number): Observable<ApiResponse>{

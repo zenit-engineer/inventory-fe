@@ -17,10 +17,11 @@ scrollHeight="70vh"
 >
   <ng-template pTemplate="caption">
     <app-filter-project
-      (selectCategory)="getProductsByCategory($event)"
-      (searchChanged)="searchProduct($event)"
+      (selectCategory)="onFilterChange('category', $event)"
+      (searchChanged)="onFilterChange('search', $event)"
       [table]="productTable">
     </app-filter-project>
+
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
