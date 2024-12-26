@@ -6,11 +6,6 @@ import { Product } from '../product';
 import { catchError, Subscription } from 'rxjs';
 import { FileUploadEvent } from 'primeng/fileupload';
 
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
-}
-
 @Component({
   selector: 'app-add-edit-product',
   templateUrl: './add-edit-product.component.html',
@@ -179,6 +174,10 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     if (file) {
       reader.readAsDataURL(file); // Read the file as a Data URL
     }
+  }
+
+  onUpload(event: FileUploadEvent) {
+    console.log(event);
   }
 
   onChangeCategory($event: any){
