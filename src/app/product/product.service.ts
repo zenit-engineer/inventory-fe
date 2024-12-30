@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Product } from './product';
 import { ProductRequest } from '../interfaces/product-request';
 import { PaginationApiResponse } from '../interfaces/pagination-api-response';
+import { ApiResponseWithDataListOfStrings } from '../interfaces/api-response-with-data-list-of-strings';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class ProductService {
       params += `&searchText=${searchText}`;
     }
 
-    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all-test?${params}`);
+    return this.http.get<PaginationApiResponse>(`${this.baseUrl}/api/v1/product/all?${params}`);
   }
 
   deleteProduct(productId: number): Observable<ApiResponse>{
@@ -59,19 +60,16 @@ export class ProductService {
     return this.http.post<ApiResponse>(`${this.baseUrl}/api/v1/product`, product);
   }
 
-  searchProduct(searchText: string | null): Observable<ApiResponse>{
-    const params = new HttpParams().set('searchText', searchText || '');
-    return this.http.get<ApiResponse>(`${this.baseUrl}/api/v1/product/search`, {params});
+  getAllCategories(): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.get<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/category/all`);
   }
 
-  getCategories(): Observable<string[]>{
-    return this.http.get<string[]>(`https://fakestoreapi.com/products/categories`);
+  getAllSuppliers(): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.get<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/supplier/all`);
   }
 
-  getProductsByCategory(category: string | null): Observable<ApiResponse> {
-    const params = new HttpParams().set('category', category || '');
-    return this.http.get<ApiResponse>(`${this.baseUrl}/api/v1/product/by-category`, { params });
+  getAllManufacturers(): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.get<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/manufacturer/all`);
   }
   
-
 }

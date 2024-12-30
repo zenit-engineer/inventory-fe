@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { Product } from '../product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
+import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 
 @Component({
   selector: 'app-filter-project',
@@ -29,9 +30,9 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   selectedCategory: string | null = null;
   selectedSupplier: string | null = null;
   selectedManufacturer: string | null = null;
-  categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
-  suppliers:string[] = ['Apple','Ali Baba','Amazon','Ali Express','Microsoft'];
-  manufacturers:string[] = ['Adidas', 'Puma', 'Nike', 'La Coste'];
+  categories:string[] = [];
+  suppliers:string[] = [];
+  manufacturers:string[] = [];
 
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
   @Output() selectSupplier: EventEmitter<string | null> = new EventEmitter<string | null>();
@@ -48,42 +49,104 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   ){}
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getAllCategories();
+    this.getAllManufacturers();
+    this.getAllSuppliers();
   }
 
-  getCategories(){
-    return this.categories;
-  }
-
-  getAllProducts() {
-    this.productSubscription = this.productService.getAllProducts(this.request).pipe(
-      map(response => response.data.products),  // Extract the products array from the response
+  getAllCategories(): void {
+    this.productSubscription = this.productService.getAllCategories().pipe(
+      map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
       catchError(error => {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching categories:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Failed to load products.'
+          detail: 'Failed to load categories.'
         });
-        return []; // Return an empty array in case of error to prevent breaking the flow
+        return []; // Return an empty array in case of error
       })
     ).subscribe({
-      next: (products) => {
-        this.products = products;  // Assign the products array to the component's products property
+      next: (categoriesNames: string[]) => {
+        this.categories = categoriesNames; // Assign the string array to `manufacturers`
+        localStorage.setItem('categories', JSON.stringify(this.categories));
       },
       error: (error) => {
-        console.error('Error during product fetch:', error);
+        console.error('Error during category fetch:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: error.message || 'Error occurred while fetching products.'
+          detail: error.message || 'Error occurred while fetching categories.'
         });
       }
     });
-    this.subscriptions.push(this.productSubscription);
-  }  
     
-
+    // Add the subscription to the subscriptions array for proper management
+    this.subscriptions.push(this.productSubscription);
+  }
+  
+  getAllManufacturers(): void {
+    this.productSubscription = this.productService.getAllManufacturers().pipe(
+      map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
+      catchError(error => {
+        console.error('Error fetching manufacturers:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load manufacturers.'
+        });
+        return []; // Return an empty array in case of error
+      })
+    ).subscribe({
+      next: (manufacturerNames: string[]) => {
+        this.manufacturers = manufacturerNames; // Assign the string array to `manufacturers`
+        localStorage.setItem('manufacturers', JSON.stringify(this.manufacturers));
+      },
+      error: (error) => {
+        console.error('Error during manufacturer fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while fetching manufacturers.'
+        });
+      }
+    });
+  
+    // Add the subscription to the subscriptions array for proper management
+    this.subscriptions.push(this.productSubscription);
+  }
+  
+  getAllSuppliers(): void {
+    this.productSubscription = this.productService.getAllSuppliers().pipe(
+      map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
+      catchError(error => {
+        console.error('Error fetching suppliers:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load suppliers.'
+        });
+        return []; // Return an empty array in case of error
+      })
+    ).subscribe({
+      next: (supplierNames: string[]) => {
+        this.suppliers = supplierNames; // Assign the string array to `manufacturers`
+        localStorage.setItem('suppliers', JSON.stringify(this.suppliers));
+      },
+      error: (error) => {
+        console.error('Error during supplier fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while fetching suppliers.'
+        });
+      }
+    });
+  
+    // Add the subscription to the subscriptions array for proper management
+    this.subscriptions.push(this.productSubscription);
+  }
+    
   onCategoryChange($event: any) {
     this.selectCategory.emit($event.value || null); // Emit null when the dropdown is cleared
   }
@@ -95,8 +158,6 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   onSupplierChange($event: any) {
     this.selectSupplier.emit($event.value || null); // Emit null when the dropdown is cleared
   }
-
-  
 
   searchProducts(searchedText: string) {
     this.searchChanged.emit(searchedText.trim());

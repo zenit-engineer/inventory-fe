@@ -3,8 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 import { MessageService } from 'primeng/api';
 import { Product } from '../product';
-import { catchError, Subscription } from 'rxjs';
+import { catchError, map, Subscription } from 'rxjs';
 import { FileUploadEvent } from 'primeng/fileupload';
+import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -23,7 +24,9 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   productSubscription: Subscription = new Subscription();
 
   selectedCategory: string | null = null;
-  categories:string[] = ['sports','electronics','cosmetics','clothings','textil','metals','colors'];
+  categories:string[] = [];
+  suppliers:string[] = [];
+  manufacturers:string[] = [];
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
 
   productForm = this.fb.group({
@@ -46,7 +49,9 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getAllCategories();
+    this.getAllManufacturers();
+    this.getAllSuppliers();
   }
 
   ngOnChanges(): void {
@@ -120,8 +125,20 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     this.subscriptions.push(this.productSubscription);
   }
   
+  getAllCategories(): void {
+    this.categories = JSON.parse(localStorage.getItem('categories') || '[]');
+  }
+  
+  getAllManufacturers(): void {
+    this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
+  }
+  
+  getAllSuppliers(): void {
+    this.suppliers = JSON.parse(localStorage.getItem('suppliers') || '[]');
+  }
   
   addProduct(productData: Product): void {
+    console.log(productData);
     this.productSubscription = this.productService.addProduct(productData).pipe(
       catchError(error => {
         console.error('Error adding product:', error);
@@ -153,11 +170,6 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     });
   
     this.subscriptions.push(this.productSubscription);
-  }
-  
-  
-  getCategories(): void {
-    this.categories;
   }
   
   onImageUpload(event: any) {

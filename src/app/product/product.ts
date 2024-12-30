@@ -5,13 +5,8 @@ export interface Product {
     description: string;
     category: string;
     image: string;
-    rating: RatingProps;
+    rating: number;
     manufacturer: string;
     supplier: string;
     weight: string;
-}
-
-interface RatingProps{
-    rate: number;
-    count:number;
 }

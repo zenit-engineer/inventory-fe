@@ -111,38 +111,6 @@ export class ProductComponent implements OnDestroy {
   saveProduct(): void {
     this.getAllProducts();
   }  
-  
-  getProductsByCategory(category: string | null){
-    if(category === null || category === undefined){
-      this.productTable.clear();
-    } else{
-      this.productSubscription = this.productService.getProductsByCategory(category).pipe(
-        map(response => response.data),
-        catchError(error => {
-          console.error('Error fetching products:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load products.'
-          });
-          return []; // Return an empty array in case of error to prevent breaking the flow
-        })
-      ).subscribe({
-        next: (products) => {
-          this.products = products;
-        },
-        error: (error) => {
-          console.error('Error during product fetch:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.message || 'Error occurred while fetching products.'
-          });
-        }
-      });
-      this.subscriptions.push(this.productSubscription);
-    }    
-  }
 
   onFilterChange(filterType: string, value: string | null) {
     // Update the corresponding request field based on filter type
@@ -223,38 +191,6 @@ export class ProductComponent implements OnDestroy {
 
     this.getAllProducts();
   }  
-
-  searchProduct(searchText: string | null) {
-    if(searchText === null || searchText === undefined){
-      this.productTable.clear();
-    }
-    this.productSubscription = this.productService.searchProduct(searchText).pipe(
-      map(response => response.data),
-      catchError(error => {
-        console.error('Error fetching products:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to load products.'
-        });
-        return []; // Return an empty array in case of error to prevent breaking the flow
-      })
-    ).subscribe({
-      next: (products) => {
-        this.products = products;
-      },
-      error: (error) => {
-        console.error('Error during product fetch:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.message || 'Error occurred while fetching products.'
-        });
-      }
-    });
-  
-    this.subscriptions.push(this.productSubscription); // Ensure to add subscription to the array for unsubscription
-  }    
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

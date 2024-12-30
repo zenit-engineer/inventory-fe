@@ -60,27 +60,37 @@
   </div>
   <div class="field">
     <label class="block" for="manufacturer">Manufacturer</label>
-    <input type="text" pInputText id="manufacturer" formControlName="manufacturer" />
-    <small
-      class="p-error block"
-      *ngIf="
-        productForm.controls['manufacturer'].invalid &&
-        productForm.controls['manufacturer'].dirty
-      "
-      >Field is required</small
-    >
+    <p-dropdown
+    [options]="manufacturers"
+    formControlName="manufacturer"
+    placeholder="Select Manufacturer"
+    [showClear]="true"
+  ></p-dropdown>
+  <small
+    class="p-error block"
+    *ngIf="
+      productForm.controls['manufacturer'].invalid &&
+      productForm.controls['manufacturer'].dirty
+    "
+    >Field is required</small
+  >
   </div>
   <div class="field">
     <label class="block" for="supplier">Supplier</label>
-    <input type="text" pInputText id="supplier" formControlName="supplier" />
-    <small
-      class="p-error block"
-      *ngIf="
-        productForm.controls['supplier'].invalid &&
-        productForm.controls['supplier'].dirty
-      "
-      >Field is required</small
-    >
+    <p-dropdown
+    [options]="suppliers"
+    formControlName="supplier"
+    placeholder="Select Supplier"
+    [showClear]="true"
+  ></p-dropdown>
+  <small
+    class="p-error block"
+    *ngIf="
+      productForm.controls['supplier'].invalid &&
+      productForm.controls['supplier'].dirty
+    "
+    >Field is required</small
+  >
   </div>
   <div class="field">
     <label class="block" for="weight">Weight</label>
@@ -97,19 +107,15 @@
   <div class="field">
     <label class="block" for="image">Image</label>
       <p-toast />
-      <p-fileUpload 
-        mode="basic" 
-        chooseLabel="Choose" 
-        chooseIcon="pi pi-upload"
-        name="demo[]" 
-        url="https://www.primefaces.org/cdn/api/upload.php" 
-        accept="image/*" 
-        [maxFileSize]="1000000" 
-        (onUpload)="onUpload($event)">
-        <!-- <ng-template let-file pTemplate="file">
-          <div>{{ file.name }} {{ file.size }}</div>
-        </ng-template> -->
-      </p-fileUpload>
+      <p-fileUpload
+        mode="basic"
+        name="file"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        (onSelect)="onImageUpload($event)"
+        (onRemove)="onImageRemove()"
+        chooseLabel="Upload Image"
+      ></p-fileUpload>
   </div>
   
 </form>
@@ -118,7 +124,6 @@
     <p-button
       (click)="addEditProduct()"
       label="{{modalType}}"
-      [disabled]="productForm.invalid"
     ></p-button>
     <p-button (click)="closeModal()" label="Close" styleClass="p-button-text">
     </p-button>
