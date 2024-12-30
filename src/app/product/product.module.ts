@@ -16,12 +16,14 @@ import { FormsModule } from '@angular/forms';
 import { FilterProjectModule } from './filter-project/filter-project.module';
 import { ManufacturerComponent } from './manufacturer/manufacturer.component';
 import { SupplierComponent } from './supplier/supplier.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
     ProductComponent,
     ManufacturerComponent,
-    SupplierComponent
+    SupplierComponent,
+    CategoryComponent
   ],
   imports: [
     CommonModule,

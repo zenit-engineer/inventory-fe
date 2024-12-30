@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from '../product.service';
+import { ProductService } from '../../services/product.service';
 import { MessageService } from 'primeng/api';
-import { Product } from '../product';
+import { Product } from '../../interfaces/product';
 import { catchError, map, Subscription } from 'rxjs';
-import { FileUploadEvent } from 'primeng/fileupload';
-import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
+import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -18,6 +17,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   @Input() selectedProduct: any = null;
   @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() clickAddEdit: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
   modalType = "Add";
 
   subscriptions: Subscription[] = [];
@@ -67,7 +67,8 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   closeModal(){
     this.clickClose.emit(true);
     this.productForm.reset();
-  } 
+    this.fileUpload.clear();
+    } 
 
   addEditProduct() {
     const productData: Product = {

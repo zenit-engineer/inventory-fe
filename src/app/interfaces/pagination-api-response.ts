@@ -1,4 +1,4 @@
-import { Product } from "../product/product";
+import { Product } from "./product";
 
 export interface PaginationApiResponse {
     status: string;

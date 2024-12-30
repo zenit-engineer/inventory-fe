@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ProductService } from './product.service';
-import { Product } from './product';
+import { ProductService } from '../services/product.service';
+import { Product } from '../interfaces/product';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
@@ -154,6 +154,7 @@ export class ProductComponent implements OnDestroy {
     ).subscribe({
       next: (products) => {
         this.products = products;
+        console.log(products)
       },
       error: (error) => {
         console.error('Error during product fetch:', error);

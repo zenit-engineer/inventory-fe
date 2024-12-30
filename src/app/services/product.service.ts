@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response';
 import { environment } from 'src/environments/environment';
-import { Product } from './product';
+import { Product } from '../interfaces/product';
 import { ProductRequest } from '../interfaces/product-request';
 import { PaginationApiResponse } from '../interfaces/pagination-api-response';
 import { ApiResponseWithDataListOfStrings } from '../interfaces/api-response-with-data-list-of-strings';

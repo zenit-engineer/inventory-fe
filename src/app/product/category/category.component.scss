@@ -1,0 +1,19 @@
+.category {
+    display: inline-block;  /* Ensures the manufacturer component is inline */
+    width: 30%;             /* Set the width to 48% so that it fits alongside another component */
+    margin: 0 1%;           /* Add some space between the tables */
+    vertical-align: top;    /* Align to the top */
+    margin-top: 5%;
+  }
+  
+  /* Selects and styles all even-numbered table rows */
+  .parent-row:nth-child(even) {
+    background-color: white;
+    /* Light grey */
+  }
+  
+  /* Selects and styles all odd-numbered table rows */
+  .parent-row:nth-child(odd) {
+    background-color: rgb(221, 226, 231);
+    /* White */
+  }

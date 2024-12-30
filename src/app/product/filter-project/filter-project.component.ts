@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { ProductService } from '../product.service';
+import { ProductService } from '../../services/product.service';
 import { catchError, map, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import { Product } from '../product';
+import { Product } from '../../interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 
