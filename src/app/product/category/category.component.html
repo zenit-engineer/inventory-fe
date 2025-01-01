@@ -8,6 +8,8 @@
     [tableStyle]="{ 'min-width': '30rem' }"
     [rowsPerPageOptions]="[5, 10, 20]"
     styleClass="p-datatable-gridlines p-datatable-striped" 
+    (sortFunction)="customSort($event)" 
+    [customSort]="true"
   >      
 <ng-template pTemplate="header">
         <tr>
