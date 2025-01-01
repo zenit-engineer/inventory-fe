@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-supplier',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent implements OnInit{
+
+  @ViewChild('supplierTable') supplierTable!: Table; // Reference to the p-table
+
   ngOnInit(): void {
     this.getAllSuppliers();
   }
@@ -14,6 +18,10 @@ export class SupplierComponent implements OnInit{
 
   getAllSuppliers(): void {
     this.suppliers = JSON.parse(localStorage.getItem('suppliers') || '[]');
+  }
+
+  resetSorting(){
+    this.supplierTable.clear();
   }
 
 }

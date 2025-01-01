@@ -8,7 +8,7 @@ import { Table } from 'primeng/table';
 })
 export class CategoryComponent {
 
-  @ViewChild('manufacturerTable') manufacturerTable!: Table; // Reference to the p-table
+  @ViewChild('categoryTable') categoryTable!: Table; // Reference to the p-table
 
 
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class CategoryComponent {
   }
 
   resetSorting(){
-    this.manufacturerTable.clear();
+    this.categoryTable.clear();
   }
 
 }

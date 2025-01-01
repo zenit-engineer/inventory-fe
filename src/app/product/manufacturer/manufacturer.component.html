@@ -1,6 +1,14 @@
 <div class="manufacturer">
   <p-button label="Add Manufacturer" />
-    <p-table [rows]="5" [value]="manufacturers" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+  <p-table 
+      #manufacturerTable
+      [value]="manufacturers"
+      [paginator]="true"
+      [rows]="5"
+      [tableStyle]="{ 'min-width': '30rem' }"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      styleClass="p-datatable-gridlines p-datatable-striped" 
+    >
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="manufacturer">

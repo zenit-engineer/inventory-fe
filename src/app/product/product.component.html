@@ -14,6 +14,8 @@ scrollHeight="70vh"
 (onLazyLoad)="loadProducts($event)"
 [totalRecords]="totalProducts"
 (sortFunction)="loadProducts($event)"
+styleClass="p-datatable-gridlines p-datatable-striped" 
+
 >
   <ng-template pTemplate="caption">
     <app-filter-project
