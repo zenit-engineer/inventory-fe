@@ -1,7 +1,11 @@
-<div class="flex justify-content-between">
+<div class="flex justify-content-between align-items-center">
   <h2>Products</h2>
-  <p-button label="Add Product" (onClick)="showAddModal()" />
+  <div class="flex gap-3">
+    <p-button label="Add Product" (onClick)="showAddModal()" />
+    <p-button icon="pi pi-file-import" label="Import Products" />
+  </div>
 </div>
+
 <p-table 
 #productTable 
 [value]="products" 
@@ -62,7 +66,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         <button
           pButton
           icon="pi pi-pencil"
-          class="p-button-rounded p-button-success mr-2"
+          class="p-button-rounded"
           (click)="showEditModal(product)"
         ></button>
       </td>
