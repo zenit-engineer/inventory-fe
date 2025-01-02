@@ -1,0 +1,34 @@
+<p-dialog
+  header="{{modalType}}"
+  [(visible)]="displayAddModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="closeModal()"
+>
+<p-toast></p-toast>
+<form [formGroup]="addForm" class="add-form">
+  <div class="field">
+    <label class="block" for="name">Name</label>
+    <input type="text" pInputText id="name" formControlName="name" />
+    <small
+      class="p-error block"
+      *ngIf="
+        addForm.controls['name'].invalid &&
+        addForm.controls['name'].dirty
+      "
+      >Field is required</small
+    >
+  </div>
+</form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="addToDatabase()"
+      label="{{modalType}}"
+    ></p-button>
+    <p-button (click)="closeModal()" label="Close" styleClass="p-button-text">
+    </p-button>
+  </ng-template>
+</p-dialog>

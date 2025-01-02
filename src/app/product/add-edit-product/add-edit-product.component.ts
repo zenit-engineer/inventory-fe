@@ -68,7 +68,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     this.clickClose.emit(true);
     this.productForm.reset();
     this.fileUpload.clear();
-    } 
+  } 
 
   addEditProduct() {
     const productData: Product = {

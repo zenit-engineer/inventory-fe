@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FilterProjectComponent } from './filter-project.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { DropdownModule } from 'primeng/dropdown';
     CommonModule,
     FormsModule,
     InputTextModule,
-    DropdownModule  
+    DropdownModule,
+    ButtonModule  
   ],
   exports:[
     FilterProjectComponent

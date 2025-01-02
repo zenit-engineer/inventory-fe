@@ -7,6 +7,9 @@ import { Product } from '../interfaces/product';
 import { ProductRequest } from '../interfaces/product-request';
 import { PaginationApiResponse } from '../interfaces/pagination-api-response';
 import { ApiResponseWithDataListOfStrings } from '../interfaces/api-response-with-data-list-of-strings';
+import { Manufacturer } from '../interfaces/manufacturer';
+import { Category } from '../interfaces/category';
+import { Supplier } from '../interfaces/supplier';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +74,22 @@ export class ProductService {
   getAllManufacturers(): Observable<ApiResponseWithDataListOfStrings>{
     return this.http.get<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/manufacturer/all`);
   }
+
+  addNewManufacturer(manufacturer: Manufacturer): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.post<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/manufacturer`, manufacturer);
+  }
+
+  addNewSupplier(supplier: Supplier): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.post<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/supplier`, supplier);
+  }
+
+  addNewCategory(category: Category): Observable<ApiResponseWithDataListOfStrings>{
+    return this.http.post<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/category`, category);
+  }
+
+  generateExcel(): Observable<void> {
+    return this.http.get<void>(`${this.baseUrl}/api/v1/product/excel`, { responseType: 'text' as 'json' });
+  }
+  
   
 }

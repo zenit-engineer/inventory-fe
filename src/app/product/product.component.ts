@@ -95,7 +95,6 @@ export class ProductComponent implements OnDestroy {
     if (this.selectedProduct && productData.id === this.selectedProduct.id) {
       this.editProduct(productData);
     } else {
-
       this.saveProduct();
     }
     this.selectedProduct = null;

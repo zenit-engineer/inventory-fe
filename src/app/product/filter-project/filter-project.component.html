@@ -31,4 +31,12 @@
         placeholder="Search Product"
         [(ngModel)]="globalFilter" />
   </div>
+
+  <div style="text-align: left">
+    <p-button 
+        icon="pi pi-external-link" 
+        label="Export" 
+        (onClick)="generateExcel()"
+       />
+  </div>
 </div>

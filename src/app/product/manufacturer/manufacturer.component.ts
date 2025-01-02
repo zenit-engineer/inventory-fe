@@ -13,6 +13,8 @@ export class ManufacturerComponent implements OnInit {
   manufacturers: string[] = [];
   isSorted: boolean | null = null; // Allowing null
   initialValue: string[] = [];
+  visible: boolean = false;
+  triggeredBy = '';
 
   ngOnInit(): void {
     this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
@@ -49,10 +51,15 @@ export class ManufacturerComponent implements OnInit {
         // Provide a fallback value of 1 if event.order is undefined
         return (event.order || 1) * result; // Default to 1 if order is undefined
     });
-}
-
-
-  resetSorting(): void {
-    this.manufacturerTable.clear(); // Clears the UI state
   }
+
+  showDialog(button: string): void {
+    this.triggeredBy = button; // Save the button identifier
+    this.visible = true;
+  }
+
+  closeDialog(): void {
+    this.visible = false; // Hide the dialog
+  }
+
 }

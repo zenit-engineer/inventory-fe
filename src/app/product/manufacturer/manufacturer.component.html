@@ -1,6 +1,13 @@
 <div class="manufacturer">
-  <p-button label="Add Manufacturer" />
-  <p-table 
+  <div class="card flex justify-content-right">
+    <p-button (onClick)="showDialog('manufacturer')" label="Add Manufacturer" />
+    <app-mini-dialog-add
+    [displayAddModal]="visible"
+    [triggeredBy]="triggeredBy"
+    (clickClose)="closeDialog()"
+    ></app-mini-dialog-add>
+</div>
+<p-table 
       #manufacturerTable
       [value]="manufacturers"
       [paginator]="true"
@@ -16,11 +23,25 @@
           <th pSortableColumn="manufacturer">
             Manufacturer <p-sortIcon field="manufacturer"></p-sortIcon>
           </th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-manufacturer>
         <tr class="parent-row">
           <td>{{ manufacturer }}</td>
+          <td>
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              style="font-size: 5rem"
+            ></button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger mr-2"
+            ></button>
+          </td>            
         </tr>
       </ng-template>
     </p-table>

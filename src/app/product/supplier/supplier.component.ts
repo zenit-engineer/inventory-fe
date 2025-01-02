@@ -13,30 +13,28 @@ export class SupplierComponent implements OnInit{
   suppliers: string[] = [];
   isSorted: boolean | null = null; // Allowing null
   initialValue: string[] = [];
+  visible: boolean = false;
+  triggeredBy = '';
 
   ngOnInit(): void {
-    this.getAllSuppliers();
+    this.suppliers = JSON.parse(localStorage.getItem('categories') || '[]');
     this.initialValue = [...this.suppliers];
   }
 
 
-  getAllSuppliers(): void {
-    this.suppliers = JSON.parse(localStorage.getItem('suppliers') || '[]');
-  }
-
   customSort(event: SortEvent) {
-    if (this.isSorted == null || this.isSorted === undefined) {
-        this.isSorted = true;
-        this.sortTableData(event);
-    } else if (this.isSorted == true) {
-        this.isSorted = false;
-        this.sortTableData(event);
-    } else if (this.isSorted == false) {
-        this.isSorted = null;
-        this.suppliers = [...this.initialValue];
-        this.supplierTable.reset();
+      if (this.isSorted == null || this.isSorted === undefined) {
+          this.isSorted = true;
+          this.sortTableData(event);
+      } else if (this.isSorted == true) {
+          this.isSorted = false;
+          this.sortTableData(event);
+      } else if (this.isSorted == false) {
+          this.isSorted = null;
+          this.suppliers = [...this.initialValue];
+          this.supplierTable.reset();
+      }
     }
-  }
   
   sortTableData(event: SortEvent) {
     const data = event.data as string[]; // Cast event.data to string array
@@ -56,8 +54,13 @@ export class SupplierComponent implements OnInit{
     });
   }
 
-  resetSorting(){
-    this.supplierTable.clear();
+  showDialog(button: string): void {
+    this.triggeredBy = button; // Save the button identifier
+    this.visible = true;
+  }
+
+  closeDialog(): void {
+    this.visible = false; // Hide the dialog
   }
 
 }

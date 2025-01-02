@@ -15,7 +15,8 @@ scrollHeight="70vh"
 [totalRecords]="totalProducts"
 (sortFunction)="loadProducts($event)"
 styleClass="p-datatable-gridlines p-datatable-striped" 
-
+[paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 >
   <ng-template pTemplate="caption">
     <app-filter-project

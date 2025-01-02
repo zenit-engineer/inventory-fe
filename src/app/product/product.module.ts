@@ -17,13 +17,14 @@ import { FilterProjectModule } from './filter-project/filter-project.module';
 import { ManufacturerComponent } from './manufacturer/manufacturer.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { CategoryComponent } from './category/category.component';
+import { MiniDialogModule } from './mini-dialog-add/mini-dialog.module';
 
 @NgModule({
   declarations: [
     ProductComponent,
     ManufacturerComponent,
     SupplierComponent,
-    CategoryComponent
+    CategoryComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,8 @@ import { CategoryComponent } from './category/category.component';
     DropdownModule,
     FormsModule,
     FilterProjectModule,
-  ],
+    MiniDialogModule
+],
   exports: [
     ProductComponent
   ],

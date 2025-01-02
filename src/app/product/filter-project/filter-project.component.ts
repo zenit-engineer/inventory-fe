@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { catchError, map, Subscription } from 'rxjs';
+import { catchError, map, of, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { Product } from '../../interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-filter-project',
@@ -33,6 +34,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   categories:string[] = [];
   suppliers:string[] = [];
   manufacturers:string[] = [];
+  baseUrl: string = environment.backend_url;
 
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
   @Output() selectSupplier: EventEmitter<string | null> = new EventEmitter<string | null>();
@@ -162,6 +164,37 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   searchProducts(searchedText: string) {
     this.searchChanged.emit(searchedText.trim());
   }
+
+  generateExcel(): void {
+    this.productSubscription = this.productService.generateExcel().pipe(
+      catchError(error => {
+        console.error('Error generating Excel file:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to generate Excel file.'
+        });
+        return of(null);  // Return null to handle the error gracefully
+      })
+    ).subscribe({
+      next: () => {
+        // When the response is successful (no body expected), trigger the download
+        const url = `${this.baseUrl}/api/v1/product/excel`; // Assuming backend sends the file directly
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'products.xls'; // Name of the file to be downloaded
+        a.click();
+      },
+      error: (error) => {
+        console.error('Error during Excel file fetch:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Error occurred while generating the Excel file.'
+        });
+      }
+    });
+  }  
   
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
