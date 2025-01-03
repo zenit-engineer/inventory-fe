@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { ProductRequest } from '../interfaces/product-request';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -20,6 +21,7 @@ export class ProductComponent implements OnDestroy {
   subscriptions: Subscription[] = [];
   productSubscription: Subscription = new Subscription();
   totalProducts: number = 0;
+  selectedFile: File | null = null;
 
   isSortingApplied: boolean = false; // Initial state
   @ViewChild('productTable') productTable!: Table; // Reference to the p-table
@@ -191,6 +193,57 @@ export class ProductComponent implements OnDestroy {
 
     this.getAllProducts();
   }  
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.files[0]; // Set the selected file
+  }
+  
+  uploadFile(): void {
+    if (!this.selectedFile) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'No file selected.'
+      });
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+  
+    // Use the service method for importing Excel
+    this.productSubscription = this.productService.importExcel(formData).pipe(
+      catchError((error: HttpErrorResponse) => {
+        const errorMessage =
+          error.error?.message || 'An error occurred while uploading the file. Please try again.';
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: errorMessage
+        });
+        return []; // Gracefully handle the error
+      })
+    ).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'File uploaded successfully!'
+        });
+      },
+      error: (error) => {
+        console.error('Error during file upload:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message || 'Unexpected error occurred during upload.'
+        });
+      }
+    });
+  
+    // Add the subscription to the array for management
+    this.subscriptions.push(this.productSubscription);
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

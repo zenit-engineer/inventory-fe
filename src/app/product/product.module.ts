@@ -18,6 +18,7 @@ import { ManufacturerComponent } from './manufacturer/manufacturer.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { CategoryComponent } from './category/category.component';
 import { MiniDialogModule } from './mini-dialog-add/mini-dialog.module';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MiniDialogModule } from './mini-dialog-add/mini-dialog.module';
     DropdownModule,
     FormsModule,
     FilterProjectModule,
-    MiniDialogModule
+    MiniDialogModule,
+    FileUploadModule
 ],
   exports: [
     ProductComponent

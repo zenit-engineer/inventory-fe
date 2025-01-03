@@ -7,6 +7,7 @@ import { Product } from '../../interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 import { environment } from 'src/environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-filter-project',
@@ -179,7 +180,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     ).subscribe({
       next: () => {
         // When the response is successful (no body expected), trigger the download
-        const url = `${this.baseUrl}/api/v1/product/excel`; // Assuming backend sends the file directly
+        const url = `${this.baseUrl}/api/v1/product/export-excel`; // Assuming backend sends the file directly
         const a = document.createElement('a');
         a.href = url;
         a.download = 'products.xls'; // Name of the file to be downloaded

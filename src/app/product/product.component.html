@@ -1,10 +1,27 @@
 <div class="flex justify-content-between align-items-center">
   <h2>Products</h2>
   <div class="flex gap-3">
-    <p-button label="Add Product" (onClick)="showAddModal()" />
-    <p-button icon="pi pi-file-import" label="Import Products" />
+    <p-button label="Add Product" (onClick)="showAddModal()">
+      <i class="pi pi-plus-circle" style="margin-right: 8px;"></i>
+    </p-button>    
+    <div class="flex align-items-center gap-2">
+      <p-toast></p-toast>
+      <p-fileUpload
+        #fileUpload
+        mode="basic"
+        name="file"
+        accept=".xls"
+        [maxFileSize]="1000000"
+        chooseLabel="Import Excel"
+        (onSelect)="onFileSelected($event)"
+      ></p-fileUpload>
+      <button (click)="uploadFile()" class="p-button p-button-success">
+        <i class="pi pi-file-import"></i>
+      </button>
+          </div>
   </div>
 </div>
+
 
 <p-table 
 #productTable 

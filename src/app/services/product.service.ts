@@ -88,8 +88,11 @@ export class ProductService {
   }
 
   generateExcel(): Observable<void> {
-    return this.http.get<void>(`${this.baseUrl}/api/v1/product/excel`, { responseType: 'text' as 'json' });
+    return this.http.get<void>(`${this.baseUrl}/api/v1/product/export-excel`, { responseType: 'text' as 'json' });
   }
   
+  importExcel(formData: FormData): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/api/v1/product/import-excel`, formData);
+  }  
   
 }
