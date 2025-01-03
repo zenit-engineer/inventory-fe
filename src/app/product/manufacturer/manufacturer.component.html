@@ -17,6 +17,8 @@
       styleClass="p-datatable-gridlines p-datatable-striped" 
       (sortFunction)="customSort($event)" 
       [customSort]="true"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} manufacturers"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -29,19 +31,20 @@
       <ng-template pTemplate="body" let-manufacturer>
         <tr class="parent-row">
           <td>{{ manufacturer }}</td>
-          <td>
+          <td class="button-container" style="display: flex; justify-content: flex-end; gap: 1rem;">
             <button
               pButton
               icon="pi pi-pencil"
               class="p-button-rounded"
-              style="font-size: 5rem"
+              style="font-size: 2rem;" 
             ></button>
             <button
               pButton
               icon="pi pi-trash"
-              class="p-button-rounded p-button-danger mr-2"
+              class="p-button-rounded p-button-danger"
+              style="font-size: 2rem;"
             ></button>
-          </td>            
+          </td>             
         </tr>
       </ng-template>
     </p-table>

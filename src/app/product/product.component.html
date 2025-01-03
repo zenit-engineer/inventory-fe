@@ -13,6 +13,7 @@
         accept=".xls"
         [maxFileSize]="1000000"
         chooseLabel="Import Excel"
+        chooseIcon="pi pi-file-import"
         (onSelect)="onFileSelected($event)"
       ></p-fileUpload>
       <button (click)="uploadFile()" class="p-button p-button-success">
@@ -36,8 +37,11 @@ scrollHeight="70vh"
 [totalRecords]="totalProducts"
 (sortFunction)="loadProducts($event)"
 styleClass="p-datatable-gridlines p-datatable-striped" 
-[paginator]="true"
-currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+[rowHover]="true"
+[showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+[(selection)]="selectProd"
+dataKey="id"
 >
   <ng-template pTemplate="caption">
     <app-filter-project
@@ -51,6 +55,9 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
+      <th style="width: 4rem">
+        <p-tableHeaderCheckbox />
+      </th>
       <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
       <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
       <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
@@ -68,6 +75,9 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr class="parent-row">
+      <td>
+        <p-tableCheckbox [value]="product" />
+      </td>
       <td>{{ product.title }}</td>
       <td>{{ product.price }}  €</td>
       <td>{{ product.category }}</td>

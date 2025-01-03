@@ -25,6 +25,7 @@ export class ProductComponent implements OnDestroy {
 
   isSortingApplied: boolean = false; // Initial state
   @ViewChild('productTable') productTable!: Table; // Reference to the p-table
+  selectProd!: Product[];
 
   request: ProductRequest = {
     first: 0,

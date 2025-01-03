@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-filter-project',
   templateUrl: './filter-project.component.html',
-  styleUrls: ['./filter-project.component.css']
+  styleUrls: ['./filter-project.component.scss']
 })
 export class FilterProjectComponent implements OnInit, OnDestroy{
 
