@@ -93,6 +93,21 @@ export class ProductService {
   
   importExcel(formData: FormData): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/api/v1/product/import-excel`, formData);
-  }  
+  }
+  
+  deleteManufacturer(name: string): Observable<ApiResponse> {
+    const params = new HttpParams().set('name', name);
+    return this.http.delete<ApiResponse>(`${this.baseUrl}/api/v1/manufacturer`, { params });
+  }
+
+  deleteSupplier(name: string): Observable<ApiResponse> {
+    const params = new HttpParams().set('name', name);
+    return this.http.delete<ApiResponse>(`${this.baseUrl}/api/v1/supplier`, { params });
+  }
+
+  deleteCategory(name: string): Observable<ApiResponse> {
+    const params = new HttpParams().set('name', name);
+    return this.http.delete<ApiResponse>(`${this.baseUrl}/api/v1/category`, { params });
+  }
   
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SortEvent } from 'primeng/api';
+import { ConfirmationService, MessageService, SortEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Subscription } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-manufacturer',
@@ -15,6 +17,13 @@ export class ManufacturerComponent implements OnInit {
   initialValue: string[] = [];
   visible: boolean = false;
   triggeredBy = '';
+  subscriptions: Subscription[] = [];
+  manufacturerSubscription: Subscription = new Subscription();
+
+  constructor(private confirmationService: ConfirmationService,
+    private productService: ProductService,
+    private messageService: MessageService
+  ){}
 
   ngOnInit(): void {
     this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
@@ -58,8 +67,65 @@ export class ManufacturerComponent implements OnInit {
     this.visible = true;
   }
 
+  deleteManufacturer(manufacturerName: string) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      accept: () => {
+        this.manufacturerSubscription = this.productService.deleteManufacturer(manufacturerName).subscribe({
+          next: (response) => {
+            // Handle successful deletion
+            if (response.status === 'OK') {
+              this.removeManufacturer(manufacturerName);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: response.message || 'Deleted Successfully'
+              });
+            }
+          },
+          error: (error) => {
+            if (error.status === 400) {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Bad Request',
+                detail: error.error?.message || 'Something went wrong!'
+              });
+            } else {
+              // General error handling
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: error.message || 'There was an error deleting the manufacturer.'
+              });
+            }
+          }
+        });
+  
+        this.subscriptions.push(this.manufacturerSubscription);
+      }
+    });
+  }
+  
+  removeManufacturer(manufacturerName: string): void {
+    // Retrieve manufacturers from localStorage
+    let manufacturers: string[] = JSON.parse(localStorage.getItem('manufacturers') || '[]');
+  
+    // Filter out the manufacturer to remove
+    manufacturers = manufacturers.filter(name => name !== manufacturerName);
+  
+    // Save the updated list back to localStorage
+    localStorage.setItem('manufacturers', JSON.stringify(manufacturers));
+
+    this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
+
+  }  
+
   closeDialog(): void {
     this.visible = false; // Hide the dialog
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }

@@ -32,15 +32,10 @@
           <td class="button-container" style="display: flex; justify-content: flex-end; gap: 1rem;">
             <button
               pButton
-              icon="pi pi-pencil"
-              class="p-button-rounded"
-              style="font-size: 2rem;" 
-            ></button>
-            <button
-              pButton
               icon="pi pi-trash"
               class="p-button-rounded p-button-danger"
               style="font-size: 2rem;"
+              (click)="deleteSupplier(supplier)"
             ></button>
           </td>            
         </tr>

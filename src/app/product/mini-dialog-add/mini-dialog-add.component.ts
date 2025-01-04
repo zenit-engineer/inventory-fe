@@ -61,7 +61,8 @@ export class MiniDialogAddComponent {
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Manufacturer added successfully');
-          this.productService.getAllManufacturers();
+          let manufacturers = this.productService.getAllManufacturers();
+          localStorage.setItem('manufacturers', JSON.stringify(manufacturers));
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);
@@ -72,12 +73,14 @@ export class MiniDialogAddComponent {
       },
     });
   }
-  
+
   private addSupplier(data: Manufacturer): void {
     this.productService.addNewSupplier(data).subscribe({
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Supplier added successfully');
+          let suppliers = this.productService.getAllSuppliers();
+          localStorage.setItem('suppliers', JSON.stringify(suppliers));
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);
@@ -94,6 +97,8 @@ export class MiniDialogAddComponent {
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Category added successfully');
+          let categories = this.productService.getAllCategories();
+          localStorage.setItem('categories', JSON.stringify(categories));
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);
