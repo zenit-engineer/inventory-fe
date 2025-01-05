@@ -124,9 +124,17 @@ export class CategoryComponent {
     // Save the updated list back to localStorage
     localStorage.setItem('categories', JSON.stringify(categories));
 
-    this.categories = JSON.parse(localStorage.getItem('categories') || '[]');
+    this.categories = [...categories];
 
   } 
+
+  handleCategoryName(name: string): void {
+    if (name) {
+      console.log('Category Name:', name); // Debugging output
+      this.categories.unshift(name); // Add to local list
+      localStorage.setItem('categories', JSON.stringify(this.categories)); // Save
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

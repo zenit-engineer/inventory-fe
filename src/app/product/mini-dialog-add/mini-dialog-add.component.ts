@@ -17,6 +17,9 @@ export class MiniDialogAddComponent {
   modalType = "Add";
   @Input() displayAddModal: boolean = true;
   @Output() clickClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() manufacturerName: EventEmitter<string> = new EventEmitter<string>();
+  @Output() supplierName: EventEmitter<string> = new EventEmitter<string>();
+  @Output() categoryName: EventEmitter<string> = new EventEmitter<string>();
   @Input() triggeredBy: string = '';
   subscriptions: Subscription[] = [];
   miniDialogSubscription: Subscription = new Subscription();
@@ -39,7 +42,7 @@ export class MiniDialogAddComponent {
     const manufacturerData: Manufacturer = {
       name: this.addForm.value.name ?? '', // Fallback to empty string
     };
-  
+
     // Call the appropriate method based on `triggeredBy`
     switch (this.triggeredBy) {
       case 'manufacturer':
@@ -61,8 +64,7 @@ export class MiniDialogAddComponent {
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Manufacturer added successfully');
-          let manufacturers = this.productService.getAllManufacturers();
-          localStorage.setItem('manufacturers', JSON.stringify(manufacturers));
+          this.manufacturerName.emit(data.name);
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);
@@ -79,8 +81,7 @@ export class MiniDialogAddComponent {
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Supplier added successfully');
-          let suppliers = this.productService.getAllSuppliers();
-          localStorage.setItem('suppliers', JSON.stringify(suppliers));
+          this.supplierName.emit(data.name);
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);
@@ -97,8 +98,7 @@ export class MiniDialogAddComponent {
       next: (response: ApiResponseWithDataListOfStrings) => {
         if (response?.status === 'CREATED') {
           this.showToast('success', 'Success', response?.message || 'Category added successfully');
-          let categories = this.productService.getAllCategories();
-          localStorage.setItem('categories', JSON.stringify(categories));
+          this.categoryName.emit(data.name);
           this.closeModal();
         } else {
           this.showToast('error', 'Error', `Unexpected response status: ${response?.status || 'unknown'}`);

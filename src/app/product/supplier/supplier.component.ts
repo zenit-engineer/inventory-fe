@@ -121,9 +121,17 @@ export class SupplierComponent implements OnInit{
     // Save the updated list back to localStorage
     localStorage.setItem('suppliers', JSON.stringify(suppliers));
 
-    this.suppliers = JSON.parse(localStorage.getItem('suppliers') || '[]');
+    this.suppliers = [...suppliers];
 
   } 
+
+  handleSupplierName(name: string): void {
+    if (name) {
+      console.log('Supplier Name:', name); // Debugging output
+      this.suppliers.unshift(name); // Add to local list
+      localStorage.setItem('suppliers', JSON.stringify(this.suppliers)); // Save
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

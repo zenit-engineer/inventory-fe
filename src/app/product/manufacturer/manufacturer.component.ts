@@ -26,7 +26,12 @@ export class ManufacturerComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.getAllManufacturers();
+  }
+
+  getAllManufacturers(){
     this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
+    console.log(this.manufacturers)
     this.initialValue = [...this.manufacturers];
   }
 
@@ -116,7 +121,7 @@ export class ManufacturerComponent implements OnInit {
     // Save the updated list back to localStorage
     localStorage.setItem('manufacturers', JSON.stringify(manufacturers));
 
-    this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
+    this.manufacturers = [...manufacturers];
 
   }  
 
@@ -124,6 +129,14 @@ export class ManufacturerComponent implements OnInit {
     this.visible = false; // Hide the dialog
   }
 
+  handleManufacturerName(name: string): void {
+    if (name) {
+      console.log('Manufacturer Name:', name); // Debugging output
+      this.manufacturers.unshift(name); // Add to local list
+      localStorage.setItem('manufacturers', JSON.stringify(this.manufacturers)); // Save
+    }
+  }
+  
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

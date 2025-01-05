@@ -4,6 +4,7 @@
     [displayAddModal]="visible"
     [triggeredBy]="triggeredBy"
     (clickClose)="closeDialog()"
+    (categoryName)="handleCategoryName($event)"
     ></app-mini-dialog-add>
   <p-table 
     #categoryTable
@@ -16,7 +17,7 @@
     (sortFunction)="customSort($event)" 
     [customSort]="true"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} categories"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
   >      
 <ng-template pTemplate="header">
         <tr>

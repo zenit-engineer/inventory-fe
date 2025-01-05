@@ -5,6 +5,7 @@
     [displayAddModal]="visible"
     [triggeredBy]="triggeredBy"
     (clickClose)="closeDialog()"
+    (manufacturerName)="handleManufacturerName($event)"
     ></app-mini-dialog-add>
 </div>
 <p-table 
@@ -18,7 +19,7 @@
       (sortFunction)="customSort($event)" 
       [customSort]="true"
       [showCurrentPageReport]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} manufacturers"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
     >
       <ng-template pTemplate="header">
         <tr>
