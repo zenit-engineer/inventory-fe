@@ -13,7 +13,5 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
 
-  getAllCategories(): Observable<any>{
-      return this.http.get<any>(`${this.baseUrl}/api/v1/category/all`);
-    }
+  
 }
