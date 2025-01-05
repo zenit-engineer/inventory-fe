@@ -22,7 +22,6 @@ export class ProductComponent implements OnDestroy {
   productSubscription: Subscription = new Subscription();
   totalProducts: number = 0;
   selectedFile: File | null = null;
-  display: boolean = false;
 
   isSortingApplied: boolean = false; // Initial state
   @ViewChild('productTable') productTable!: Table; // Reference to the p-table

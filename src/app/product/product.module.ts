@@ -19,16 +19,15 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { CategoryComponent } from './category/category.component';
 import { MiniDialogModule } from './mini-dialog-add/mini-dialog.module';
 import { FileUploadModule } from 'primeng/fileupload';
-import {SidebarModule} from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';  // Import RouterModule
+
 
 @NgModule({
   declarations: [
     ProductComponent,
     ManufacturerComponent,
     SupplierComponent,
-    CategoryComponent,
-    
+    CategoryComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +44,6 @@ import { RouterModule } from '@angular/router';  // Import RouterModule
     FilterProjectModule,
     MiniDialogModule,
     FileUploadModule,
-    SidebarModule,
     RouterModule
 ],
   exports: [

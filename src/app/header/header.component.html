@@ -1,0 +1,8 @@
+<p-button type="text" (click)="display = true" icon="pi pi-bars" label="Menu"></p-button>
+<p-sidebar [(visible)]="display">
+    <h3>
+      <a [routerLink]="['/home']">Home</a>
+      <a [routerLink]="['/statistics']">Statistics</a>
+      <a [routerLink]="['/statistics']">User Management</a>
+    </h3>
+  </p-sidebar>

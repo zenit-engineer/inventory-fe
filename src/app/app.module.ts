@@ -6,19 +6,27 @@ import { ProductModule } from './product/product.module';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './login/login.module';
-import { StatisticsComponent } from './statistics/statistics.component';
+import { StatisticsModule } from './statistics/statistics.module';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { ButtonModule } from 'primeng/button';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StatisticsComponent
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
     ProductModule,
-    LoginModule
+    LoginModule,
+    StatisticsModule,
+    SidebarModule,
+    ButtonModule
   ],
   exports:[
     
