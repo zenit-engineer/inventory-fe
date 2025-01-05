@@ -2,7 +2,6 @@
   <div class="flex gap-3">
     <h2>Stock Management</h2>
   </div>
-
   <div class="flex gap-3 align-items-center">
     <p-button label="Add Product" (onClick)="showAddModal()">
       <i class="pi pi-plus-circle" style="margin-right: 8px;"></i>
@@ -19,7 +18,7 @@
         chooseIcon="pi pi-file-import"
         (onSelect)="onFileSelected($event)"
       ></p-fileUpload>
-      <button (click)="uploadFile()" class="p-button p-button-help">
+      <button (click)="uploadFile()" class="p-button p-button-success">
         <i class="pi pi-file-import"></i>
       </button>
           </div>

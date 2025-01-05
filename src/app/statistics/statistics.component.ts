@@ -17,11 +17,11 @@ export class StatisticsComponent {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.basicData = {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [
             {
                 label: 'Sales',
-                data: [540, 325, 702, 620],
+                data: [540, 325, 702, 620, 200, 300, 500, 540, 930, 102, 504, 670],
                 backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
                 borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                 borderWidth: 1
