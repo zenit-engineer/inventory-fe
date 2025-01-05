@@ -1,0 +1,12 @@
+
+html, body {
+    height: 100%; /* Ensure the body and html elements take full height */
+    margin: 0;    /* Remove default margin */
+}
+
+.chart {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;      /* Centers vertically */
+    height: 100vh;            /* Full height of the viewport */
+}
