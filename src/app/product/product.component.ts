@@ -22,6 +22,7 @@ export class ProductComponent implements OnDestroy {
   productSubscription: Subscription = new Subscription();
   totalProducts: number = 0;
   selectedFile: File | null = null;
+  display: boolean = false;
 
   isSortingApplied: boolean = false; // Initial state
   @ViewChild('productTable') productTable!: Table; // Reference to the p-table
@@ -29,7 +30,7 @@ export class ProductComponent implements OnDestroy {
 
   request: ProductRequest = {
     first: 0,
-    rows: 10,
+    rows: 15,
     sortField: '',
     sortOrder: 1,
     category: '' , 
@@ -137,6 +138,7 @@ export class ProductComponent implements OnDestroy {
   }
   
   getAllProducts() {
+    console.log(this.request);
 
     this.productSubscription = this.productService.getAllProducts(this.request).pipe(
       map(response => {
@@ -172,7 +174,7 @@ export class ProductComponent implements OnDestroy {
     this.request.sortField = $event.sortField || '';
     this.request.sortOrder = $event.sortOrder || 1;
     this.request.first = $event.first || 0; // The starting index for the page
-    this.request.rows = $event.rows || 10;  // Number of rows per page
+    this.request.rows = $event.rows || 15;  // Number of rows per page
   
     // Check if sorting is applied
     this.isSortingApplied = !!$event.sortField;

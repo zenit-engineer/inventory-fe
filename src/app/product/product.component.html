@@ -1,6 +1,15 @@
 <div class="flex justify-content-between align-items-center">
-  <h2>Stock Management</h2>
   <div class="flex gap-3">
+    <p-button type="text" (click)="display = true" icon="pi pi-bars" label="Menu"></p-button>
+    <h2>Stock Management</h2>
+    <p-sidebar [(visible)]="display">
+      <h3>
+        <a [routerLink]="['/statistics']">Statistics</a>
+      </h3>
+    </p-sidebar>
+  </div>
+
+  <div class="flex gap-3 align-items-center">
     <p-button label="Add Product" (onClick)="showAddModal()">
       <i class="pi pi-plus-circle" style="margin-right: 8px;"></i>
     </p-button>    
@@ -16,13 +25,12 @@
         chooseIcon="pi pi-file-import"
         (onSelect)="onFileSelected($event)"
       ></p-fileUpload>
-      <button (click)="uploadFile()" class="p-button p-button-success">
+      <button (click)="uploadFile()" class="p-button p-button-help">
         <i class="pi pi-file-import"></i>
       </button>
           </div>
   </div>
 </div>
-
 
 <p-table 
 #productTable 
@@ -93,7 +101,7 @@ dataKey="id"
         <button
           pButton
           icon="pi pi-pencil"
-          class="p-button-rounded"
+          class="p-button-rounded custom-edit-button"
           (click)="showEditModal(product)"
         ></button>
       </td>
@@ -101,7 +109,7 @@ dataKey="id"
         <button
           pButton
           icon="pi pi-trash"
-          class="p-button-rounded p-button-danger mr-2"
+          class="p-button-rounded p-button-danger mr-2 custom-delete-button"
           (click)="deleteProduct(product.id)"
         ></button>
       </td>

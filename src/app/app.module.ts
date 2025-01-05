@@ -3,20 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ProductModule } from './product/product.module';
-import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginModule } from './login/login.module';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    ProductModule
+    ProductModule,
+    LoginModule
   ],
   exports:[
     
