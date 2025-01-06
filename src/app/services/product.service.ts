@@ -10,6 +10,7 @@ import { ApiResponseWithDataListOfStrings } from '../interfaces/api-response-wit
 import { Manufacturer } from '../interfaces/manufacturer';
 import { Category } from '../interfaces/category';
 import { Supplier } from '../interfaces/supplier';
+import { VerticalBarResponseData } from '../interfaces/vertical-bar-response-data';
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +109,11 @@ export class ProductService {
   deleteCategory(name: string): Observable<ApiResponse> {
     const params = new HttpParams().set('name', name);
     return this.http.delete<ApiResponse>(`${this.baseUrl}/api/v1/category`, { params });
+  }
+
+  getVerticalBarData(year: number): Observable<VerticalBarResponseData>{
+    const params = new HttpParams().set('year', year);
+    return this.http.get<VerticalBarResponseData>(`${this.baseUrl}/api/v1/product/vertical-bar`, {params});
   }
   
 }
