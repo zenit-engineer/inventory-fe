@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { catchError, map, Subscription } from 'rxjs';
+import { catchError, map, of, Subscription } from 'rxjs';
 import { ProductService } from '../services/product.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { VerticalBarData } from '../interfaces/vertical-bar-response-data';
+import { MessageService } from 'primeng/api';
+import { VerticalBarData, VerticalBarResponseData } from '../interfaces/vertical-bar-response-data';
 
 @Component({
     selector: 'app-statistics',
@@ -20,28 +20,75 @@ export class StatisticsComponent {
     constructor(
         private productService: ProductService,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService,
     ) { }
 
-    ngOnInit() {
+    ngOnInit() {    
+        // Call the API and handle the data inside subscribe
+        this.getVerticalBarData(2025);
+    }
+    
+    getVerticalBarData(year: number) {
+        this.statisticsSubscription = this.productService.getVerticalBarData(year).pipe(
+            map((response: VerticalBarResponseData) => response.data), // Extract the array from `data`
+            catchError(error => {
+                console.error('Error fetching vertical bar data:', error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Failed to load vertical bar data.'
+                });
+                return of([] as VerticalBarData[]); // Return an empty array on error
+            })
+        ).subscribe({
+            next: (verticalBarData) => {
+                this.verticalBarData = verticalBarData; // Assign the extracted data
+                console.log("Assigned Vertical Bar Data:", this.verticalBarData);
+    
+                // Map the data to totalPrices and initialize the chart
+                const totalPrices: number[] = this.verticalBarData.map(item => item.total_price);
+                console.log("totalPrices:", totalPrices);
+    
+                // Update the chart data
+                this.initializeChart(totalPrices);
+            },
+            error: (error) => {
+                console.error('Error during vertical bar data fetch:', error);
+            }
+        });
+    
+        this.subscriptions.push(this.statisticsSubscription);
+    }
+    
+    initializeChart(totalPrices: number[]) {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
         this.basicData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            labels: months,
             datasets: [
                 {
                     label: 'Sales',
-                    data: [],
-                    backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    data: totalPrices,
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.2)', 
+                        'rgba(75, 192, 192, 0.2)', 
+                        'rgba(54, 162, 235, 0.2)', 
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 159, 64)', 
+                        'rgb(75, 192, 192)', 
+                        'rgb(54, 162, 235)', 
+                        'rgb(153, 102, 255)'
+                    ],
                     borderWidth: 1
                 }
             ]
         };
-
+    
         this.basicOptions = {
             plugins: {
                 legend: {
@@ -72,34 +119,6 @@ export class StatisticsComponent {
                 }
             }
         };
-        this.getVerticalBarData(2024);
-    }
-
-    getVerticalBarData(year: number) {
-        this.statisticsSubscription = this.productService.getVerticalBarData(year).pipe(
-            map(response => {
-                const responseData = response?.data?.verticalBarData || []; // Safely extract verticalBarData
-                return responseData; // Extract verticalBarData directly
-            }),
-            catchError(error => {
-                console.error('Error fetching vertical bar data:', error);
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Failed to load vertical bar data.'
-                });
-                return []; // Return empty array in case of error
-            })
-        ).subscribe({
-            next: (verticalBarData) => {
-                this.verticalBarData = verticalBarData;
-            },
-            error: (error) => {
-                console.error('Error during vertical bar data fetch:', error);
-            }
-        });
-    
-        this.subscriptions.push(this.statisticsSubscription);
     }    
 
     ngOnDestroy(): void {
