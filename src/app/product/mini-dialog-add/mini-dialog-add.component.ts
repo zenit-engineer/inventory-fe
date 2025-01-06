@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-mini-dialog-add',
   templateUrl: './mini-dialog-add.component.html',
-  styleUrls: ['./mini-dialog-add.component.sass']
+  styleUrls: ['./mini-dialog-add.component.scss']
 })
 export class MiniDialogAddComponent {
 
