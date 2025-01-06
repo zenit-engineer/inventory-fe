@@ -137,8 +137,6 @@ export class ProductComponent implements OnDestroy {
   }
   
   getAllProducts() {
-    console.log(this.request);
-
     this.productSubscription = this.productService.getAllProducts(this.request).pipe(
       map(response => {
         const responseData = response.data;
@@ -157,7 +155,6 @@ export class ProductComponent implements OnDestroy {
     ).subscribe({
       next: (products) => {
         this.products = products;
-        console.log(products)
       },
       error: (error) => {
         console.error('Error during product fetch:', error);

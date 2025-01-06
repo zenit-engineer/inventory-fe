@@ -31,7 +31,6 @@ export class ManufacturerComponent implements OnInit {
 
   getAllManufacturers(){
     this.manufacturers = JSON.parse(localStorage.getItem('manufacturers') || '[]');
-    console.log(this.manufacturers)
     this.initialValue = [...this.manufacturers];
   }
 
@@ -131,7 +130,6 @@ export class ManufacturerComponent implements OnInit {
 
   handleManufacturerName(name: string): void {
     if (name) {
-      console.log('Manufacturer Name:', name); // Debugging output
       this.manufacturers.unshift(name); // Add to local list
       localStorage.setItem('manufacturers', JSON.stringify(this.manufacturers)); // Save
     }

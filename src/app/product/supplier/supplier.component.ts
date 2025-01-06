@@ -127,7 +127,6 @@ export class SupplierComponent implements OnInit{
 
   handleSupplierName(name: string): void {
     if (name) {
-      console.log('Supplier Name:', name); // Debugging output
       this.suppliers.unshift(name); // Add to local list
       localStorage.setItem('suppliers', JSON.stringify(this.suppliers)); // Save
     }

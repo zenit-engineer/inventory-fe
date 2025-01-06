@@ -139,7 +139,6 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
   }
   
   addProduct(productData: Product): void {
-    console.log(productData);
     this.productSubscription = this.productService.addProduct(productData).pipe(
       catchError(error => {
         console.error('Error adding product:', error);

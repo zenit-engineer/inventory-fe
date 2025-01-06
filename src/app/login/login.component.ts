@@ -43,8 +43,8 @@ export class LoginComponent {
         password: this.loginForm.value.password!
       };
 
-      console.log('Username:', userCredentials.username);
-      console.log('Password:', userCredentials.password);
+      // console.log('Username:', userCredentials.username);
+      // console.log('Password:', userCredentials.password);
 
       this.getAccessToken(userCredentials);
     } else {

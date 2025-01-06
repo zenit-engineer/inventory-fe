@@ -130,7 +130,6 @@ export class CategoryComponent {
 
   handleCategoryName(name: string): void {
     if (name) {
-      console.log('Category Name:', name); // Debugging output
       this.categories.unshift(name); // Add to local list
       localStorage.setItem('categories', JSON.stringify(this.categories)); // Save
     }
