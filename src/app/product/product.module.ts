@@ -20,6 +20,7 @@ import { CategoryComponent } from './category/category.component';
 import { MiniDialogModule } from './mini-dialog-add/mini-dialog.module';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterModule } from '@angular/router';  // Import RouterModule
+import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { RouterModule } from '@angular/router';  // Import RouterModule
     FilterProjectModule,
     MiniDialogModule,
     FileUploadModule,
-    RouterModule
+    RouterModule,
+    TagModule
 ],
   exports: [
     ProductComponent

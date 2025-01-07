@@ -1,5 +1,5 @@
 <div class="suppliers">
-  <p-button (onClick)="showDialog('supplier')" label="Add Supplier" />
+  <p-button (onClick)="showDialog('supplier')" [outlined]="true" label="Add Supplier" />
   <app-mini-dialog-add
   [displayAddModal]="visible"
   [triggeredBy]="triggeredBy"
@@ -34,7 +34,7 @@
             <button
               pButton
               icon="pi pi-trash"
-              class="p-button-rounded p-button-danger custom-delete-button"
+              class="p-button-rounded p-button-danger custom-delete-button p-button-outlined"
               style="font-size: 2rem;"
               (click)="deleteSupplier(supplier)"
             ></button>

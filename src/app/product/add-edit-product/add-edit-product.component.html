@@ -125,8 +125,9 @@
     <p-button
       (click)="addEditProduct()"
       label="{{modalType}}"
+      [outlined]="true"
     ></p-button>
-    <p-button (click)="closeModal()" label="Close" styleClass="p-button-text">
+    <p-button (click)="closeModal()" label="Close" [outlined]="true" styleClass="p-button-text">
     </p-button>
   </ng-template>
 </p-dialog>

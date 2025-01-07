@@ -3,53 +3,28 @@
     <h2>Stock Management</h2>
   </div>
   <div class="flex gap-3 align-items-center">
-    <p-button label="Add Product" (onClick)="showAddModal()">
-      <i class="pi pi-plus-circle" style="margin-right: 8px;"></i>
-    </p-button>    
+    <p-button label="Add Product" [outlined]=true icon="pi pi-plus-circle" (onClick)="showAddModal()">
+    </p-button>
     <div class="flex align-items-center gap-2">
       <p-toast></p-toast>
-      <p-fileUpload
-        #fileUpload
-        mode="basic"
-        name="file"
-        accept=".xls"
-        [maxFileSize]="1000000"
-        chooseLabel="Import Excel"
-        chooseIcon="pi pi-file-import"
-        (onSelect)="onFileSelected($event)"
-      ></p-fileUpload>
-      <button (click)="uploadFile()" class="p-button p-button-success">
-        <i class="pi pi-file-import"></i>
-      </button>
-          </div>
+      <p-fileUpload #fileUpload mode="basic" name="file" accept=".xls" [maxFileSize]="1000000"
+        chooseLabel="Import Excel" chooseIcon="pi pi-file-import" (onSelect)="onFileSelected($event)"></p-fileUpload>
+      <p-button (click)="uploadFile()" [outlined]="true" icon="pi pi-file-import">
+      </p-button>
+    </div>
   </div>
 </div>
 
-<p-table 
-#productTable 
-[value]="products" 
-[scrollable]="true" 
-scrollHeight="70vh" 
-[paginator]="true" 
-[rows]="request.rows"
-[first]="request.first"
-[lazy]="true"
-(onLazyLoad)="loadProducts($event)"
-[totalRecords]="totalProducts"
-(sortFunction)="loadProducts($event)"
-styleClass="p-datatable-gridlines p-datatable-striped" 
-[rowHover]="true"
-[showCurrentPageReport]="true"
-currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-[(selection)]="selectProd"
-dataKey="id"
->
+<p-table #productTable [value]="products" [scrollable]="true" scrollHeight="70vh" [paginator]="true"
+  [rows]="request.rows" [first]="request.first" [lazy]="true" (onLazyLoad)="loadProducts($event)"
+  [totalRecords]="totalProducts" (sortFunction)="loadProducts($event)"
+  styleClass="p-datatable-gridlines p-datatable-striped" [rowHover]="true" [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" [(selection)]="selectProd"
+  dataKey="id">
   <ng-template pTemplate="caption">
-    <app-filter-project
-      (selectCategory)="onFilterChange('category', $event)"
+    <app-filter-project (selectCategory)="onFilterChange('category', $event)"
       (selectSupplier)="onFilterChange('supplier', $event)"
-      (selectManufacturer)="onFilterChange('manufacturer', $event)"
-      (searchChanged)="onFilterChange('search', $event)"
+      (selectManufacturer)="onFilterChange('manufacturer', $event)" (searchChanged)="onFilterChange('search', $event)"
       [table]="productTable">
     </app-filter-project>
 
@@ -69,7 +44,8 @@ dataKey="id"
       <th pSortableColumn="supplier">Supplier<p-sortIcon field="supplier"></p-sortIcon></th>
       <th pSortableColumn="weight">Weight<p-sortIcon field="weight"></p-sortIcon></th>
       <th>
-        <p-button label="Reset Sorting" (onClick)="resetSorting()" class="p-button-secondary" [disabled]="!isSortingApplied"></p-button>
+        <p-button label="Reset Sorting" [outlined]=true (onClick)="resetSorting()" class="p-button-secondary"
+          [disabled]="!isSortingApplied"></p-button>
       </th>
       <th></th>
     </tr>
@@ -80,7 +56,7 @@ dataKey="id"
         <p-tableCheckbox [value]="product" />
       </td>
       <td>{{ product.title }}</td>
-      <td>{{ product.price }}  €</td>
+      <td>{{ product.price | currency : 'EUR'}}</td>
       <td>{{ product.category }}</td>
       <td>
         <img [src]="'data:image/jpeg;base64,' + product.image" height="30px" />
@@ -91,36 +67,24 @@ dataKey="id"
       <td>{{ product.supplier }}</td>
       <td>{{ product.weight}} kg</td>
       <td>
-        <button
-          pButton
-          icon="pi pi-pencil"
-          class="p-button-rounded custom-edit-button"
-          (click)="showEditModal(product)"
-        ></button>
+        <button pButton icon="pi pi-pencil"
+          class="p-button-rounded p-button-outlined p-button-success custom-edit-button"
+          (click)="showEditModal(product)"></button>
       </td>
       <td>
-        <button
-          pButton
-          icon="pi pi-trash"
-          class="p-button-rounded p-button-danger mr-2 custom-delete-button"
-          (click)="deleteProduct(product.id)"
-        ></button>
+        <button pButton icon="pi pi-trash"
+          class="p-button-rounded p-button-outlined p-button-danger mr-2 custom-delete-button"
+          (click)="deleteProduct(product.id)"></button>
       </td>
     </tr>
   </ng-template>
 </p-table>
 
-<app-add-edit-product 
-  [displayAddEditModal]="displayAddEditModal"
-  (clickClose)="hideAddModal($event)"
-  (clickAddEdit)="saveEditProduct($event)"
-  [selectedProduct]="selectedProduct"
-  ></app-add-edit-product>
+<app-add-edit-product [displayAddEditModal]="displayAddEditModal" (clickClose)="hideAddModal($event)"
+  (clickAddEdit)="saveEditProduct($event)" [selectedProduct]="selectedProduct"></app-add-edit-product>
 
-<p-confirmDialog 
-  header="Delete"
-></p-confirmDialog>
-<p-toast position="bottom-left"/>
+<p-confirmDialog header="Delete"></p-confirmDialog>
+<p-toast position="bottom-left" />
 
 <div class="table-container">
   <app-manufacturer></app-manufacturer>

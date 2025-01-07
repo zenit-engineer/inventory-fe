@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnDestroy {
+export class ProductComponent implements OnInit,OnDestroy {
 
   products: Product[] = [];
   selectedProduct: Product | null = null; 
@@ -43,6 +43,10 @@ export class ProductComponent implements OnDestroy {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) {}
+
+  ngOnInit(): void {
+    this.getAllProducts();
+  }
 
   showAddModal() {
     this.displayAddEditModal = true;

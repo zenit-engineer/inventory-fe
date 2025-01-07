@@ -1,14 +1,3 @@
-/* Selects and styles all even-numbered table rows */
-// .parent-row:nth-child(even) {
-//     background-color: white;
-//     /* Light grey */
-// }
-
-// /* Selects and styles all odd-numbered table rows */
-// .parent-row:nth-child(odd) {
-//     background-color: rgb(221, 226, 231);
-//     /* White */
-// }
 
 /* Ensure cells are of equal size */
 p-table th,
@@ -32,8 +21,4 @@ p-table th {
   vertical-align: top;    /* Align to the top */
   margin-top: 5%;
 }
-/* Optional: Add hover effects */
-//   .parent-row:hover {
-//     background-color: #9b6d6d;
-//   }
 

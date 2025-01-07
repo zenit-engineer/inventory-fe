@@ -1,6 +1,6 @@
 <div class="manufacturer">
-  <div class="card flex justify-content-right">
-    <p-button (onClick)="showDialog('manufacturer')" label="Add Manufacturer" />
+  <div class="card flex justify-content-left">
+    <p-button (onClick)="showDialog('manufacturer')" [outlined]="true" label="Add Manufacturer" />
     <app-mini-dialog-add
     [displayAddModal]="visible"
     [triggeredBy]="triggeredBy"
@@ -36,7 +36,7 @@
             <button
               pButton
               icon="pi pi-trash"
-              class="p-button-rounded p-button-danger custom-delete-button"
+              class="p-button-rounded p-button-danger p-button-outlined custom-delete-button"
               style="font-size: 2rem;"
               (click)="deleteManufacturer(manufacturer)"
             ></button>
