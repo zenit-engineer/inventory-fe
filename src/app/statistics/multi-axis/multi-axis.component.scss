@@ -1,0 +1,19 @@
+html, body {
+    height: 100%; /* Ensure the body and html elements take full height */
+    margin: 0;    /* Remove default margin */
+}
+
+.multi-axis {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;      /* Centers vertically */
+    width: 100%;
+    height: 100%;             /* Full height of the viewport */
+}
+
+.multi-axis-caption {
+    text-align: center;
+    margin-top: 5px;   /* Reduced space between chart and caption */
+    font-size: 1.2em;   /* Adjust the font size */
+    font-weight: bold;  /* Make the caption bold */
+}

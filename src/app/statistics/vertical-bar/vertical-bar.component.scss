@@ -1,0 +1,35 @@
+html, body {
+    height: 100%; /* Ensure the body and html elements take full height */
+    margin: 0;    /* Remove default margin */
+}
+
+.chart {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;      /* Centers vertically */
+    width: 100%;
+    height: 100%;             /* Full height of the viewport */
+}
+
+.vertical-bar-pic {
+    display: flex;
+    justify-content: center;
+}
+
+.download-chart {
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-end; /* Aligns content to the right */
+    margin-bottom: 10px; /* Add some spacing below the button for better appearance */
+}
+
+.download-chart p-button {
+    margin-left: auto; /* Ensure the button stays on the far right */
+}
+
+/* Reduced space between the chart and the caption */
+.chart-caption {
+    text-align: center;
+    margin-top: 5px;   /* Reduced space between chart and caption */
+    font-size: 1.2em;   /* Adjust the font size */
+    font-weight: bold;  /* Make the caption bold */
+}
