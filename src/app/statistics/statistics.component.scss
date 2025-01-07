@@ -8,5 +8,16 @@ html, body {
     display: flex;
     justify-content: center;  /* Centers horizontally */
     align-items: center;      /* Centers vertically */
-    height: 100vh;            /* Full height of the viewport */
+    width: 100%;
+    height: 100%;            /* Full height of the viewport */
+}
+
+.download-chart {
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-end; /* Aligns content to the right */
+    margin-bottom: 10px; /* Add some spacing below the button for better appearance */
+}
+
+.download-chart p-button {
+    margin-left: auto; /* Ensure the button stays on the far right */
 }

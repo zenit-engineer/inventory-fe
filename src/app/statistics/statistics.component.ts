@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { MessageService } from 'primeng/api';
 import { VerticalBarData, VerticalBarResponseData } from '../interfaces/vertical-bar-response-data';
+import { Chart } from 'chart.js';
+import { UIChart } from 'primeng/chart';
 
 @Component({
     selector: 'app-statistics',
@@ -16,6 +18,7 @@ export class StatisticsComponent {
     statisticsSubscription: Subscription = new Subscription();
     verticalBarData: VerticalBarData []= [];
     basicOptions: any;
+    @ViewChild('chart') chart!: UIChart; // Reference to the PrimeNG chart
 
     constructor(
         private productService: ProductService,
@@ -42,11 +45,9 @@ export class StatisticsComponent {
         ).subscribe({
             next: (verticalBarData) => {
                 this.verticalBarData = verticalBarData; // Assign the extracted data
-                console.log("Assigned Vertical Bar Data:", this.verticalBarData);
     
                 // Map the data to totalPrices and initialize the chart
                 const totalPrices: number[] = this.verticalBarData.map(item => item.total_price);
-                console.log("totalPrices:", totalPrices);
     
                 // Update the chart data
                 this.initializeChart(totalPrices);
@@ -70,7 +71,7 @@ export class StatisticsComponent {
             labels: months,
             datasets: [
                 {
-                    label: 'Sales',
+                    label: 'All prices per month',
                     data: totalPrices,
                     backgroundColor: [
                         'rgba(255, 159, 64, 0.2)', 
@@ -119,7 +120,31 @@ export class StatisticsComponent {
                 }
             }
         };
+            // Adjust canvas resolution for high DPI
+    const chartCanvas = document.getElementById('chartId') as HTMLCanvasElement;
+    if (chartCanvas) {
+        const ratio = window.devicePixelRatio || 1; // Get device pixel ratio
+        chartCanvas.width = chartCanvas.offsetWidth * ratio;
+        chartCanvas.height = chartCanvas.offsetHeight * ratio;
+        chartCanvas.getContext('2d')?.scale(ratio, ratio);
+    }
+
     }    
+
+    screenshotChart() {
+        const chartCanvas = this.chart.chart.canvas; // Access the chart's canvas
+        if (!chartCanvas) {
+            console.error('Chart canvas not found!');
+            return;
+        }
+
+        const chartImage = chartCanvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = chartImage;
+        downloadLink.download = 'chart-screenshot.png';
+        downloadLink.click();
+    }
+    
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
