@@ -7,6 +7,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     ButtonModule,
     FileUploadModule,
-    ToastModule  
+    ToastModule,
+    ToolbarModule  
   ],
   exports:[
     FilterProjectComponent

@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import { ProductService } from '../../services/product.service';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Product } from '../../interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
@@ -36,6 +36,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   suppliers:string[] = [];
   manufacturers:string[] = [];
   baseUrl: string = environment.backend_url;
+  selectedProducts!: Product[] | null;
 
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
   @Output() selectSupplier: EventEmitter<string | null> = new EventEmitter<string | null>();
@@ -48,7 +49,8 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   @Output() searchChanged: EventEmitter<string| null> = new EventEmitter<string | null>();;
 
   constructor(private productService: ProductService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ){}
 
   ngOnInit(): void {
@@ -196,6 +198,17 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
       }
     });
   }  
+
+  deleteSelectedProducts() {
+    this.confirmationService.confirm({
+        message: 'Are you sure you want to delete the selected products?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        }
+    });
+  }
   
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

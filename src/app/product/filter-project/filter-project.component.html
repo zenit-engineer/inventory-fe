@@ -1,4 +1,12 @@
 <div class="flex align-items-center gap-3">
+
+  <p-button
+    severity="danger" 
+    label="Delete" 
+    icon="pi pi-trash" 
+    (onClick)="deleteSelectedProducts()" 
+    [disabled]="!selectedProducts || !selectedProducts.length" />
+    
   <p-dropdown
     [options]="categories"
     [(ngModel)]="selectedCategory"
