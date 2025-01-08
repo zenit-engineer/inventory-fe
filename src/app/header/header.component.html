@@ -1,4 +1,8 @@
-<p-button type="text" [outlined]=true (click)="display = true" icon="pi pi-bars" label="Menu"></p-button>
+<div class="button-container">
+  <p-button type="text" [outlined]="true" [raised]="true" (click)="display = true" icon="pi pi-bars" label="Menu"></p-button>
+  <p-button icon="pi pi-power-off" label="Sign Out" [outlined]="true" [raised]="true" severity="danger" (click)="logOut()"></p-button>
+</div>
+
 <p-sidebar [(visible)]="display">
   <h1>
     <div><p-button label="Home" [link]="true" [routerLink]="['/home']"></p-button></div>

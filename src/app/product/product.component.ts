@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit,OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getAllProducts();
+    // this.getAllProducts();
   }
 
   showAddModal() {

@@ -3,13 +3,13 @@
     <h2>Stock Management</h2>
   </div>
   <div class="flex gap-3 align-items-center">
-    <p-button label="Add Product" [outlined]=true icon="pi pi-plus-circle" (onClick)="showAddModal()">
+    <p-button label="Add Product" [raised]="true" [outlined]=true icon="pi pi-plus-circle" (onClick)="showAddModal()">
     </p-button>
     <div class="flex align-items-center gap-2">
       <p-toast></p-toast>
       <p-fileUpload #fileUpload mode="basic" name="file" accept=".xls" [maxFileSize]="1000000"
         chooseLabel="Import Excel" chooseIcon="pi pi-file-import" (onSelect)="onFileSelected($event)"></p-fileUpload>
-      <p-button (click)="uploadFile()" [outlined]="true" icon="pi pi-file-import">
+      <p-button (click)="uploadFile()" [raised]="true" [outlined]="true" icon="pi pi-file-import">
       </p-button>
     </div>
   </div>
@@ -84,7 +84,7 @@
   (clickAddEdit)="saveEditProduct($event)" [selectedProduct]="selectedProduct"></app-add-edit-product>
 
 <p-confirmDialog header="Delete"></p-confirmDialog>
-<p-toast position="bottom-left" />
+<!-- <p-toast position="bottom-left" /> -->
 
 <div class="table-container">
   <app-manufacturer></app-manufacturer>
