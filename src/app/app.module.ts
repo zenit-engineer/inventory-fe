@@ -21,7 +21,7 @@ import { BaseComponent } from './base/base.component';
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    BaseComponent
+    BaseComponent,
   ],
   imports: [
     BrowserModule,
