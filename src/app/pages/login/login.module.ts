@@ -8,7 +8,11 @@ import { ActivateAccountComponent } from '../activate-account/activate-account.c
 import { RegisterComponent } from '../register/register.component';
 import { RouterModule } from '@angular/router';  // Import RouterModule
 import { CodeInputModule } from 'angular-code-input';
-
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [LoginComponent, ActivateAccountComponent, RegisterComponent],
@@ -18,7 +22,12 @@ import { CodeInputModule } from 'angular-code-input';
     FormsModule,
     ButtonModule,
     RouterModule,
-    CodeInputModule
+    CodeInputModule,
+    CardModule,
+    DividerModule,
+    MessageModule,
+    PasswordModule,
+    InputTextModule
   ],
   exports:[
     LoginComponent

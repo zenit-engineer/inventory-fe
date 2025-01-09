@@ -11,7 +11,10 @@ import { TokenService } from 'src/app/services/token-service';
 })
 export class LoginComponent {
 
-  authRequest: AuthenticationRequest = {email: '', password: ''};
+  authRequest: AuthenticationRequest = {
+    email: '', 
+    password: ''
+  };
   errorMsg: Array<string> = [];
 
   constructor(

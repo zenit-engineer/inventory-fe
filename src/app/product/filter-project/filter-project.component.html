@@ -1,52 +1,62 @@
-<div class="flex align-items-center gap-3">
+<div class="flex flex-wrap align-items-center gap-2 md:gap-3">
 
-  <p-button
-    severity="danger" 
-    label="Delete" 
-    icon="pi pi-trash" 
-    (onClick)="deleteSelectedProducts()" 
-    [disabled]="!selectedProducts || !selectedProducts.length" />
-    
-  <p-dropdown
-    [options]="categories"
-    [(ngModel)]="selectedCategory"
-    placeholder="Select Category"
-    [showClear]="true"
-    (onChange)="onCategoryChange($event)">
-  </p-dropdown>
+  <!-- Delete Button + Dropdowns (Left Side) -->
+  <div class="flex flex-wrap align-items-center gap-2 md:gap-3 md:flex-1">
+    <p-button
+      severity="danger" 
+      label="Delete" 
+      icon="pi pi-trash" 
+      (onClick)="deleteSelectedProducts()" 
+      [disabled]="!selectedProducts || !selectedProducts.length" 
+      class="w-full md:w-auto"
+    />
 
-  <p-dropdown
-    [options]="manufacturers"
-    [(ngModel)]="selectedManufacturer"
-    placeholder="Select Manufacturer"
-    [showClear]="true"
-    (onChange)="onManufacturerChange($event)">
-  </p-dropdown>
+    <p-dropdown
+      [options]="categories"
+      [(ngModel)]="selectedCategory"
+      placeholder="Select Category"
+      [showClear]="true"
+      (onChange)="onCategoryChange($event)"
+      class="w-full md:w-auto"
+    ></p-dropdown>
 
-  <p-dropdown
-    [options]="suppliers"
-    [(ngModel)]="selectedSupplier"
-    placeholder="Select Supplier"
-    [showClear]="true"
-    (onChange)="onSupplierChange($event)">
-  </p-dropdown>
+    <p-dropdown
+      [options]="manufacturers"
+      [(ngModel)]="selectedManufacturer"
+      placeholder="Select Manufacturer"
+      [showClear]="true"
+      (onChange)="onManufacturerChange($event)"
+      class="w-full md:w-auto"
+    ></p-dropdown>
 
-  <div class="ml-auto">
+    <p-dropdown
+      [options]="suppliers"
+      [(ngModel)]="selectedSupplier"
+      placeholder="Select Supplier"
+      [showClear]="true"
+      (onChange)="onSupplierChange($event)"
+      class="w-full md:w-auto"
+    ></p-dropdown>
+  </div>
+
+  <!-- Search and Export (Right Side) -->
+  <div class="flex align-items-center gap-2 md:gap-3 md:ml-auto">
     <input 
         pInputText
         type="text" 
         (ngModelChange)="searchProducts($event)" 
         placeholder="Search Product"
-        [(ngModel)]="globalFilter" />
-  </div>
-
-  <div style="text-align: left">
+        [(ngModel)]="globalFilter"
+        class="w-full md:w-16rem"
+    />
+    
     <p-button 
         label="Export Excel" 
         icon="pi pi-file-export" 
         iconPos="right" 
         (onClick)="generateExcel()"
-        class="export-excel-button"
-       />
+        class="w-full md:w-auto export-excel-button"
+    />
   </div>
+
 </div>

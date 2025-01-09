@@ -1,11 +1,14 @@
 <div class="category">
-  <p-button (onClick)="showDialog('category')" [outlined]="true" label="Add Category" />
-  <app-mini-dialog-add
-    [displayAddModal]="visible"
-    [triggeredBy]="triggeredBy"
-    (clickClose)="closeDialog()"
-    (categoryName)="handleCategoryName($event)"
-    ></app-mini-dialog-add>
+  <div class="card">
+    <p-button (onClick)="showDialog('category')" [outlined]="true" label="Add Category" />
+    <app-mini-dialog-add
+      [displayAddModal]="visible"
+      [triggeredBy]="triggeredBy"
+      (clickClose)="closeDialog()"
+      (categoryName)="handleCategoryName($event)">
+    </app-mini-dialog-add>
+  </div>
+
   <p-table 
     #categoryTable
     [value]="categories"
@@ -17,30 +20,31 @@
     (sortFunction)="customSort($event)" 
     [customSort]="true"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-  >      
-<ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="category">
-            Category <p-sortIcon field="category"></p-sortIcon>
-          </th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-category>
-        <tr class="parent-row">
-          <td>{{ category }}</td>
-          <td class="button-container" style="display: flex; justify-content: flex-end; gap: 1rem;">
-            <button
-              pButton
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-danger custom-delete-button p-button-outlined"
-              style="font-size: 2rem;"
-              (click)="deleteCategory(category)"
-            ></button>
-          </td>             
-        </tr>
-      </ng-template>
-    </p-table>
-</div>
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
     
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="category">
+          Category <p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-category>
+      <tr class="parent-row">
+        <td>{{ category }}</td>
+        <td class="button-container" style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger custom-delete-button p-button-outlined"
+            style="font-size: 2rem;"
+            (click)="deleteCategory(category)">
+          </button>
+        </td>             
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
