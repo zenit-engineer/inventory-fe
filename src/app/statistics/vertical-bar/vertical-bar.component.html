@@ -1,13 +1,12 @@
-<div class="download-chart">
-    <p-button
-    icon="pi pi-camera"
-    (onClick)="screenshotChart()"
-    label="Screenshot vertical bar">
-    </p-button>
-</div>
-
 <div class="card">
     <h3 class="chart-caption">Product prices input per month by year</h3>
+    <div class="download-chart">
+        <p-button
+        icon="pi pi-camera"
+        (onClick)="screenshotChart()"
+        label="Screenshot vertical bar">
+        </p-button>
+    </div>
     <p-chart 
         #chart 
         type="bar" 

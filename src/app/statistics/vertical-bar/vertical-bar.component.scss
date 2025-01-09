@@ -23,7 +23,11 @@ html, body {
 }
 
 .download-chart p-button {
-    margin-left: auto; /* Ensure the button stays on the far right */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 /* Reduced space between the chart and the caption */
