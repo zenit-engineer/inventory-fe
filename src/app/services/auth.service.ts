@@ -20,12 +20,20 @@ export class AuthenticationService {
   }
 
   activateAccount(activationToken: string): Observable<AuthenticationResponse> {
-    const params = new HttpParams().set('token', activationToken);
+    const params = new HttpParams().set('activationToken', activationToken);
     return this.http.get<AuthenticationResponse>(`${this.baseUrl}/api/v1/auth/activate-account`, {params});
   }
 
   authenticate(authenticationRequest: AuthenticationRequest): Observable<AuthenticationResponse> {
     return this.http.post<AuthenticationResponse>(`${this.baseUrl}/api/v1/auth/authenticate`, authenticationRequest);
+  }
+
+  refreshToken(): Observable<AuthenticationResponse> {
+    return this.http.post<AuthenticationResponse>(`${this.baseUrl}/api/v1/auth/refresh-token`, {});
+  }
+
+  logOut(): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/api/v1/auth/logout`, {});
   }
   
 }

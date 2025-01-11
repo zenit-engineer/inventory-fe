@@ -6,16 +6,29 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class TokenService {
 
-  set token(token: string) {
-    localStorage.setItem('token', token);
+  set accessToken(accessToken: string) {
+    localStorage.setItem('accessToken', accessToken);
   }
 
-  get token() {
-    return localStorage.getItem('token') as string;
+  get accessToken() {
+    return localStorage.getItem('accessToken') as string;
+  }
+
+  set refreshToken(refreshToken: string) {
+    localStorage.setItem('refreshToken', refreshToken);
+  }
+
+  get refreshToken() {
+    return localStorage.getItem('refreshToken') as string;
+  }
+
+  clearTokens() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 
   isTokenValid() {
-    const token = this.token;
+    const token = this.accessToken;
     if (!token) {
       return false;
     }
@@ -24,7 +37,7 @@ export class TokenService {
     // check expiry date
     const isTokenExpired = jwtHelper.isTokenExpired(token);
     if (isTokenExpired) {
-      localStorage.clear();
+      localStorage.setItem('accessToken', this.refreshToken);
       return false;
     }
     return true;
@@ -35,7 +48,7 @@ export class TokenService {
   }
 
   get userRoles(): string[] {
-    const token = this.token;
+    const token = this.accessToken;
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);

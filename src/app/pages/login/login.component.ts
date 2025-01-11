@@ -27,8 +27,9 @@ export class LoginComponent {
     this.errorMsg = [];
     this.authService.authenticate(this.authRequest).subscribe({
       next: (res) => {
-        // Access the token from the response
-        this.tokenService.token = res.token || '';
+        // Access the accessToken from the response
+        this.tokenService.accessToken = res.accessToken || '';
+        this.tokenService.refreshToken = res.refreshToken || '';
         this.router.navigate(['home']);
       },
       error: (err) => {
