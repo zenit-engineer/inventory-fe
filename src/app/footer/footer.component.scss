@@ -1,0 +1,76 @@
+// Resets
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; // Ensure padding and border are included in the width and height
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden; // Prevent horizontal overflow /
+}
+
+// Ensuring the footer sticks to the bottom if there is less content
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; // Using full viewport height
+}
+
+main {
+    flex: 1; // Fills the available space so the footer can stick to the bottom
+    // Make sure to add padding here if your content requires it
+}
+
+// Footer Styles
+.footer {
+    background-color: #5273a9;
+    color: #fff;
+    padding: 20px calc(20px + env(safe-area-inset-left)) 20px calc(20px + env(safe-area-inset-right));
+    width: 100vw; // Ensures the footer extends the full width of the viewport
+    margin-bottom: 0; // Removes any space below the footer
+    position: relative; // Ensures that the footer is positioned correctly
+    left: calc(-50vw + 50%); // Centers the footer correctly by offsetting it
+    margin-top: 5%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between; // Space between footer content
+    align-items: center; // Vertical centering of content
+    max-width: 1200px; // Maximum width of the content within the footer
+    width: 100%; // Takes the full width of the footer
+    margin: 0 auto; // Centers the content within the footer
+}
+
+.footer p {
+    margin: 0; // Removes default paragraph margin
+
+}
+
+// Navigation Styles
+.footer-nav ul {
+    list-style-type: none; // No bullets
+    display: flex;
+    flex-wrap: wrap; // Wrap items to the next line on small screens
+    justify-content: center; // Center align the navigation items
+}
+
+.footer-nav li {
+    padding: 10px 15px; // Better spacing and larger click area
+    margin: 0 5px; // Space between items
+}
+
+.footer-nav a {
+    text-decoration: none; // No underline
+    color: #fff; // White text
+    transition: color 0.3s ease; // Smooth color transition for hover
+}
+
+.footer-nav a:hover {
+    color: #ddd; // Lighten color on hover
+    text-decoration: underline; // Underline on hover
+}
+
+// Add any additional global styles or component styles below
