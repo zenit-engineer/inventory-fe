@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { ProductModule } from './product/product.module';
 import { RouterModule } from '@angular/router';
@@ -15,6 +14,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { JwtModule } from "@auth0/angular-jwt";
 import { HttpTokenInterceptor } from './interceptor/http-token-interceptor';
 import { BaseComponent } from './base/base.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,8 @@ import { BaseComponent } from './base/base.component';
     ButtonModule,
     LoginModule,
     HttpClientModule,
-    JwtModule
+    JwtModule,
+    ToastModule
   ],
   exports:[
     
