@@ -15,6 +15,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { HttpTokenInterceptor } from './interceptor/http-token-interceptor';
 import { BaseComponent } from './base/base.component';
 import { ToastModule } from 'primeng/toast';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
     FooterComponent,
     HeaderComponent,
     BaseComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
