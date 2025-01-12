@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { catchError, Subscription, tap } from 'rxjs';
+import { TokenService} from '../services/token-service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService 
+    private authenticationService: AuthenticationService,
+    private tokenService: TokenService
   ) {}
 
   display: boolean = false;
@@ -23,9 +25,7 @@ export class HeaderComponent {
   logOut() {
     this.logoutSubscription = this.authenticationService.logOut().pipe(
       tap(() => {
-        console.log("Successfully Logged Out!");
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        this.tokenService.clearTokens();
         this.router.navigate(['/login']);
       }),
       catchError(error => {

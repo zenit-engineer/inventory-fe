@@ -11,15 +11,29 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = this.tokenService.accessToken;
-    if (token) {
+    
+    if(!this.tokenService.isAccessTokenValid()){
+      const refreshToken = this.tokenService.refreshToken;
+      if (refreshToken){
+        const authReq = request.clone({
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${refreshToken}`
+        })
+      });
+        return next.handle(authReq);
+      }
+    }
+
+    const accessToken = this.tokenService.accessToken;
+    if (accessToken) {
       const authReq = request.clone({
         headers: new HttpHeaders({
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${accessToken}`
         })
       });
       return next.handle(authReq);
     }
+
     return next.handle(request);
   }
 }

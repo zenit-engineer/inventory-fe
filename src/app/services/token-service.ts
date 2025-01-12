@@ -27,24 +27,35 @@ export class TokenService {
     localStorage.removeItem('refreshToken');
   }
 
-  isTokenValid() {
-    const token = this.accessToken;
-    if (!token) {
+  isAccessTokenValid() {
+    const accessToken = this.accessToken;
+    if (!accessToken) {
       return false;
     }
-    // decode the token
+    // decode the accessToken
     const jwtHelper = new JwtHelperService();
     // check expiry date
-    const isTokenExpired = jwtHelper.isTokenExpired(token);
-    if (isTokenExpired) {
-      localStorage.setItem('accessToken', this.refreshToken);
+    const isAccessTokenExpired = jwtHelper.isTokenExpired(accessToken);
+    if (isAccessTokenExpired) {
+      // localStorage.setItem('accessToken', this.refreshToken);
       return false;
     }
     return true;
   }
 
-  isTokenNotValid() {
-    return !this.isTokenValid();
+  isRefreshTokenValid() {
+    const refreshToken = this.refreshToken;
+    if (!refreshToken) {
+      return false;
+    }
+    // decode the refreshToken
+    const jwtHelper = new JwtHelperService();
+    // check expiry date
+    const isRefreshTokenExpired = jwtHelper.isTokenExpired(refreshToken);
+    if (isRefreshTokenExpired) {
+      return false;
+    }
+    return true;
   }
 
   get userRoles(): string[] {

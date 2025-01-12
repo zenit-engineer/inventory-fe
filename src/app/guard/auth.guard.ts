@@ -10,12 +10,12 @@ export const authGuard: CanActivateFn = () => {
     const authService = inject(AuthenticationService)
 
 
-    if(!tokenService.accessToken){
+    if(!tokenService.accessToken || !tokenService.refreshToken){
       router.navigate(['login']);
       return false;
     }
 
-    if (tokenService.isTokenNotValid()) {
+    if (!tokenService.isAccessTokenValid()) {
     return authService.refreshToken().pipe(
       switchMap((newTokens) => {
         if (newTokens.accessToken && newTokens.refreshToken) {
@@ -23,15 +23,18 @@ export const authGuard: CanActivateFn = () => {
           tokenService.refreshToken = newTokens.refreshToken;
           return of(true);
         } else {
+          tokenService.clearTokens();
           router.navigate(['login']);
           return of(false);
         }
       }),
       catchError(() => {
+        tokenService.clearTokens();     
         router.navigate(['login']);
         return of(false);
       })
     ) as unknown as boolean; // Necessary because Angular expects a boolean return
+   
   }
 
   return true;
