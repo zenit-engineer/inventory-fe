@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { authGuard } from './guards/auth.guard';
-import { ProductComponent } from './product/product.component';
-import { LoginComponent } from './pages/login/login.component';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { authGuard } from './guard/auth.guard';
-import { BaseComponent } from './base/base.component';
+import { BaseComponent } from './components/base/base.component';
+import { RegisterComponent } from './components/pages/register/register.component';
+import { ActivateAccountComponent } from './components/pages/activate-account/activate-account.component';
+import { LoginComponent } from './components/pages/login/login.component';
 
 const routes: Routes = [
   {
@@ -30,7 +27,7 @@ const routes: Routes = [
   {
     path: '',
     component:BaseComponent,
-    loadChildren: ()=> import('./base/base.module').then(m => m.BaseModule),
+    loadChildren: ()=> import('./components/base/base.module').then(m => m.BaseModule),
     canActivate: [authGuard],
   }
 ];

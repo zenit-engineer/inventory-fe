@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { ApiResponse } from 'src/app/interfaces/api-response';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 import { Manufacturer } from 'src/app/interfaces/manufacturer';
 import { ProductService } from 'src/app/services/product.service';

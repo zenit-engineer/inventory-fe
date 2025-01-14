@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { ProductModule } from './product/product.module';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginModule } from './pages/login/login.module';
-import { StatisticsModule } from './statistics/statistics.module';
+import { StatisticsModule } from './components/statistics/statistics.module';
 import { ButtonModule } from 'primeng/button';
 import {SidebarModule} from 'primeng/sidebar';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
 import { HttpTokenInterceptor } from './interceptor/http-token-interceptor';
 import { ToastModule } from 'primeng/toast';
-import { BaseModule } from './base/base.module'; 
-import { ChangePasswordModule } from './change-password/change-password.module';
+import { ChangePasswordModule } from './components/change-password/change-password.module';
+import { ProductModule } from './components/product/product.module';
+import { LoginModule } from './components/pages/login/login.module';
+import { BaseModule } from './components/base/base.module';
 
 @NgModule({
   declarations: [

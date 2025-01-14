@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../services/auth.service';
-import { changePasswordMismatchValidator } from '../shared/password-mismatch-validator.directive';
-import { ChangePasswordRequest } from '../interfaces/change-password-request';
+import { AuthenticationService } from '../../services/auth.service';
+import { changePasswordMismatchValidator } from '../../shared/password-mismatch-validator.directive';
+import { ChangePasswordRequest } from '../../interfaces/change-password-request';
 import { MessageService } from 'primeng/api';
 
 @Component({

@@ -1,13 +1,13 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { ProductService } from '../../services/product.service';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Product } from '../../interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-filter-project',

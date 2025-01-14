@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../services/auth.service';
+import { AuthenticationService } from '../../services/auth.service';
 import { catchError, Subscription, tap } from 'rxjs';
-import { TokenService} from '../services/token-service';
+import { TokenService} from '../../services/token-service';
 
 @Component({
   selector: 'app-header',

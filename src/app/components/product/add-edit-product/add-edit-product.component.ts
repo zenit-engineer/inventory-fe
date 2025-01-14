@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from '../../services/product.service';
 import { MessageService } from 'primeng/api';
-import { Product } from '../../interfaces/product';
 import { catchError, map, Subscription } from 'rxjs';
 import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
+import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-add-edit-product',

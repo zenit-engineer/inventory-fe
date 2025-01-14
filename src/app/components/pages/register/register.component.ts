@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/auth.service';
-import { passwordMismatchValidator } from '../../shared/password-mismatch-validator.directive';
 import { RegistrationRequest } from 'src/app/interfaces/registration-request';
+import { passwordMismatchValidator } from 'src/app/shared/password-mismatch-validator.directive';
 
 @Component({
   selector: 'app-register',

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ProductService } from '../services/product.service';
-import { Product } from '../interfaces/product';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { ProductRequest } from '../interfaces/product-request';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Product } from 'src/app/interfaces/product';
+import { ProductRequest } from 'src/app/interfaces/product-request';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product',
