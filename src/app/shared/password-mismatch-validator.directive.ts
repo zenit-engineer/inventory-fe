@@ -11,3 +11,15 @@ export const passwordMismatchValidator: ValidatorFn = (
     ? { passwordMismatch: true }
     : null;
 };
+
+
+export const changePasswordMismatchValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const newPassword = control.get('newPassword');
+  const confirmPassword = control.get('confirmPassword');
+
+  return newPassword && confirmPassword && newPassword.value !== confirmPassword.value
+    ? { passwordMismatch: true }
+    : null;
+};

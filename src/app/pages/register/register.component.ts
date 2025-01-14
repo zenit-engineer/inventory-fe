@@ -53,6 +53,7 @@ export class RegisterComponent {
         this.errorMsg = error.error.validationErrors;
       }
     );
+    this.subscriptions.push(this.authenticationSubscription);
   }
 
   get firstname() {
@@ -73,5 +74,9 @@ export class RegisterComponent {
 
   get confirmPassword() {
     return this.registerForm.controls['confirmPassword'];
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { RegistrationRequest } from '../interfaces/registration-request';
 import { AuthenticationRequest } from '../interfaces/authentication-request';
 import { AuthenticationResponse } from '../interfaces/authentication-response';
+import { ChangePasswordRequest } from '../interfaces/change-password-request';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class AuthenticationService {
 
   logOut(): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/api/v1/auth/logout`, {});
+  }
+
+  changePassword(changePasswordRequest: ChangePasswordRequest): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/api/v1/user`, changePasswordRequest);
   }
   
 }

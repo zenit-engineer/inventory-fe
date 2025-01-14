@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationRequest } from 'src/app/interfaces/authentication-request';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token-service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
   constructor(
     private router: Router, 
     private authService: AuthenticationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private messageService: MessageService
   ){}
 
   login() {
@@ -33,14 +35,14 @@ export class LoginComponent {
         this.router.navigate(['home']);
       },
       error: (err) => {
-        console.log(err);
-        // Handle validation errors
-        if (err.error && err.error.validationErrors) {
-          this.errorMsg = err.error.validationErrors;
-        } else if (err.error && err.error.errorMsg) {
-          // Handle general error message
-          this.errorMsg.push(err.error.errorMsg);
-        }
+        const errorMsgs = err?.error?.error || 'An unexpected error occurred';
+      
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failed to Sign In!',
+          detail: errorMsgs, // Show the actual backend error message
+          life: 5000
+        });
       }
     });
   }

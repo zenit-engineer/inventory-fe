@@ -13,6 +13,7 @@ import { DividerModule } from 'primeng/divider';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [LoginComponent, ActivateAccountComponent, RegisterComponent],
@@ -27,7 +28,8 @@ import { InputTextModule } from 'primeng/inputtext';
     DividerModule,
     MessageModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule
   ],
   exports:[
     LoginComponent

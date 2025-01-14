@@ -6,24 +6,18 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './pages/login/login.module';
 import { StatisticsModule } from './statistics/statistics.module';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
 import { ButtonModule } from 'primeng/button';
 import {SidebarModule} from 'primeng/sidebar';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
 import { HttpTokenInterceptor } from './interceptor/http-token-interceptor';
-import { BaseComponent } from './base/base.component';
 import { ToastModule } from 'primeng/toast';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { BaseModule } from './base/base.module'; 
+import { ChangePasswordModule } from './change-password/change-password.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    HeaderComponent,
-    BaseComponent,
-    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +30,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     LoginModule,
     HttpClientModule,
     JwtModule,
-    ToastModule
+    ToastModule,
+    BaseModule,
+    ChangePasswordModule
   ],
   exports:[
     
