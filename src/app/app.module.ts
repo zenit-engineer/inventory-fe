@@ -11,9 +11,9 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { HttpTokenInterceptor } from './interceptor/http-token-interceptor';
 import { ToastModule } from 'primeng/toast';
 import { ChangePasswordModule } from './components/change-password/change-password.module';
-import { ProductModule } from './components/product/product.module';
-import { LoginModule } from './components/pages/login/login.module';
 import { BaseModule } from './components/base/base.module';
+import { LoginModule } from './components/auth/login/login.module';
+import { HomeModule } from './components/home/home.module';
 
 @NgModule({
   declarations: [
@@ -23,11 +23,11 @@ import { BaseModule } from './components/base/base.module';
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    ProductModule,
     StatisticsModule,
     SidebarModule,
     ButtonModule,
     LoginModule,
+    HomeModule,
     HttpClientModule,
     JwtModule,
     ToastModule,

@@ -5,7 +5,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 import { environment } from 'src/environments/environment';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
 

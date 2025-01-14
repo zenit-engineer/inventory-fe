@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StatisticsComponent } from '../statistics/statistics.component';
 import { authGuard } from 'src/app/guard/auth.guard';
-import { ProductComponent } from '../product/product.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { HomeComponent } from '../home/home.component';
 const routes: Routes = [
   {
     path: 'statistics',
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: ProductComponent,
+    component: HomeComponent,
     canActivate: [authGuard]
   },
   {

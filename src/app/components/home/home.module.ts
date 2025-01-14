@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductComponent } from './product.component';
 import {HttpClientModule} from '@angular/common/http'
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -21,11 +20,12 @@ import { RouterModule } from '@angular/router';  // Import RouterModule
 import { TagModule } from 'primeng/tag';
 import { AddEditProductModule } from './add-edit-product/add-edit-product.module';
 import { FilterProjectModule } from './filter-project/filter-project.module';
+import { HomeComponent } from './home.component';
 
 
 @NgModule({
   declarations: [
-    ProductComponent,
+    HomeComponent,
     ManufacturerComponent,
     SupplierComponent,
     CategoryComponent
@@ -49,11 +49,11 @@ import { FilterProjectModule } from './filter-project/filter-project.module';
     TagModule
 ],
   exports: [
-    ProductComponent
+    HomeComponent
   ],
   providers:[
     MessageService,
     ConfirmationService
   ]
 })
-export class ProductModule { }
+export class HomeModule { }

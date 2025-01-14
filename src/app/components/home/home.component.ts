@@ -9,11 +9,11 @@ import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class ProductComponent implements OnInit,OnDestroy {
+export class HomeComponent implements OnInit,OnDestroy {
 
   products: Product[] = [];
   selectedProduct: Product | null = null; 
