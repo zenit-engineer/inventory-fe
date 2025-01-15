@@ -11,6 +11,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { HttpClientModule } from '@angular/common/http';  // Import this
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,11 @@ import { ToastModule } from 'primeng/toast';
     PasswordModule,
     InputTextModule,
     ToastModule,
+    HttpClientModule
   ],
   providers:[
-    MessageService
+    MessageService,
+    AuthenticationService
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
