@@ -55,8 +55,16 @@
   >
   </div>
   <div class="field">
-    <label class="block">Description</label>
-    <textarea pInputTextarea formControlName="description"></textarea>
+    <label class="block" for="description">Description</label>
+    <input type="text" pInputText id="description" formControlName="description" />
+    <small
+      class="p-error block"
+      *ngIf="
+        productForm.controls['description'].invalid &&
+        productForm.controls['description'].dirty
+      "
+      >Field is required</small
+    >
   </div>
   <div class="field">
     <label class="block" for="manufacturer">Manufacturer</label>
