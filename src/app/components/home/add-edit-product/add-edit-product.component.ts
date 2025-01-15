@@ -1,13 +1,36 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Subscription } from 'rxjs';
 import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
+import { CommonModule } from '@angular/common';
+import {DialogModule} from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';  
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToastModule } from 'primeng/toast';
+import { RouterModule } from '@angular/router'; // Add this import
 
 @Component({
   selector: 'app-add-edit-product',
+  standalone: true,
+  imports: [
+    CommonModule,
+    DialogModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    InputNumberModule,
+    DropdownModule,
+    FileUploadModule,
+    ToastModule,
+    RouterModule
+  ],
   templateUrl: './add-edit-product.component.html',
   styleUrls: ['./add-edit-product.component.scss']
 })

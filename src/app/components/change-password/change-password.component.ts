@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,9 +6,26 @@ import { AuthenticationService } from '../../services/auth.service';
 import { changePasswordMismatchValidator } from '../../shared/password-mismatch-validator.directive';
 import { ChangePasswordRequest } from '../../interfaces/change-password-request';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { PasswordModule } from 'primeng/password';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+import { RouterModule } from '@angular/router'; // Import RouterModule here if needed
 
 @Component({
   selector: 'app-change-password',
+  standalone: true,
+  imports: [
+    CommonModule,
+    PasswordModule,
+    CardModule,
+    ButtonModule,
+    ToastModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })

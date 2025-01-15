@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -7,9 +7,31 @@ import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-respons
 import { environment } from 'src/environments/environment';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/interfaces/product';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-filter-project',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    DropdownModule,
+    ButtonModule,
+    FileUploadModule,
+    ToastModule,
+    ToolbarModule,
+    RouterModule  
+
+  ],
   templateUrl: './filter-project.component.html',
   styleUrls: ['./filter-project.component.scss']
 })

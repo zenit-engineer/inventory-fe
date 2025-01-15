@@ -1,39 +1,22 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from './guard/auth.guard';
-import { BaseComponent } from './components/base/base.component';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { ActivateAccountComponent } from './components/auth/activate-account/activate-account.component';
-import { LoginComponent } from './components/auth/login/login.component';
+import { BaseComponent } from './components/base/base.component';
+import { authGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  {
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'activate-account', component: ActivateAccountComponent },
+  { path: 'register', component: RegisterComponent },
+  { 
     path: '', 
-    redirectTo: 'login', 
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'activate-account',
-    component: ActivateAccountComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
-  {
-    path: '',
-    component:BaseComponent,
-    loadChildren: ()=> import('./components/base/base.module').then(m => m.BaseModule),
-    canActivate: [authGuard],
+    component: BaseComponent, 
+    loadChildren: () => import('./components/base/base.component').then(m => m.BaseComponent),
+    canActivate: [authGuard]
   }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+// Use RouterModule directly in the standalone components
+RouterModule.forRoot(routes);

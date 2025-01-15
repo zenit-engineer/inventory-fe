@@ -1,15 +1,56 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { catchError, first, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Product } from 'src/app/interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ProductService } from 'src/app/services/product.service';
+import { CommonModule } from '@angular/common';
+import {HttpClientModule} from '@angular/common/http'
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { FileUploadModule } from 'primeng/fileupload';
+import { RouterModule } from '@angular/router';
+import { TagModule } from 'primeng/tag';
+import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
+import { CategoryComponent } from './category/category.component';
+import { FilterProjectComponent } from './filter-project/filter-project.component';
+import { ManufacturerComponent } from './manufacturer/manufacturer.component';
+import { MiniDialogAddComponent } from './mini-dialog-add/mini-dialog-add.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    TableModule,
+    ButtonModule,
+    DialogModule,
+    BrowserAnimationsModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DropdownModule,
+    FormsModule,
+    FileUploadModule,
+    RouterModule,
+    TagModule,
+    AddEditProductComponent,
+    CategoryComponent,
+    FilterProjectComponent,
+    ManufacturerComponent,
+    MiniDialogAddComponent,
+    SupplierComponent
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

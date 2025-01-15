@@ -3,9 +3,20 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
 import { catchError, Subscription, tap } from 'rxjs';
 import { TokenService} from '../../services/token-service';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { RouterModule } from '@angular/router'; // Add this import
 
 @Component({
   selector: 'app-header',
+  standalone: true,
+  imports: [
+    CommonModule,
+    SidebarModule,
+    ButtonModule,
+    RouterModule
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

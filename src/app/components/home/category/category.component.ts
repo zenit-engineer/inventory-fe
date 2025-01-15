@@ -3,9 +3,28 @@ import { ConfirmationService, MessageService, SortEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { MiniDialogAddComponent } from '../mini-dialog-add/mini-dialog-add.component';
+import { RouterModule } from '@angular/router'; // Add this import
 
 @Component({
   selector: 'app-category',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    PaginatorModule,
+    DialogModule,
+    ToastModule,
+    MiniDialogAddComponent,
+    RouterModule
+  ],
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })

@@ -5,9 +5,28 @@ import { Subscription } from 'rxjs';
 import { ApiResponseWithDataListOfStrings } from 'src/app/interfaces/api-response-with-data-list-of-strings';
 import { Manufacturer } from 'src/app/interfaces/manufacturer';
 import { ProductService } from 'src/app/services/product.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-mini-dialog-add',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DialogModule,
+    ButtonModule,
+    InputTextareaModule,
+    InputTextModule,
+    ToastModule,
+    RouterModule
+  ],
   templateUrl: './mini-dialog-add.component.html',
   styleUrls: ['./mini-dialog-add.component.scss']
 })

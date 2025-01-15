@@ -1,13 +1,37 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { RegistrationRequest } from 'src/app/interfaces/registration-request';
 import { passwordMismatchValidator } from 'src/app/shared/password-mismatch-validator.directive';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms'; // ✅ Import this!
+import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';  // Import RouterModule
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    RouterModule,
+    CardModule,
+    DividerModule,
+    MessageModule,
+    PasswordModule,
+    InputTextModule,
+    ToastModule
+  ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
@@ -34,7 +58,8 @@ export class RegisterComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private messageService: MessageService
   ) {}
 
   login() {
@@ -50,7 +75,15 @@ export class RegisterComponent {
         this.router.navigate(['activate-account']);
       },
       (error) => {
-        this.errorMsg = error.error.validationErrors;
+        // Check if error response has a body and extract the error message
+        const errorMsg = error?.error?.validationErrors || error?.error?.error || 'An unexpected error occurred';
+              
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failed to Register',
+          detail: errorMsg, // Show the actual backend error message
+          life: 5000
+        });      
       }
     );
     this.subscriptions.push(this.authenticationSubscription);

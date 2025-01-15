@@ -1,7 +1,18 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChartModule } from 'primeng/chart';
+import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-multi-axis',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ChartModule,
+    ButtonModule,
+    RouterModule
+  ],
   templateUrl: './multi-axis.component.html',
   styleUrls: ['./multi-axis.component.scss']
 })

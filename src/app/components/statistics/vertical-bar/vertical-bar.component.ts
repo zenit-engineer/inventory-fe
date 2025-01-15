@@ -4,9 +4,20 @@ import { MessageService } from 'primeng/api';
 import { UIChart } from 'primeng/chart';
 import { VerticalBarData, VerticalBarResponseData } from 'src/app/interfaces/vertical-bar-response-data';
 import { ProductService } from 'src/app/services/product.service';
+import { CommonModule } from '@angular/common';
+import { ChartModule } from 'primeng/chart';
+import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-vertical-bar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ChartModule,
+    ButtonModule,
+    RouterModule
+  ],
   templateUrl: './vertical-bar.component.html',
   styleUrls: ['./vertical-bar.component.scss']
 })
