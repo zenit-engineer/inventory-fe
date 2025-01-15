@@ -12,7 +12,6 @@ import {HttpClientModule} from '@angular/common/http'
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -36,7 +35,6 @@ import { SupplierComponent } from './supplier/supplier.component';
     TableModule,
     ButtonModule,
     DialogModule,
-    BrowserAnimationsModule,
     ToastModule,
     ConfirmDialogModule,
     DropdownModule,
@@ -50,6 +48,9 @@ import { SupplierComponent } from './supplier/supplier.component';
     ManufacturerComponent,
     MiniDialogAddComponent,
     SupplierComponent
+  ],
+  providers:[
+    ConfirmationService
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']

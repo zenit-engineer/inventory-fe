@@ -7,7 +7,6 @@ import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // ✅ Import this!
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';  // Import RouterModule
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,11 +19,13 @@ import { ToastModule } from 'primeng/toast';
     CommonModule,
     FormsModule,
     ButtonModule,
-    RouterModule,
     CardModule,
     PasswordModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+  ],
+  providers:[
+    MessageService
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
