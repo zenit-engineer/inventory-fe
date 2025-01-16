@@ -190,24 +190,17 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   }
 
   generateExcel(): void {
-    this.productSubscription = this.productService.generateExcel().pipe(
-      catchError(error => {
-        console.error('Error generating Excel file:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to generate Excel file.'
-        });
-        return of(null);  // Return null to handle the error gracefully
-      })
-    ).subscribe({
-      next: () => {
-        // When the response is successful (no body expected), trigger the download
-        const url = `${this.baseUrl}/api/v1/product/export-excel`; // Assuming backend sends the file directly
+  // Subscribe to the productService generateExcel API
+  this.productSubscription = this.productService.generateExcel()
+    .subscribe({
+      next: (response: Blob) => {
+        // When the response is successful (the file is returned as a Blob), trigger the download
+        const url = window.URL.createObjectURL(response);  // Create a URL for the Blob response
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'products.xls'; // Name of the file to be downloaded
-        a.click();
+        a.download = 'products.xls';  // Set the name for the file to be downloaded
+        a.click();  // Trigger the download
+        window.URL.revokeObjectURL(url);  // Clean up the URL object after download
       },
       error: (error) => {
         console.error('Error during Excel file fetch:', error);
@@ -218,7 +211,8 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
         });
       }
     });
-  }  
+  }
+
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({

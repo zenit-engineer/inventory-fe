@@ -88,8 +88,8 @@ export class ProductService {
     return this.http.post<ApiResponseWithDataListOfStrings>(`${this.baseUrl}/api/v1/category`, category);
   }
 
-  generateExcel(): Observable<void> {
-    return this.http.get<void>(`${this.baseUrl}/api/v1/product/export-excel`, { responseType: 'text' as 'json' });
+  generateExcel(): Observable<Blob> {
+  return this.http.get<Blob>(`${this.baseUrl}/api/v1/product/export-excel`, { responseType: 'blob' as 'json' });
   }
   
   importExcel(formData: FormData): Observable<void> {
