@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-import {} from '@angular/common/http'; // Import HttpClientModule
 import { CommonModule } from '@angular/common'; // Use CommonModule
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +13,9 @@ import { CommonModule } from '@angular/common'; // Use CommonModule
     RouterModule,
     JwtModule,
     CommonModule,
-    
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule  // Add this import to provide HttpClient
+  ],
+  providers:[
+    MessageService
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
