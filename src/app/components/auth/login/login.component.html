@@ -12,18 +12,18 @@
           name="email"
           #email="ngModel"
           required
+          minlength=8
           pattern="[a-z0-9\._%\+\-]+@[a-z0-9\.\-]+\.[a-z]{2,}$"
         />
-        <div *ngIf="email.invalid && (email.dirty || email.touched)">
-          <small class="block p-error">
-            <div *ngIf="email.errors?.['required']">
-              <span>Email is required</span>
-            </div>
-            <div *ngIf="email.errors?.['pattern']">
-              <span>Email is invalid</span>
-            </div>
-          </small>
-        </div>
+        @if(email.invalid && (email.dirty || email.touched)){
+        <small class="block p-error">
+          @if(email.hasError('required')) {
+          <span>Email is required</span>
+          } @else if(email.hasError('pattern')) {
+          <span>Email is invalid</span>
+          }
+        </small>
+        }
       </div>
       <div class="field">
         <label for="password">Password</label>
@@ -33,21 +33,20 @@
           [toggleMask]="true"
           inputId="password"
           name="password"
-          minlength="8"
           #password="ngModel"
+          minlength="8"
           inputStyleClass="w-full"
           styleClass="w-full"
           required
         />
-        <div *ngIf="password.invalid && (password.dirty || password.touched)">
-          <small class="block p-error">
-            Password is required
-          </small>
-        </div>
+        @if(password.invalid && (password.dirty || password.touched)) {
+        <small class="block p-error"> Password is required </small>
+        }
       </div>
       <p-button
         label="SIGN IN"
         styleClass="w-full"
+        [disabled]="loginForm.invalid"
         type="submit"
       ></p-button>
       <div class="mt-2">
@@ -55,5 +54,5 @@
       </div>
     </form>
   </p-card>
+  <p-toast></p-toast>
 </div>
-<p-toast></p-toast>

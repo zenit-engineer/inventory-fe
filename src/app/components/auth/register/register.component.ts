@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { RegistrationRequest } from 'src/app/interfaces/registration-request';
@@ -8,7 +7,6 @@ import { passwordMismatchValidator } from 'src/app/shared/password-mismatch-vali
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms'; // ✅ Import this!
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';  // Import RouterModule
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { MessageModule } from 'primeng/message';
@@ -16,6 +14,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,13 +23,13 @@ import { MessageService } from 'primeng/api';
     CommonModule,
     ReactiveFormsModule,
     ButtonModule,
-    RouterModule,
     CardModule,
     DividerModule,
     MessageModule,
     PasswordModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    RouterLink
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']

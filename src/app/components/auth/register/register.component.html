@@ -5,28 +5,29 @@
       <div class="field">
         <label for="firstname">First Name</label>
         <input pInputText class="w-full" id="firstname" formControlName="firstname" />
-        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+        @if(firstname.invalid && (firstname.dirty || firstname.touched)){
           <small class="block p-error">First name is required</small>
-        </div>
+        }
       </div>
       <div class="field">
         <label for="lastname">Last Name</label>
         <input pInputText class="w-full" id="lastname" formControlName="lastname" />
-        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+        @if(lastname.invalid && (lastname.dirty || lastname.touched)){
           <small class="block p-error">Last name is required</small>
-        </div>
+        }
       </div>
-
-      <!-- Email -->
       <div class="field">
         <label for="email">Email</label>
         <input pInputText class="w-full" id="email" formControlName="email" />
-        <div *ngIf="email.invalid && (email.dirty || email.touched)">
-          <small class="block p-error">
-            <div *ngIf="email.hasError('required')">Email is required</div>
-            <div *ngIf="email.hasError('pattern')">Email is invalid</div>
-          </small>
-        </div>
+        @if(email.invalid && (email.dirty || email.touched)){
+        <small class="block p-error">
+          @if(email.hasError('required')) {
+          <span>Email is required</span>
+          } @else if(email.hasError('pattern')) {
+          <span>Email is invalid</span>
+          }
+        </small>
+        }
       </div>
 
       <!-- Password -->
@@ -40,9 +41,9 @@
           inputStyleClass="w-full"
           styleClass="w-full"
         />
-        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+        @if(password.invalid && (password.dirty || password.touched)) {
           <small class="block p-error">Password is required</small>
-        </div>
+        }
       </div>
 
       <!-- Confirm Password -->
@@ -56,12 +57,13 @@
           inputStyleClass="w-full"
           styleClass="w-full"
         />
-        <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
-          <small class="block p-error">Confirm password is required</small>
-        </div>
-        <div *ngIf="registerForm.hasError('passwordMismatch') && password.valid && confirmPassword.valid">
-          <small class="block p-error">Password mismatch</small>
-        </div>
+        @if(confirmPassword.invalid && (confirmPassword.dirty ||
+        confirmPassword.touched)) {
+        <small class="block p-error"> Confirm Password is required </small>
+        } @if(registerForm.hasError('passwordMismatch') && password.valid &&
+        confirmPassword.valid) {
+        <small class="block p-error"> Password mismatch </small>
+        }
       </div>
 
       <p-button type="submit" label="Register" styleClass="w-full" [disabled]="registerForm.invalid"></p-button>

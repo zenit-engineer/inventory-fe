@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthenticationRequest } from 'src/app/interfaces/authentication-request';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token-service';
@@ -11,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +23,8 @@ import { ToastModule } from 'primeng/toast';
     PasswordModule,
     InputTextModule,
     ToastModule,
+    RouterLink,
+    RouterModule
   ],
   providers:[
     MessageService,
