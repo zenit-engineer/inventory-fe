@@ -11,7 +11,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
-import { HttpClientModule } from '@angular/common/http';  // Import this
+import {} from '@angular/common/http';  // Import this
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,11 @@ import { HttpClientModule } from '@angular/common/http';  // Import this
     PasswordModule,
     InputTextModule,
     ToastModule,
-    HttpClientModule
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule
   ],
   providers:[
     MessageService,
