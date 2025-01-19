@@ -59,6 +59,20 @@ export class LoginComponent {
             this.tokenService.accessToken = response.accessToken || '';
             this.tokenService.refreshToken = response.refreshToken || '';
             this.router.navigate(['home']);
+          }else if (this.authResponse.mfaEnabled) {
+            this.router.navigate(['two-factor-authentication'], 
+              {
+               state: { 
+                registerEmail: this.authRequest.email, 
+                } 
+              });
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Failed to Sign In!',
+              detail: 'User Not Found!', // Show the actual backend error message
+              life: 5000
+            });
           }
         },
         error: (err) => {
