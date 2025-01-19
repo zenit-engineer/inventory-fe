@@ -15,6 +15,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router, RouterLink } from '@angular/router';
+import { CheckboxModule } from 'primeng/checkbox';
+import { AuthenticationResponse } from 'src/app/interfaces/authentication-response';
+import { ActivateAccountComponent } from './activate-account/activate-account.component';
+import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +33,10 @@ import { Router, RouterLink } from '@angular/router';
     PasswordModule,
     InputTextModule,
     ToastModule,
-    RouterLink
+    RouterLink,
+    CheckboxModule,
+    ActivateAccountComponent,
+    TwoFactorAuthenticationComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -45,6 +52,7 @@ export class RegisterComponent {
       ]),
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required]),
+      mfaEnabled: new FormControl(false)
     },
     {
       validators: passwordMismatchValidator,
@@ -54,6 +62,7 @@ export class RegisterComponent {
   errorMsg: Array<string> = [];
   subscriptions: Subscription[] = [];
   authenticationSubscription: Subscription = new Subscription();
+  authResponse: AuthenticationResponse = {};
 
   constructor(
     private router: Router,
@@ -65,28 +74,44 @@ export class RegisterComponent {
     this.router.navigate(['login']);
   }
 
-  onRegister() {
+  register() {
+    if (this.registerForm.invalid) {
+      return; // Prevent submission if the form is invalid
+    }
+  
     const postData = { ...this.registerForm.value };
     delete postData.confirmPassword; // Remove confirmPassword before sending data to the backend
-
-    this.authenticationSubscription = this.authService.register(postData as RegistrationRequest).subscribe(
-      () => {
-        this.router.navigate(['activate-account']);
-      },
-      (error) => {
-        // Check if error response has a body and extract the error message
-        const errorMsg = error?.error?.validationErrors || error?.error?.error || 'An unexpected error occurred';
-              
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failed to Register',
-          detail: errorMsg, // Show the actual backend error message
-          life: 5000
-        });      
-      }
-    );
+  
+    this.authenticationSubscription = this.authService.register(postData as RegistrationRequest)
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.authResponse = response;
+            this.router.navigate(['activate-account'], 
+              {
+               state: { 
+                mfaEnabled: this.authResponse.mfaEnabled, 
+                secretImageUri: this.authResponse.secretImageUri,
+                registerEmail: this.registerForm.controls['email'].value
+                } 
+              });
+          }
+        },
+        error: (error) => {
+          const errorMsg = error?.error?.validationErrors || error?.error?.error || 'An unexpected error occurred';
+  
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failed to Register',
+            detail: errorMsg,
+            life: 5000
+          });
+        }
+      });
+  
     this.subscriptions.push(this.authenticationSubscription);
   }
+  
 
   get firstname() {
     return this.registerForm.controls['firstname'];

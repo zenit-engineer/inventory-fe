@@ -11,6 +11,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { AuthenticationResponse } from 'src/app/interfaces/authentication-response';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent {
     password: ''
   };
   errorMsg: Array<string> = [];
+  authResponse: AuthenticationResponse = {};
 
   constructor(
     private router: Router, 
@@ -49,27 +51,28 @@ export class LoginComponent {
   ){}
 
   login() {
-    this.errorMsg = [];
-    this.authService.authenticate(this.authRequest).subscribe({
-      next: (res) => {
-        // Access the accessToken from the response
-        this.tokenService.accessToken = res.accessToken || '';
-        this.tokenService.refreshToken = res.refreshToken || '';
-        this.router.navigate(['home']);
-      },
-      error: (err) => {
-        const errorMsgs = err?.error?.error || 'An unexpected error occurred';
-      
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failed to Sign In!',
-          detail: errorMsgs, // Show the actual backend error message
-          life: 5000
-        });
-      }
+    this.authService.authenticate(this.authRequest)
+      .subscribe({
+        next: (response: AuthenticationResponse) => {
+          this.authResponse = response;
+          if (!this.authResponse.mfaEnabled) {
+            this.tokenService.accessToken = response.accessToken || '';
+            this.tokenService.refreshToken = response.refreshToken || '';
+            this.router.navigate(['home']);
+          }
+        },
+        error: (err) => {
+          const errorMsgs = err?.error?.error || 'An unexpected error occurred';
+        
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failed to Sign In!',
+            detail: errorMsgs, // Show the actual backend error message
+            life: 5000
+          });
+        }
     });
   }
-  
 
   register() {
     this.router.navigate(['register']);

@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path: 'activate-account',
     loadComponent: () =>
-      import('./components/auth/activate-account/activate-account.component').then(
+      import('./components/auth/register/activate-account/activate-account.component').then(
         (m) => m.ActivateAccountComponent
       ),
   },
@@ -20,6 +20,11 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () =>
       import('./components/auth/register/register.component').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'two-factor-authentication',
+    loadComponent: () =>
+      import('./components/auth/register/two-factor-authentication/two-factor-authentication.component').then((m) => m.TwoFactorAuthenticationComponent),
   },
   {
     path: '',

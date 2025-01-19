@@ -1,6 +1,6 @@
 <div class="flex justify-content-center align-items-center min-h-screen">
   <p-card header="Register" [style]="{ width: '400px' }">
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
       <!-- Full Name (Firstname + Lastname) -->
       <div class="field">
         <label for="firstname">First Name</label>
@@ -65,7 +65,12 @@
         <small class="block p-error"> Password mismatch </small>
         }
       </div>
-
+      <div class="field">
+        <form class="flex items-center gap-1">
+          <p-checkbox formControlName="mfaEnabled" value="mfa" inputId="mfa" binary="true"/>
+          <label for="mfa" class="ml-2">Enable Two Factor Authentication</label>  
+        </form>
+      </div>
       <p-button type="submit" label="Register" styleClass="w-full" [disabled]="registerForm.invalid"></p-button>
       <div class="mt-2">Already a member? <a routerLink="/login">Login</a></div>
     </form>

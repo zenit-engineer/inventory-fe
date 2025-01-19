@@ -6,6 +6,7 @@ import { RegistrationRequest } from '../interfaces/registration-request';
 import { AuthenticationRequest } from '../interfaces/authentication-request';
 import { AuthenticationResponse } from '../interfaces/authentication-response';
 import { ChangePasswordRequest } from '../interfaces/change-password-request';
+import { VerificationRequest } from '../interfaces/verification-request';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  register(registrationRequest: RegistrationRequest): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/api/v1/auth/register`, registrationRequest);
+  register(registrationRequest: RegistrationRequest): Observable<AuthenticationResponse> {
+    return this.http.post<AuthenticationResponse>(`${this.baseUrl}/api/v1/auth/register`, registrationRequest);
   }
 
   activateAccount(activationToken: string): Observable<AuthenticationResponse> {
@@ -39,6 +40,10 @@ export class AuthenticationService {
 
   changePassword(changePasswordRequest: ChangePasswordRequest): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/api/v1/user`, changePasswordRequest);
+  }
+
+  verifyCode(verificationRequest: VerificationRequest): Observable<AuthenticationResponse> {
+    return this.http.post<AuthenticationResponse>(`${this.baseUrl}/api/v1/auth/verify`, verificationRequest);
   }
   
 }
