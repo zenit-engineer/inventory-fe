@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column; // Stack elements vertically
+    align-items: center;    // Center horizontally
+    justify-content: center; // Center vertically
+    height: 100vh;          // Full viewport height
+  
+    h2 {
+      margin-bottom: 1rem; // Space below the heading
+    }
+  
+    .qr-code {
+      margin-bottom: 1.5rem; // Space below the QR code
+    }
+  
+    div {
+      display: flex;
+      flex-direction: column; // Stack the label and code-input vertically
+      align-items: center;    // Center horizontally
+      gap: 1rem;              // Space between the label and code-input
+      width: 400px;           // Set a consistent width
+      text-align: center;     // Center text
+    }
+  
+    .code-input {
+      width: 100%; // Ensure code-input spans the full width of its container
+    }
+  }
+  

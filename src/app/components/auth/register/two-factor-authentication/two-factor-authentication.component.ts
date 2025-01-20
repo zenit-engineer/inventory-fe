@@ -1,13 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { AuthenticationRequest } from 'src/app/interfaces/authentication-request';
 import { VerificationRequest } from 'src/app/interfaces/verification-request';
 import { AuthenticationService } from 'src/app/services/auth.service';
+import { ImageModule } from 'primeng/image';
+import { CodeInputModule } from 'angular-code-input';
 
 @Component({
   selector: 'app-two-factor-authentication',
@@ -16,7 +17,9 @@ import { AuthenticationService } from 'src/app/services/auth.service';
     FormsModule,
     ButtonModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    ImageModule,
+    CodeInputModule
   ],
   templateUrl: './two-factor-authentication.component.html',
   styleUrl: './two-factor-authentication.component.scss'
@@ -25,7 +28,6 @@ export class TwoFactorAuthenticationComponent implements OnChanges{
 
   secretImageUri: string | undefined;
   registerEmail: string = '';
-  otpCode = '';
 
   constructor(
     private authService: AuthenticationService,
@@ -43,10 +45,14 @@ export class TwoFactorAuthenticationComponent implements OnChanges{
     }
   }
   
-  verifyCode() {
+  onCodeCompleted(otpCode: string) {
+    this.verifyCode(otpCode);
+  }
+
+  verifyCode(otpCode: string) {
     const verifyRequest: VerificationRequest = {
       email: this.registerEmail,
-      code: this.otpCode
+      code: otpCode
     };
   
     this.authService.verifyCode(verifyRequest).subscribe({
