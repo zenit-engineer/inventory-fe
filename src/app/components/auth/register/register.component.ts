@@ -85,8 +85,10 @@ export class RegisterComponent {
     this.authenticationSubscription = this.authService.register(postData as RegistrationRequest)
       .subscribe({
         next: (response) => {
+          debugger;
           if (response) {
             this.authResponse = response;
+            debugger;
             this.router.navigate(['activate-account'], 
               {
                state: { 
