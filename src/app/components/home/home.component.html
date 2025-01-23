@@ -38,11 +38,12 @@
       <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
       <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
       <th>Image</th>
-      <th pSortableColumn="rating">Rating <p-sortIcon field="rating"></p-sortIcon></th>
+      <th pSortableColumn="quantity">Quantity <p-sortIcon field="quantity"></p-sortIcon></th>
       <th>Description</th>
       <th pSortableColumn="manufacturer">Manufacturer<p-sortIcon field="manufacturer"></p-sortIcon></th>
       <th pSortableColumn="supplier">Supplier<p-sortIcon field="supplier"></p-sortIcon></th>
       <th pSortableColumn="weight">Weight<p-sortIcon field="weight"></p-sortIcon></th>
+      <th pSortableColumn="total_price">Total price<p-sortIcon field="total_price"></p-sortIcon></th>
       <th>
         <p-button label="Reset Sorting" [outlined]=true (onClick)="resetSorting()" class="p-button-secondary"
           [disabled]="!isSortingApplied"></p-button>
@@ -61,11 +62,12 @@
       <td>
         <img [src]="'data:image/jpeg;base64,' + product.image" height="30px" />
       </td>
-      <td>{{ product.rating }} ☆</td>
+      <td>{{ product.quantity }} pc</td>
       <td>{{ product.description }}</td>
       <td>{{ product.manufacturer }}</td>
       <td>{{ product.supplier }}</td>
       <td>{{ product.weight}} kg</td>
+      <td>{{ product.totalPrice | currency : 'EUR'}}</td>
       <td>
         <button pButton icon="pi pi-pencil"
           class="p-button-rounded p-button-outlined p-button-success custom-edit-button"

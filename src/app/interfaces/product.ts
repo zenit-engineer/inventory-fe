@@ -5,8 +5,9 @@ export interface Product {
     description: string;
     category: string;
     image: string;
-    rating: number;
+    quantity: number;
     manufacturer: string;
     supplier: string;
     weight: string;
+    total_price?: number
 }
