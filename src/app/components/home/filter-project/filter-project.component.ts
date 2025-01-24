@@ -16,6 +16,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RouterModule } from '@angular/router';
+import { ApiResponse } from 'src/app/interfaces/api-response';
 
 @Component({
   selector: 'app-filter-project',
@@ -38,11 +39,10 @@ import { RouterModule } from '@angular/router';
 export class FilterProjectComponent implements OnInit, OnDestroy{
 
   products: Product[] = [];
-  
   globalFilter = '';
   request: ProductRequest = {
     first: 0,
-    rows: 10,
+    rows: 15,
     sortField: '',
     sortOrder: 1,
     category: '', 
@@ -58,16 +58,15 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   manufacturers:string[] = [];
   baseUrl: string = environment.backend_url;
   selectedProducts!: Product[] | null;
-
   @Output() selectCategory: EventEmitter<string | null> = new EventEmitter<string | null>();
   @Output() selectSupplier: EventEmitter<string | null> = new EventEmitter<string | null>();
   @Output() selectManufacturer: EventEmitter<string | null> = new EventEmitter<string | null>();
-  
   subscriptions: Subscription[] = [];
-  productSubscription: Subscription = new Subscription();
- 
+  filterSubscription: Subscription = new Subscription();
+  @Input() selectedProductIds: number[] = [];
   @Input() table!: Table;
   @Output() searchChanged: EventEmitter<string| null> = new EventEmitter<string | null>();;
+  totalProducts: number = 0;
 
   constructor(private productService: ProductService,
     private messageService: MessageService,
@@ -81,7 +80,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
   }
 
   getAllCategories(): void {
-    this.productSubscription = this.productService.getAllCategories().pipe(
+    this.filterSubscription = this.productService.getAllCategories().pipe(
       map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
       catchError(error => {
         console.error('Error fetching categories:', error);
@@ -108,11 +107,11 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     });
     
     // Add the subscription to the subscriptions array for proper management
-    this.subscriptions.push(this.productSubscription);
+    this.subscriptions.push(this.filterSubscription);
   }
   
   getAllManufacturers(): void {
-    this.productSubscription = this.productService.getAllManufacturers().pipe(
+    this.filterSubscription = this.productService.getAllManufacturers().pipe(
       map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
       catchError(error => {
         console.error('Error fetching manufacturers:', error);
@@ -139,11 +138,11 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     });
   
     // Add the subscription to the subscriptions array for proper management
-    this.subscriptions.push(this.productSubscription);
+    this.subscriptions.push(this.filterSubscription);
   }
   
   getAllSuppliers(): void {
-    this.productSubscription = this.productService.getAllSuppliers().pipe(
+    this.filterSubscription = this.productService.getAllSuppliers().pipe(
       map((response: ApiResponseWithDataListOfStrings) => response.data), // Directly use the `data` field as it is already a string array
       catchError(error => {
         console.error('Error fetching suppliers:', error);
@@ -170,7 +169,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
     });
   
     // Add the subscription to the subscriptions array for proper management
-    this.subscriptions.push(this.productSubscription);
+    this.subscriptions.push(this.filterSubscription);
   }
     
   onCategoryChange($event: any) {
@@ -191,7 +190,7 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
 
   generateExcel(): void {
   // Subscribe to the productService generateExcel API
-  this.productSubscription = this.productService.generateExcel()
+  this.filterSubscription = this.productService.generateExcel()
     .subscribe({
       next: (response: Blob) => {
         // When the response is successful (the file is returned as a Blob), trigger the download
@@ -211,19 +210,98 @@ export class FilterProjectComponent implements OnInit, OnDestroy{
         });
       }
     });
+    this.subscriptions.push(this.filterSubscription);
   }
 
+  canDelete(): boolean {
+    return this.selectedProductIds && this.selectedProductIds.length > 0; // Check if there are any selected items
+  }
+
+  getAllProducts() {
+    this.filterSubscription = this.productService.getAllProducts(this.request).pipe(
+      map(response => {
+        const responseData = response.data;
+        this.totalProducts = responseData?.totalElements || 0; // Extract totalElements
+        return responseData?.products || []; // Extract products list
+      }),
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load products.'
+        });
+        return []; // Return empty array in case of error
+      })
+    ).subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (error) => {
+        console.error('Error during product fetch:', error);
+      }
+    });
+  
+    this.subscriptions.push(this.filterSubscription);
+  }
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete the selected products?',
-        header: 'Confirm',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+      message: 'Are you sure you want to delete the selected products?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // Check if there are selected products to delete
+        if (this.selectedProductIds && this.selectedProductIds.length > 0) {
+          // Call the product service to delete multiple products
+          this.filterSubscription = this.productService.deleteMultipleProducts(this.selectedProductIds)
+            .subscribe({
+              next: (response: ApiResponse) => {
+                // Assuming ApiResponse has properties like status, message, etc.
+                if (response.status === 'success') {
+                  // Handle success (e.g., refresh product list, show success message)
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Products Deleted',
+                    life: 3000
+                  });
+                  // Perform any UI updates, such as refreshing the table or clearing the selection
+                  this.selectedProductIds = []; // Clear the selected IDs
+                  this.getAllProducts(); // Refresh the product list (assuming this method exists)
+                } else {
+                  // Handle unexpected response status
+                  this.messageService.add({
+                    severity: 'warn',
+                    summary: 'Warning',
+                    detail: response.message || 'Unable to delete products.',
+                  });
+                }
+              },
+              error: (error) => {
+                console.error('Error during product deletion:', error);
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: error.message || 'An error occurred while deleting products.',
+                });
+              }
+            });
+  
+          // Push the subscription to the subscriptions array
+          this.subscriptions.push(this.filterSubscription);
+        } else {
+          // Handle the case where no products are selected
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Warning',
+            detail: 'No products selected for deletion.',
+          });
         }
+      }
     });
   }
+  
   
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

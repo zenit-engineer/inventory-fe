@@ -19,13 +19,13 @@
   [rows]="request.rows" [first]="request.first" [lazy]="true" (onLazyLoad)="loadProducts($event)"
   [totalRecords]="totalProducts" (sortFunction)="loadProducts($event)"
   styleClass="p-datatable-gridlines p-datatable-striped" [rowHover]="true" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" [(selection)]="selectProd"
-  dataKey="id">
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+  dataKey="id" (selectionChange)="onSelectionChange($event)" [(selection)]="selectedProducts">
   <ng-template pTemplate="caption">
     <app-filter-project (selectCategory)="onFilterChange('category', $event)"
       (selectSupplier)="onFilterChange('supplier', $event)"
       (selectManufacturer)="onFilterChange('manufacturer', $event)" (searchChanged)="onFilterChange('search', $event)"
-      [table]="productTable">
+      [table]="productTable" [selectedProductIds]="selectedProductIds">
     </app-filter-project>
 
   </ng-template>

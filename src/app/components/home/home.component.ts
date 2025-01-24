@@ -8,7 +8,6 @@ import { Product } from 'src/app/interfaces/product';
 import { ProductRequest } from 'src/app/interfaces/product-request';
 import { ProductService } from 'src/app/services/product.service';
 import { CommonModule } from '@angular/common';
-import {HttpClientModule} from '@angular/common/http'
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -23,7 +22,6 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
 import { CategoryComponent } from './category/category.component';
 import { FilterProjectComponent } from './filter-project/filter-project.component';
 import { ManufacturerComponent } from './manufacturer/manufacturer.component';
-import { MiniDialogAddComponent } from './mini-dialog-add/mini-dialog-add.component';
 import { SupplierComponent } from './supplier/supplier.component';
 
 @Component({
@@ -45,7 +43,6 @@ import { SupplierComponent } from './supplier/supplier.component';
     CategoryComponent,
     FilterProjectComponent,
     ManufacturerComponent,
-    MiniDialogAddComponent,
     SupplierComponent
   ],
   providers:[
@@ -63,10 +60,10 @@ export class HomeComponent implements OnInit,OnDestroy {
   productSubscription: Subscription = new Subscription();
   totalProducts: number = 0;
   selectedFile: File | null = null;
-
+  selectedProducts: Product[] = []; // Holds the selected products
+  selectedProductIds: number[] = []; // Holds only the IDs of selected products
   isSortingApplied: boolean = false; // Initial state
   @ViewChild('productTable') productTable!: Table; // Reference to the p-table
-  selectProd!: Product[];
 
   request: ProductRequest = {
     first: 0,
@@ -287,6 +284,11 @@ export class HomeComponent implements OnInit,OnDestroy {
   
     // Add the subscription to the array for management
     this.subscriptions.push(this.productSubscription);
+  }
+
+  onSelectionChange(selectedItems: Product[]) {
+    this.selectedProducts = selectedItems; // Store the full objects
+    this.selectedProductIds = selectedItems.map((item) => item.id); // Extract only IDs
   }
 
   ngOnDestroy(): void {

@@ -5,9 +5,10 @@
     <p-button
       severity="danger" 
       label="Delete" 
-      icon="pi pi-trash" 
+      icon="pi pi-trash"
+      outlined
       (onClick)="deleteSelectedProducts()" 
-      [disabled]="!selectedProducts || !selectedProducts.length" 
+      [disabled]="!canDelete()"
       class="w-full md:w-auto"
     />
 
@@ -53,6 +54,7 @@
     <p-button 
         label="Export Excel" 
         icon="pi pi-file-export" 
+        outlined
         iconPos="right" 
         (onClick)="generateExcel()"
         class="w-full md:w-auto export-excel-button"

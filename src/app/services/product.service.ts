@@ -115,5 +115,12 @@ export class ProductService {
     const params = new HttpParams().set('year', year);
     return this.http.get<VerticalBarResponseData>(`${this.baseUrl}/api/v1/product/vertical-bar`, {params});
   }
+
+  deleteMultipleProducts(productIds: number[]): Observable<ApiResponse> {
+    const options = {
+      body: productIds, // Pass the array of product IDs in the body
+    };
+    return this.http.delete<ApiResponse>(`${this.baseUrl}/api/v1/product`, options);
+  }
   
 }
