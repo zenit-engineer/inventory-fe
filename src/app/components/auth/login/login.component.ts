@@ -58,6 +58,7 @@ export class LoginComponent {
           if (!this.authResponse.mfaEnabled) {
             this.tokenService.accessToken = response.accessToken || '';
             this.tokenService.refreshToken = response.refreshToken || '';
+            this.tokenService.role = this.tokenService.userRoles || [];
             this.router.navigate(['home']);
           }else if (this.authResponse.mfaEnabled) {
             this.router.navigate(['two-factor-authentication'], 

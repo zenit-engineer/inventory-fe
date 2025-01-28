@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
 import { catchError, Subscription, tap } from 'rxjs';
@@ -20,16 +20,24 @@ import { RouterModule } from '@angular/router'; // Add this import
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   subscriptions: Subscription[] = [];
   logoutSubscription: Subscription = new Subscription();
-
+  adminRole: boolean = false;
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private tokenService: TokenService
   ) {}
+
+  ngOnInit(): void {
+    const userRoles = this.tokenService.role;
+    if(userRoles.includes("ADMIN")){
+      this.adminRole = true;
+      console.log(this.adminRole);
+    }
+  }
 
   display: boolean = false;
 

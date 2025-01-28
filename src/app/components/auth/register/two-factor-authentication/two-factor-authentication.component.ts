@@ -9,6 +9,7 @@ import { VerificationRequest } from 'src/app/interfaces/verification-request';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { ImageModule } from 'primeng/image';
 import { CodeInputModule } from 'angular-code-input';
+import { TokenService } from 'src/app/services/token-service';
 
 @Component({
   selector: 'app-two-factor-authentication',
@@ -32,7 +33,8 @@ export class TwoFactorAuthenticationComponent implements OnChanges{
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private tokenService: TokenService
   ){
     const navigation = this.router.getCurrentNavigation();
     this.secretImageUri = navigation?.extras.state?.['secretImageUri'];
@@ -61,6 +63,7 @@ export class TwoFactorAuthenticationComponent implements OnChanges{
         localStorage.setItem('accessToken', response.accessToken as string);
         localStorage.setItem('refreshToken', response.refreshToken as string);
         localStorage.setItem('mfaEnabled', String(response.mfaEnabled as boolean));
+        this.tokenService.role = this.tokenService.userRoles || [];
         this.router.navigate(['home']);
       },
       error: (err) => {

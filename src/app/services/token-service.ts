@@ -22,9 +22,20 @@ export class TokenService {
     return localStorage.getItem('refreshToken') as string;
   }
 
+  set role(roles: string[]) {
+    localStorage.setItem('roles', JSON.stringify(roles));
+  }
+
+  get role() {
+    const storedRoles = localStorage.getItem('roles');
+    return storedRoles ? JSON.parse(storedRoles) : [];  // Parse the JSON string back to an array, or return an empty array if not found
+  }  
+
   clearTokens() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('mfaEnabled');
+    localStorage.removeItem('roles');
   }
 
   isAccessTokenValid() {
@@ -63,8 +74,8 @@ export class TokenService {
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
-      console.log(decodedToken.authorities);
-      return decodedToken.authorities;
+      console.log(decodedToken.roles);
+      return decodedToken.roles;
     }
     return [];
   }

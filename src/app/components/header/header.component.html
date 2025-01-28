@@ -6,7 +6,9 @@
 <p-sidebar [(visible)]="display">
   <h1>
     <div><p-button label="Home" [link]="true" [routerLink]="['/home']"></p-button></div>
-    <div><p-button label="Statistics" [link]="true" [routerLink]="['/statistics']"></p-button></div>
+    @if(adminRole == true){
+      <div><p-button label="Statistics" [link]="true" [routerLink]="['/statistics']"></p-button></div>
+    }
     <div><p-button label="Change Password" [link]="true" [routerLink]="['/change-password']"></p-button></div>
     <div><p-button label="User Management" [link]="true" [routerLink]="['/statistics']"></p-button></div>
   </h1>
