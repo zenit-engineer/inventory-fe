@@ -1,6 +1,6 @@
-<div class="flex justify-content-between align-items-center">
+<div class="flex justify-content-between align-items-center margin-top margin-bottom">
   <div class="flex gap-3">
-    <h2>Stock Management</h2>
+    <h2></h2>
   </div>
   <div class="flex gap-3 align-items-center">
     <p-button label="Add Product" [raised]="true" [outlined]=true icon="pi pi-plus-circle" (onClick)="showAddModal()">
@@ -67,7 +67,7 @@
       <td>{{ product.manufacturer }}</td>
       <td>{{ product.supplier }}</td>
       <td>{{ product.weight}} kg</td>
-      <td>{{ product.totalPrice | currency : 'EUR'}}</td>
+      <td>{{ product.total_price | currency : 'EUR'}}</td>
       <td>
         <button pButton icon="pi pi-pencil"
           class="p-button-rounded p-button-outlined p-button-success custom-edit-button"

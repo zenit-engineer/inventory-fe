@@ -36,7 +36,7 @@ export class VerticalBarComponent {
 
   ngOnInit() {
       // Call the API and handle the data inside subscribe
-      this.getVerticalBarData(2025);
+      this.getVerticalBarData(2024);
   }
 
   getVerticalBarData(year: number) {
