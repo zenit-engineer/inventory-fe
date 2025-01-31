@@ -1,15 +1,15 @@
 <div class="button-container">
   <p-button type="text" [outlined]="true" [raised]="true" (click)="display = true" icon="pi pi-bars" label="Menu"></p-button>
-  <p-button icon="pi pi-power-off" label="Sign Out" [outlined]="true" [raised]="true" severity="danger" (click)="logOut()"></p-button>
 </div>
 
 <p-sidebar [(visible)]="display">
   <h1>
-    <div><p-button label="Dashboard" [link]="true" [routerLink]="['/home']"></p-button></div>
+    <div><p-button label="Manage Products" icon="pi pi-list" [link]="true" [routerLink]="['/home']"></p-button></div>
     @if(adminRole == true){
-      <div><p-button label="Statistics" [link]="true" [routerLink]="['/statistics']"></p-button></div>
+    <div><p-button label="Raports" icon="pi pi-chart-bar" [link]="true" [routerLink]="['/statistics']"></p-button></div>
     }
-    <div><p-button label="Change Password" [link]="true" [routerLink]="['/change-password']"></p-button></div>
-    <div><p-button label="Generate bill" [link]="true" [routerLink]="['/change-password']"></p-button></div>   
+    <div><p-button label="Change Password" icon="pi pi-lock" [link]="true" [routerLink]="['/change-password']"></p-button></div>
+    <div><p-button label="Generate invoice" icon="pi pi-file-export" [link]="true" [routerLink]="['/change-password']"></p-button></div>
+    <div><p-button label="Sign Out" icon="pi pi-power-off" severity="danger" [link]="true" (click)="logOut()" class="red-label-button"></p-button></div>
   </h1>
 </p-sidebar>

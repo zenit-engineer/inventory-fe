@@ -4,3 +4,11 @@
   align-items: center; /* Align items vertically */
   padding: 10px 20px; /* Add padding as needed */
 }
+
+::ng-deep .red-label-button .p-button-label {
+  color: red !important;
+}
+
+::ng-deep .red-label-button .p-button-icon {
+  color: red !important;
+}
