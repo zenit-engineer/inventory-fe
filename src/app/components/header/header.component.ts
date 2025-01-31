@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router'; // Add this import
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ import { RouterModule } from '@angular/router'; // Add this import
     CommonModule,
     SidebarModule,
     ButtonModule,
-    RouterModule
+    RouterModule,
+    ToolbarModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
