@@ -1,0 +1,16 @@
+<form [formGroup]="productForm" class="product-form">
+    <div class="field">
+      <label class="block" for="number">Invoice Nr</label>
+      <input type="text" pInputText id="invoiceNumber" formControlName="invoiceNumber" />
+      @if(productForm.controls['invoiceNumber'].invalid && productForm.controls['invoiceNumber'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+        <label class="block" for="number">Invoice Nr</label>
+        <p-floatlabel variant="on">
+            <p-datepicker inputId="on_label" showIcon iconDisplay="input" />
+            <label for="on_label">On Label</label>
+        </p-floatlabel>
+      </div>
+  </form>
