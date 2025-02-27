@@ -7,10 +7,52 @@
       }
     </div>
     <div class="field">
-        <label class="block" for="number">Invoice Nr</label>
+        <label class="block" for="number">Invoice Date</label>
         <p-floatlabel variant="on">
             <p-datepicker inputId="on_label" showIcon iconDisplay="input" />
             <label for="on_label">On Label</label>
         </p-floatlabel>
-      </div>
+    </div>
+    <div class="field">
+      <label class="block" for="number">Billing Company</label>
+      <input type="text" pInputText id="billingCompany" formControlName="billingCompany" />
+      @if(productForm.controls['billingCompany'].invalid && productForm.controls['billingCompany'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+      <label class="block" for="number">Billing Person's Name</label>
+      <input type="text" pInputText id="billingName" formControlName="billingName" />
+      @if(productForm.controls['billingName'].invalid && productForm.controls['billingName'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+      <label class="block" for="number">Billing Address</label>
+      <input type="text" pInputText id="billingAddress" formControlName="billingAddress" />
+      @if(productForm.controls['billingAddress'].invalid && productForm.controls['billingAddress'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+      <label class="block" for="number">Billing Person's Email</label>
+      <input type="text" pInputText id="billingEmail" formControlName="billingEmail" />
+      @if(productForm.controls['billingEmail'].invalid && productForm.controls['billingEmail'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+      <label class="block" for="number">Shipping Address</label>
+      <input type="text" pInputText id="shippingAddress" formControlName="shippingAddress" />
+      @if(productForm.controls['shippingAddress'].invalid && productForm.controls['shippingAddress'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
+    <div class="field">
+      <label class="block" for="number">Shipping Name</label>
+      <input type="text" pInputText id="shippingName" formControlName="shippingName" />
+      @if(productForm.controls['shippingName'].invalid && productForm.controls['shippingName'].dirty){
+        <small class="p-error block">Field is required</small>
+      }
+    </div>
   </form>

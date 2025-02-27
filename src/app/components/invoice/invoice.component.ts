@@ -34,5 +34,11 @@ export class InvoiceComponent {
   manufacturers:string[] = [];
   productForm = this.fb.group({
     invoiceNumber: ["", Validators.required],
+    billingCompany: ["", Validators.required],
+    billingName: ["", Validators.required],
+    billingAddress: ["", Validators.required],
+    billingEmail: ["", Validators.required],
+    shippingAddress: ["", Validators.required],
+    shippingName: ["", Validators.required],
   })
 }
