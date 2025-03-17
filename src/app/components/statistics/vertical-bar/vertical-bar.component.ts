@@ -1,10 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { UIChart } from 'primeng/chart';
 import { VerticalBarData, VerticalBarResponseData } from 'src/app/interfaces/vertical-bar-response-data';
 import { ProductService } from 'src/app/services/product.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
@@ -29,15 +29,80 @@ export class VerticalBarComponent {
   basicOptions: any;
   @ViewChild('chart') chart!: UIChart; // Reference to the PrimeNG chart
 
+
+  basicDataTwo: any;
+
+  basicOptionsTwo: any;
+
+  platformId = inject(PLATFORM_ID);
+
   constructor(
       private productService: ProductService,
       private messageService: MessageService,
+      private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
       // Call the API and handle the data inside subscribe
-      this.getVerticalBarData(2024);
+      this.initChart();
   }
+
+  initChart() {
+    if (isPlatformBrowser(this.platformId)) {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--p-text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
+        const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+
+        this.basicData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [
+                {
+                    label: 'Sales',
+                    data: [540, 325, 702, 620, 430, 540, 325, 702, 620, 430, 200, 840],
+                    backgroundColor: [
+                        'rgba(249, 115, 22, 0.2)',
+                        'rgba(6, 182, 212, 0.2)',
+                        'rgb(107, 114, 128, 0.2)',
+                        'rgba(139, 92, 246, 0.2)',
+                    ],
+                    borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        this.basicOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary,
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColorSecondary,
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                    },
+                },
+            },
+        };
+        this.cd.markForCheck()
+    }
+}
 
   getVerticalBarData(year: number) {
       this.statisticsSubscription = this.productService.getVerticalBarData(year).pipe(
