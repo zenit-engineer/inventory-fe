@@ -38,6 +38,22 @@
     >
   </div>
   <div class="field">
+    <label class="block" for="quantity">Quantity</label>
+    <p-inputNumber
+      id="quantity"
+      formControlName="quantity"
+      class="block"
+    ></p-inputNumber>
+    <small
+      class="p-error block"
+      *ngIf="
+        productForm.controls['quantity'].invalid &&
+        productForm.controls['quantity'].dirty
+      "
+      >Field is required</small
+    >
+  </div>
+  <div class="field">
     <label class="block" for="category">Category</label>
     <p-dropdown
     [options]="categories"

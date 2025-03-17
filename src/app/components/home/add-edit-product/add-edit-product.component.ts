@@ -60,7 +60,8 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
     image: ["", Validators.required],
     manufacturer: ["", Validators.required],
     supplier: ["", Validators.required],
-    weight: ["", Validators.required]
+    weight: ["", Validators.required],
+    quantity: ["", Validators.required],
   })
 
   constructor(
@@ -101,7 +102,7 @@ export class AddEditProductComponent implements OnInit, OnChanges, OnDestroy{
       description: this.productForm.value.description ?? '',  // Fallback to an empty string if null or undefined
       category: this.productForm.value.category ?? '',  // Fallback to an empty string if null or undefined
       image: this.productForm.value.image ?? '',  // Fallback to an empty string if null or undefined
-      quantity: this.selectedProduct?.quantity ?? 0, // Fallback to 0 if quantity is undefined
+      quantity: parseFloat(this.productForm.value.quantity ?? "0") || 0,
       manufacturer: this.productForm.value.manufacturer ?? '',  // Fallback to an empty string if null or undefined
       supplier: this.productForm.value.supplier ?? '',  // Fallback to an empty string if null or undefined
       weight: this.productForm.value.weight ?? ''
